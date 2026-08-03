@@ -176,6 +176,35 @@
     .replace(legacyNavigationOrder, renderedNavigationOrder)
     .replace(legacySectionOrder, renderedSectionOrder);
 
+  const founderBioUpdates = [
+    {
+      from: "I bring to this project a background in Business Analytics for Management at LIUC Business University, with a focus on financial analysis, statistical modelling and AI-assisted software development.",
+      to: "I bring to this project a background in Business Analytics for Management at LIUC Business University, with a focus on financial analysis, statistical modelling and AI-assisted software development. I am also pursuing the CFA Program, one of the most prestigious and internationally recognised professional pathways in financial analysis and investment management."
+    },
+    {
+      from: "Porto in questo percorso una formazione in Business Analytics for Management alla LIUC Business University, con un focus su analisi finanziaria, modellistica statistica e sviluppo software assistito da AI.",
+      to: "Porto in questo percorso una formazione in Business Analytics for Management alla LIUC Business University, con un focus su analisi finanziaria, modellistica statistica e sviluppo software assistito da AI. Sto inoltre seguendo il CFA Program, uno dei percorsi di qualificazione professionale più prestigiosi e riconosciuti a livello internazionale nell’analisi finanziaria e nell’investment management."
+    },
+    {
+      from: "J’apporte à ce projet une formation en Business Analytics for Management à la LIUC Business University, avec un accent sur l’analyse financière, la modélisation statistique et le développement logiciel assisté par IA.",
+      to: "J’apporte à ce projet une formation en Business Analytics for Management à la LIUC Business University, avec un accent sur l’analyse financière, la modélisation statistique et le développement logiciel assisté par IA. Je poursuis également le CFA Program, l’un des parcours de qualification professionnelle les plus prestigieux et reconnus à l’échelle internationale en analyse financière et en gestion d’investissement."
+    },
+    {
+      from: "Ich bringe in dieses Projekt eine Ausbildung in Business Analytics for Management an der LIUC Business University ein, mit Fokus auf Finanzanalyse, statistische Modellierung und KI-gestützte Softwareentwicklung.",
+      to: "Ich bringe in dieses Projekt eine Ausbildung in Business Analytics for Management an der LIUC Business University ein, mit Fokus auf Finanzanalyse, statistische Modellierung und KI-gestützte Softwareentwicklung. Darüber hinaus absolviere ich das CFA Program, einen der weltweit renommiertesten und anerkanntesten professionellen Qualifikationswege in Finanzanalyse und Investment Management."
+    }
+  ];
+
+  founderBioUpdates.forEach(({ from, to }, index) => {
+    const occurrences = correctedSource.split(from).length - 1;
+    if (occurrences !== 1) {
+      throw new Error(
+        `Founder CFA copy compatibility check failed for language index ${index}: found ${occurrences}.`
+      );
+    }
+    correctedSource = correctedSource.replace(from, to);
+  });
+
   const legacyScrollSpy = `    const handleScroll = () => {
       const navH = 72;
       let current = '';
