@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>EULA — PREVISIO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #050505;
+  --gold-primary: #D4AF37;
+  --gold-light: #F3E5AB;
+  --gold-dim: #8a6d2f;
+  --text-main: #EAEAEA;
+  --text-muted: #888;
+  --text-soft: #B0B0B0;
+  --border-subtle: rgba(255,255,255,0.08);
+  --border-gold: rgba(212,175,55,0.25);
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius-sm: 8px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg-deep);color:var(--text-main);font-family:var(--font-ui);font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:18px 36px;background:rgba(5,5,5,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-subtle);position:sticky;top:0;z-index:100;}
+.brand-title{font-size:18px;font-weight:700;letter-spacing:0.08em;color:var(--text-main);}
+.brand-subtitle{font-size:10px;color:var(--gold-primary);text-transform:uppercase;letter-spacing:0.22em;margin-top:4px;opacity:0.85;}
+.topbar-right{display:flex;align-items:center;gap:14px;}
+.back-link{font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-primary);text-decoration:none;border:1px solid var(--gold-dim);padding:8px 16px;border-radius:var(--radius-sm);transition:all .2s ease;}
+.back-link:hover{background:rgba(212,175,55,0.08);border-color:var(--gold-primary);box-shadow:0 0 16px rgba(212,175,55,0.2);}
+
+.lang-select{background:rgba(0,0,0,0.4);border:1px solid var(--border-gold);border-radius:6px;color:var(--gold-primary);font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:0.08em;padding:7px 28px 7px 12px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23D4AF37' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:10px 6px;}
+.lang-select option{background:#141417;color:#eaeaea;}
+
+.legal-doc{max-width:820px;margin:0 auto;padding:56px 28px 96px;}
+.legal-doc header{border-bottom:2px solid var(--gold-primary);padding-bottom:18px;margin-bottom:28px;}
+.legal-doc .brand-doc{font-family:var(--font-mono);letter-spacing:0.18em;text-transform:uppercase;font-size:12px;color:var(--gold-primary);font-weight:700;}
+.legal-doc h1{font-size:26px;margin:10px 0 4px;line-height:1.25;font-weight:600;}
+.legal-doc .meta{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);}
+.legal-doc h2{font-size:18px;margin:34px 0 10px;padding-top:6px;font-weight:600;color:var(--gold-light);}
+.legal-doc h3{font-size:15px;margin:22px 0 6px;font-weight:500;}
+.legal-doc p,.legal-doc li{font-size:15px;color:var(--text-soft);}
+.legal-doc ul,.legal-doc ol{padding-left:22px;}
+.legal-doc li{margin:6px 0;}
+.legal-doc .lead{font-size:15.5px;color:var(--text-soft);background:rgba(212,175,55,0.04);border-left:3px solid var(--gold-primary);padding:14px 18px;margin:22px 0;border-radius:0 6px 6px 0;}
+.legal-doc .ph{background:rgba(255,193,7,0.12);border-bottom:1px dashed rgba(212,175,55,0.5);padding:0 2px;font-family:var(--font-mono);font-size:13px;color:var(--gold-light);}
+.legal-doc .toc{font-family:var(--font-ui);font-size:13.5px;background:rgba(0,0,0,0.3);border:1px solid var(--border-subtle);border-radius:6px;padding:16px 22px;margin:24px 0;}
+.legal-doc .toc strong{color:var(--gold-primary);}
+.legal-doc .toc ol{padding-left:20px;margin:6px 0 0;}
+.legal-doc .toc li{color:var(--text-soft);}
+.legal-doc footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--border-subtle);font-family:var(--font-mono);font-size:12px;color:var(--text-muted);}
+.legal-doc strong{font-weight:600;color:var(--text-main);}
+
+.ambient-bg{position:fixed;top:0;left:0;width:100vw;height:100vh;background:radial-gradient(circle at 15% 15%,rgba(212,175,55,0.04),transparent 40%),radial-gradient(circle at 85% 85%,rgba(50,60,90,0.08),transparent 40%);z-index:-1;pointer-events:none;}
+
+@media(max-width:600px){.topbar{padding:14px 18px;}.legal-doc{padding:32px 18px 60px;}.legal-doc h1{font-size:22px;}}
+</style>
+</head>
+<body>
+<div class="ambient-bg"></div>
+<header class="topbar">
+  <div>
+    <div class="brand-title">PREVISIO</div>
+    <div class="brand-subtitle" id="subtitle"></div>
+  </div>
+  <div class="topbar-right">
+    <select class="lang-select" id="langSelect">
+      <option value="en">EN — English</option>
+      <option value="it">IT — Italiano</option>
+    </select>
+    <a href="index.html" class="back-link" id="backLink">← Back to site</a>
+  </div>
+</header>
+
+<div id="content-en" style="display:none;"><article class="legal-doc">
+  
+  <header>
+    <div class="brand">PREVISIO</div>
+    <h1>End User License Agreement (EULA)</h1>
+    <div class="meta">
+      Version 1.0 &middot; Last updated: July 7, 2026
+      &middot; Licensor: Fabrizio Midaglia — Sole Proprietor, Carnago (VA), Italy (VAT number pending registration)
+    </div>
+  </header>
+
+  <p class="lead">
+    This End User License Agreement (the &ldquo;Agreement&rdquo; or &ldquo;EULA&rdquo;)
+    governs your use of the <strong>PREVISIO</strong> software (the
+    &ldquo;Software&rdquo;), a quantitative decision-support product intended
+    exclusively for professional and business users (including, without
+    limitation: asset management companies, investment firms, family offices,
+    independent financial advisors and advisory firms, research desks,
+    corporate treasuries, intermediaries, and professional clients under
+    applicable law). By installing, activating, or using the Software, the
+    User acknowledges having read, understood, and fully accepted this
+    Agreement. If the User does not accept it, the User must not install or
+    use the Software.
+  </p>
+
+  <div class="toc">
+    <strong>Contents</strong>
+    <ol>
+      <li>Definitions</li>
+      <li>Purpose of the Software and intended users</li>
+      <li>Grant of license</li>
+      <li>Use restrictions</li>
+      <li>Intellectual property</li>
+      <li>Term, activation, license keys and technical controls</li>
+      <li>Updates and support</li>
+      <li>Fees</li>
+      <li>User Data, Market Data and third-party services</li>
+      <li>No investment advice and probabilistic nature of outputs</li>
+      <li>Disclaimer of warranties</li>
+      <li>Limitation of liability</li>
+      <li>Termination</li>
+      <li>Governing law and jurisdiction</li>
+      <li>Miscellaneous</li>
+      <li>Specific approval of onerous clauses</li>
+    </ol>
+  </div>
+
+  <h2>1. Definitions</h2>
+  <ul>
+    <li><strong>Licensor</strong>: Fabrizio Midaglia — Sole Proprietor, Carnago (VA), Italy (VAT number pending registration), exclusive owner of all rights in the Software.</li>
+    <li><strong>User</strong>: the legal entity, organization, or professional that has acquired a license to use the Software for exclusively professional, non-consumer purposes.</li>
+    <li><strong>Software</strong>: the <strong>PREVISIO</strong> application, including executable code, quantitative models, configuration, interfaces, documentation, supporting materials, and subsequent updates provided by the Licensor.</li>
+    <li><strong>User Data</strong>: the time series, prices, files, datasets, and any other data provided, uploaded, or generated by the User and processed by the Software.</li>
+    <li><strong>Market Data</strong>: any financial, price, or reference data supplied by third parties (including, without limitation, market data vendors, exchanges, index providers, Bloomberg, Refinitiv/LSEG, or other vendors) to which the User holds licenses or subscriptions in its own name.</li>
+    <li><strong>Output</strong>: forecasts, estimates, probabilities, distributions, reports, and any other result produced by the Software.</li>
+  </ul>
+
+  <h2>2. Purpose of the Software and intended users</h2>
+  <p>
+    PREVISIO is a <strong>quantitative decision-support</strong> software that
+    processes User Data and/or Market Data to produce probabilistic estimates
+    and statistical analyses. The Software <strong>is not an investment
+    advisory service</strong>, does not provide personalized recommendations,
+    and does not manage orders or execute market transactions. The Software is
+    intended exclusively for professional users and is not directed at
+    consumers or retail clients.
+  </p>
+
+  <h2>3. Grant of license</h2>
+  <p>
+    Subject to payment of the applicable fees and full compliance with this
+    Agreement, the Licensor grants the User a <strong>non-exclusive,
+    non-transferable, non-sublicensable, personal, and revocable</strong>
+    license to install and run the Software on
+    one (1) seat/device per license purchased, unless otherwise agreed in writing, within the User's
+    organization, solely for internal, professional use.
+  </p>
+  <p>
+    The Software is licensed in executable form on the User's device and
+    performs its processing locally on the User's machine. The license does
+    not include any right to distribute, sublicense, resell, or make the
+    Software available to third parties.
+  </p>
+
+  <h2>4. Use restrictions</h2>
+  <p>Except to the extent expressly permitted by mandatory law, the User shall not:</p>
+  <ul>
+    <li>copy, reproduce, distribute, resell, rent, lend, lease, publish, or otherwise make the Software available to third parties;</li>
+    <li>sublicense the Software or offer it to third parties as <strong>SaaS, ASP, hosting, time-sharing, service bureau, managed service, outsourcing</strong>, or similar arrangements, whether for consideration or free of charge;</li>
+    <li>use the Software to provide third parties with analysis, reporting, or signal services based, in whole or in part, on the Output;</li>
+    <li>decompile, disassemble, decrypt, or reverse engineer the Software, the models, or any related artifacts, except as mandatorily permitted by law;</li>
+    <li>extract, isolate, or replicate the algorithms, model architectures, or internal logic of the Software, including by automated querying, scraping of Output, or model-extraction techniques;</li>
+    <li>remove, alter, or obscure copyright notices, trademarks, watermarks, version identifiers, or proprietary notices;</li>
+    <li>use the Software, its Output, or its documentation to design, develop, train, improve, or commercialize a product or service that <strong>competes</strong> with PREVISIO;</li>
+    <li>circumvent, disable, tamper with, or bypass activation, licensing, seat-count controls, technical protection, license telemetry, trial periods, or demonstration versions;</li>
+    <li>use license keys not assigned by the Licensor, share its keys, or allow their use by persons outside the User's organization.</li>
+  </ul>
+
+  <h2>5. Intellectual property</h2>
+  <p>
+    The Software is <strong>licensed, not sold</strong>. All intellectual and
+    industrial property rights in the Software, the quantitative models, the
+    algorithms, the model weights, the configurations, the interface, the
+    documentation, and the trademarks and distinctive signs remain the
+    exclusive property of the Licensor or its licensors. The User acquires no
+    rights in the Software other than the license expressly granted herein.
+    User Data remains the property of the User; the User grants the Licensor
+    only the technical rights strictly necessary for the local execution of
+    the Software.
+  </p>
+
+  <h2>6. Term, activation, license keys and technical controls</h2>
+  <p>
+    The license has a perpetual
+    duration from activation, unless a different term is expressly agreed in the
+    purchase order or commercial offer accepted by the User.
+    The Software may require a <strong>license key</strong>, online or offline
+    activation, and periodic validity checks. The User undertakes not to share
+    the key, not to replicate it on devices beyond the licensed seats, and not
+    to bypass technical controls. The Licensor may suspend or revoke
+    activation in the event of non-compliant use. On expiry or termination,
+    the right to use ceases and the User must uninstall the Software.
+  </p>
+
+  <h2>7. Updates and support</h2>
+  <p>
+    The Licensor may, at its discretion, release corrective, security, or
+    evolutionary updates. Unless otherwise agreed in writing, updates are
+    governed by this Agreement. Support terms (channels, response times,
+    scope, service levels) are those set out in the applicable support
+    agreement or commercial offer accepted by the User, where applicable. No
+    maintenance or support obligation is owed absent a specific written
+    agreement or payment of the corresponding fee.
+  </p>
+
+  <h2>8. Fees</h2>
+  <p>
+    License fees and any ancillary service fees are as set out in the
+    purchase order or commercial offer accepted by the User.
+    Unless otherwise agreed in writing, amounts paid are non-refundable. In
+    case of non-payment, the Licensor may suspend the User's use of the
+    Software and/or terminate this Agreement under clause 13.
+  </p>
+
+  <h2>9. User Data, Market Data and third-party services</h2>
+  <p>
+    The Software processes User Data locally on the User's machine. The User
+    is the <strong>sole and exclusive party responsible</strong> for:
+  </p>
+  <ul>
+    <li>the legitimacy, ownership, quality, accuracy, completeness, and currency of the User Data and Market Data uploaded to or used within the Software;</li>
+    <li>the existence and validity of the licenses, subscriptions, and usage rights covering the Market Data, including, without limitation, the contractual terms of its providers (e.g. Bloomberg, Refinitiv/LSEG, exchanges, index providers) governing internal use, redistribution, data derivation, use for commercial purposes, and the number of authorized users;</li>
+    <li>compliance with any restrictions on redistribution, use in derivative products, or disclosure to third parties imposed by Market Data providers;</li>
+    <li>compliance with applicable law concerning personal data protection, confidentiality, inside information, market abuse, and any other sector-specific regulation.</li>
+  </ul>
+  <p>
+    The Licensor is not a party to the arrangements between the User and its
+    Market Data providers and assumes no responsibility for the User's use of
+    such data within the Software. Certain optional features may integrate
+    with third-party services (for example a local language model or, if
+    configured by the User, a cloud service); in such cases the relevant
+    provider's terms apply, and the User undertakes to comply with them.
+    Processing of personal data is described in the Privacy Notice.
+  </p>
+
+  <h2>10. No investment advice and probabilistic nature of outputs</h2>
+  <p>
+    The Software is a quantitative analysis tool that produces
+    <strong>probabilistic estimates</strong>. Output may be inaccurate,
+    imprecise, unrepresentative of future market conditions, or inconsistent
+    with actual outcomes. The Licensor does not warrant the accuracy,
+    statistical significance, or practical usefulness of the Output.
+  </p>
+  <p>
+    The Output does <strong>not</strong> constitute, under any circumstances
+    or on any basis: investment advice, personalized investment
+    recommendations, generic investment recommendations, investment research,
+    solicitation of the investing public, a public offer, an indication to
+    buy, sell, or hold financial instruments (<em>buy/sell/hold</em>), a
+    rating or overweight/underweight judgment, or tax or legal advice. The
+    User acknowledges and agrees that every investment decision is made
+    independently, under the User's sole responsibility, and based on the
+    User's own professional judgment and regulatory obligations.
+  </p>
+
+  <h2>11. Disclaimer of warranties</h2>
+  <p>
+    To the maximum extent permitted by law, the Software is provided
+    <strong>&ldquo;AS IS&rdquo; and &ldquo;AS AVAILABLE&rdquo;</strong>,
+    without warranties of any kind, express or implied, including, without
+    limitation, warranties of merchantability, fitness for a particular
+    purpose, accuracy, reliability, continuity, non-infringement of
+    third-party rights, or error-free operation. The Licensor does not
+    warrant that forecasts are correct, that any results will be achieved,
+    that the Software's operation will be uninterrupted, or that the Software
+    is free of defects.
+  </p>
+
+  <h2>12. Limitation of liability</h2>
+  <p>
+    To the maximum extent permitted by law, the Licensor shall not be liable
+    for indirect, consequential, incidental, or punitive damages, or for loss
+    of profit, revenue, goodwill, data, opportunity, reputation, or
+    <strong>investment losses</strong> or foregone gains arising from use of,
+    inability to use, or reliance on the Output of the Software. The
+    Licensor's aggregate liability, on any basis &mdash; contractual,
+    tortious, pre-contractual, or otherwise &mdash; is in any event limited to
+    the license fees actually paid by the User to the Licensor in the
+    12 months preceding the event giving rise to the
+    damage. Nothing in this Agreement excludes or limits liability that
+    cannot be excluded or limited by law (for example, willful misconduct or
+    gross negligence).
+  </p>
+
+  <h2>13. Termination</h2>
+  <p>
+    The Licensor may terminate this Agreement, pursuant to article 1456 of
+    the Italian Civil Code, for breach of clauses 3 (Grant of license), 4
+    (Use restrictions), 5 (Intellectual property), 6 (Term, activation and
+    technical controls), 8 (Fees), or 9 (User Data and third-party services)
+    not cured within 15 days of written notice. On
+    termination, the User must immediately cease all use of the Software,
+    uninstall it from all devices, and destroy any copies in its possession.
+    Clauses 5, 9, 10, 11, 12, 14, 15, and 16 survive termination, whether by
+    their nature or by express provision.
+  </p>
+
+  <h2>14. Governing law and jurisdiction</h2>
+  <p>
+    This Agreement is governed by <strong>Italian law</strong>. Any dispute
+    concerning the validity, interpretation, performance, or termination of
+    this Agreement shall be subject to the general rules of territorial
+    jurisdiction under the Italian Code of Civil Procedure, no exclusive
+    venue being designated. As this is a
+    B2B relationship between professional parties, consumer-protection rules
+    do not apply.
+  </p>
+
+  <h2>15. Miscellaneous</h2>
+  <ul>
+    <li>This Agreement, together with the Terms of Use, the Privacy Notice, and any accepted orders/quotes, constitutes the entire agreement between the parties with respect to its subject matter and supersedes any prior agreement or understanding.</li>
+    <li>If any clause is held invalid, unlawful, or unenforceable, the remaining clauses shall remain in effect; the parties shall replace the invalid clause with a valid clause of equivalent economic and legal effect.</li>
+    <li>The User may not assign this Agreement, in whole or in part, or any rights arising from it, without the Licensor's prior written consent.</li>
+    <li>Failure to enforce, or delay in enforcing, any provision does not constitute a waiver of that provision.</li>
+    <li>Any amendment to this Agreement must be agreed in writing between the parties.</li>
+  </ul>
+
+  <p>Licensor contact: previsio.quant@gmail.com</p>
+
+  <h2>16. Specific approval of onerous clauses</h2>
+  <p>
+    Pursuant to and for the purposes of articles 1341 and 1342 of the Italian
+    Civil Code, the User declares to have read, understood, and specifically
+    approved the following clauses: 3 (Grant of license &mdash; non-exclusive,
+    non-transferable, revocable nature), 4 (Use restrictions &mdash;
+    prohibitions on reverse engineering, SaaS, competing products,
+    circumvention of controls), 5 (Intellectual property), 6 (Term,
+    activation, license keys and technical controls), 8 (Non-refundable
+    fees), 9 (User Data, Market Data and third-party services), 10 (No
+    investment advice and probabilistic nature of outputs), 11 (Disclaimer of
+    warranties), 12 (Limitation of liability), 13 (Termination), 14
+    (Governing law and exclusive jurisdiction), and 15 (Miscellaneous,
+    including the prohibition on assignment).
+  </p>
+
+  <footer>
+    PREVISIO &mdash; End User License Agreement, v1.0.
+    <br />
+    <strong>Status: pending VAT number registration.</strong> All fields have
+    been completed except the VAT number, which is being applied for; this
+    document must be updated with the VAT number once assigned, and reviewed
+    by a qualified lawyer before commercial use.
+  </footer>
+</article></div>
+<div id="content-it" style="display:none;"><article class="legal-doc">
+  
+  <header>
+    <div class="brand">PREVISIO</div>
+    <h1>Contratto di Licenza con l'Utente Finale (EULA)</h1>
+    <div class="meta">
+      Versione 1.0 &middot; Ultimo aggiornamento: 7 luglio 2026
+      &middot; Licenziante: Fabrizio Midaglia — Titolare, Carnago (VA) (P.IVA in corso di attribuzione)
+    </div>
+  </header>
+
+  <p class="lead">
+    Il presente Contratto di Licenza con l'Utente Finale (di seguito il
+    &laquo;Contratto&raquo; o &laquo;EULA&raquo;) regola l'uso del software
+    <strong>PREVISIO</strong> (il &laquo;Software&raquo;), prodotto di analisi
+    quantitativa a supporto delle decisioni destinato esclusivamente a utenti
+    professionali e clienti business (a titolo esemplificativo: società di
+    gestione del risparmio, SIM, SGR, family office, consulenti finanziari
+    autonomi e società di consulenza, uffici studi, tesorerie aziendali,
+    intermediari e clienti professionali ai sensi della normativa applicabile).
+    Installando, attivando o utilizzando il Software, l'Utente dichiara di aver
+    letto, compreso e accettato integralmente il presente Contratto. Se non
+    intende accettarlo, non deve installare né utilizzare il Software.
+  </p>
+
+  <div class="toc">
+    <strong>Indice</strong>
+    <ol>
+      <li>Definizioni</li>
+      <li>Oggetto del Software e destinatari</li>
+      <li>Concessione della licenza</li>
+      <li>Restrizioni d'uso</li>
+      <li>Proprietà intellettuale</li>
+      <li>Durata, attivazione, chiavi di licenza e controlli tecnici</li>
+      <li>Aggiornamenti e assistenza</li>
+      <li>Corrispettivi</li>
+      <li>Dati dell'Utente, dati di mercato e servizi di terze parti</li>
+      <li>Assenza di consulenza finanziaria e natura probabilistica degli output</li>
+      <li>Esclusione di garanzie</li>
+      <li>Limitazione di responsabilità</li>
+      <li>Risoluzione</li>
+      <li>Legge applicabile e foro competente</li>
+      <li>Disposizioni finali</li>
+      <li>Approvazione specifica delle clausole onerose</li>
+    </ol>
+  </div>
+
+  <h2>1. Definizioni</h2>
+  <ul>
+    <li><strong>Licenziante</strong>: Fabrizio Midaglia — Titolare, Carnago (VA) (P.IVA in corso di attribuzione), titolare esclusivo di tutti i diritti sul Software.</li>
+    <li><strong>Utente</strong>: la persona giuridica, l'ente o il professionista che ha acquisito una licenza d'uso del Software per finalità esclusivamente professionali e non consumeristiche.</li>
+    <li><strong>Software</strong>: l'applicativo <strong>PREVISIO</strong>, comprensivo di codice eseguibile, modelli quantitativi, configurazioni, interfacce, documentazione, materiali di supporto e successivi aggiornamenti forniti dal Licenziante.</li>
+    <li><strong>Dati dell'Utente</strong>: le serie storiche, i prezzi, i file, i dataset e ogni altro dato forniti, caricati o generati dall'Utente ed elaborati dal Software.</li>
+    <li><strong>Dati di Mercato</strong>: qualunque dato finanziario, di prezzo o di riferimento fornito da terzi (a titolo esemplificativo: fornitori di market data, exchange, index provider, Bloomberg, Refinitiv/LSEG, altri vendor) di cui l'Utente disponga in virtù di licenze o abbonamenti a esso intestati.</li>
+    <li><strong>Output</strong>: previsioni, stime, probabilità, distribuzioni, report e ogni altro risultato prodotto dal Software.</li>
+  </ul>
+
+  <h2>2. Oggetto del Software e destinatari</h2>
+  <p>
+    PREVISIO è un software di <strong>supporto decisionale quantitativo</strong> che
+    elabora Dati dell'Utente e/o Dati di Mercato per produrre stime probabilistiche
+    e analisi statistiche. Il Software <strong>non è un servizio di consulenza in
+    materia di investimenti</strong>, non fornisce raccomandazioni personalizzate,
+    non gestisce ordini né esegue operazioni sui mercati. Il Software è destinato
+    esclusivamente a utenti professionali e non è indirizzato a consumatori né a
+    clienti al dettaglio.
+  </p>
+
+  <h2>3. Concessione della licenza</h2>
+  <p>
+    Subordinatamente al pagamento dei corrispettivi e al pieno rispetto del
+    presente Contratto, il Licenziante concede all'Utente una licenza
+    <strong>non esclusiva, non trasferibile, non sublicenziabile, personale e
+    revocabile</strong> a installare ed eseguire il Software su
+    1 (una) postazione/dispositivo per ciascuna licenza acquistata, salvo diverso accordo scritto, all'interno della propria
+    organizzazione, esclusivamente per uso interno e professionale.
+  </p>
+  <p>
+    Il Software è concesso in modalità eseguibile sul dispositivo dell'Utente ed
+    esegue le proprie elaborazioni localmente sulla macchina dell'Utente. La
+    licenza non include alcun diritto di distribuzione, sublicenza, rivendita o
+    messa a disposizione del Software a soggetti terzi.
+  </p>
+
+  <h2>4. Restrizioni d'uso</h2>
+  <p>Salvo quanto espressamente consentito da norme imperative inderogabili, l'Utente non potrà:</p>
+  <ul>
+    <li>copiare, riprodurre, distribuire, rivendere, noleggiare, prestare, cedere in leasing, pubblicare o comunque rendere disponibile il Software a terzi;</li>
+    <li>concedere in sublicenza il Software o offrirlo a terzi in modalità <strong>SaaS, ASP, hosting, time-sharing, service bureau, managed service, outsourcing</strong> o modalità analoghe, sia a titolo oneroso sia a titolo gratuito;</li>
+    <li>utilizzare il Software per erogare a terzi servizi di analisi, reportistica o segnalazione basati in tutto o in parte sugli Output;</li>
+    <li>decompilare, disassemblare, decrittare o effettuare reverse engineering del Software, dei modelli o dei relativi artefatti, salvo nei limiti inderogabili di legge;</li>
+    <li>estrarre, isolare o replicare gli algoritmi, le architetture di modello o le logiche interne del Software, anche mediante interrogazioni automatizzate, scraping degli Output o tecniche di model extraction;</li>
+    <li>rimuovere, alterare od occultare avvisi di copyright, marchi, filigrane, identificatori di versione o note di proprietà;</li>
+    <li>utilizzare il Software, i suoi Output o la documentazione per progettare, sviluppare, addestrare, migliorare o commercializzare un prodotto o servizio <strong>concorrente</strong> con PREVISIO;</li>
+    <li>eludere, disattivare, manomettere o aggirare i meccanismi di attivazione, licenza, controllo del numero di postazioni, protezione tecnica, telemetria di licenza, periodo di prova (<em>trial</em>) o versioni dimostrative;</li>
+    <li>utilizzare chiavi di licenza non assegnate dal Licenziante, condividere le proprie chiavi o consentirne l'uso a soggetti esterni all'organizzazione dell'Utente.</li>
+  </ul>
+
+  <h2>5. Proprietà intellettuale</h2>
+  <p>
+    Il Software è <strong>concesso in licenza, non venduto</strong>. Tutti i diritti
+    di proprietà intellettuale e industriale sul Software, sui modelli quantitativi,
+    sugli algoritmi, sui pesi, sulle configurazioni, sull'interfaccia, sulla
+    documentazione, sui marchi e sui segni distintivi restano di titolarità
+    esclusiva del Licenziante o dei suoi danti causa. L'Utente non acquisisce
+    alcun diritto sul Software diverso dalla licenza d'uso qui espressamente
+    concessa. I Dati dell'Utente restano di proprietà dell'Utente; l'Utente
+    concede al Licenziante esclusivamente i diritti tecnici strettamente necessari
+    all'esecuzione locale del Software.
+  </p>
+
+  <h2>6. Durata, attivazione, chiavi di licenza e controlli tecnici</h2>
+  <p>
+    La licenza ha durata perpetua a
+    decorrere dall'attivazione, salvo diversa durata espressamente concordata nell'ordine
+    di acquisto o nell'offerta commerciale accettata dall'Utente. Il
+    Software può richiedere una <strong>chiave di licenza</strong>, un'attivazione
+    online o offline e verifiche periodiche di validità. L'Utente si impegna a
+    non condividere la chiave, a non replicarla su postazioni ulteriori rispetto
+    a quelle licenziate e a non aggirare i controlli tecnici. Il Licenziante può
+    sospendere o revocare l'attivazione in caso di uso non conforme. Alla
+    scadenza o alla risoluzione, il diritto d'uso cessa e l'Utente deve
+    disinstallare il Software.
+  </p>
+
+  <h2>7. Aggiornamenti e assistenza</h2>
+  <p>
+    Il Licenziante può, a propria discrezione, rilasciare aggiornamenti correttivi,
+    di sicurezza o evolutivi. Salvo diverso accordo scritto, gli aggiornamenti
+    sono regolati dal presente Contratto. Le condizioni di assistenza (canali,
+    tempi di risposta, perimetro, livelli di servizio) sono quelle indicate nell'eventuale
+    contratto di assistenza o offerta commerciale accettata dall'Utente. Nessuna
+    obbligazione di manutenzione o assistenza è dovuta in assenza di uno specifico
+    accordo scritto o del pagamento del relativo corrispettivo.
+  </p>
+
+  <h2>8. Corrispettivi</h2>
+  <p>
+    I corrispettivi di licenza e degli eventuali servizi accessori sono quelli
+    indicati nell'ordine di acquisto o nell'offerta commerciale accettata dall'Utente.
+    Salvo diverso accordo scritto, gli importi pagati non sono rimborsabili. In
+    caso di mancato pagamento, il Licenziante può sospendere l'esecuzione del
+    Software e/o risolvere il Contratto ai sensi della clausola 13.
+  </p>
+
+  <h2>9. Dati dell'Utente, dati di mercato e servizi di terze parti</h2>
+  <p>
+    Il Software elabora i Dati dell'Utente localmente sulla macchina dell'Utente.
+    L'Utente è <strong>unico ed esclusivo responsabile</strong> di:
+  </p>
+  <ul>
+    <li>la legittimità, la titolarità, la qualità, l'accuratezza, la completezza e l'aggiornamento dei Dati dell'Utente e dei Dati di Mercato caricati o utilizzati nel Software;</li>
+    <li>l'esistenza e la validità delle licenze, degli abbonamenti e dei diritti d'uso sui Dati di Mercato, incluse — a titolo esemplificativo — le condizioni contrattuali dei fornitori (<em>e.g.</em> Bloomberg, Refinitiv/LSEG, exchange, index provider) in materia di uso interno, redistribuzione, derivazione di dati, uso per finalità commerciali e numero di utenti autorizzati;</li>
+    <li>il rispetto di eventuali divieti di redistribuzione, di uso in prodotti derivati o di comunicazione a terzi imposti dai fornitori dei Dati di Mercato;</li>
+    <li>il rispetto della normativa applicabile in materia di protezione dei dati personali, riservatezza, informazioni privilegiate, market abuse e ogni altra normativa di settore.</li>
+  </ul>
+  <p>
+    Il Licenziante non è parte dei rapporti tra l'Utente e i fornitori di Dati di
+    Mercato e non assume alcuna responsabilità per l'uso che l'Utente faccia di
+    tali dati all'interno del Software. Alcune funzionalità opzionali possono
+    integrarsi con servizi di terze parti (ad esempio un modello linguistico
+    locale o, se configurato dall'Utente, un servizio cloud): in tal caso valgono
+    i termini del relativo fornitore, che l'Utente si impegna a rispettare. Il
+    trattamento dei dati personali è descritto nell'Informativa Privacy.
+  </p>
+
+  <h2>10. Assenza di consulenza finanziaria e natura probabilistica degli output</h2>
+  <p>
+    Il Software è uno strumento di analisi quantitativa che produce
+    <strong>stime probabilistiche</strong>. Gli Output possono essere errati,
+    imprecisi, non rappresentativi delle condizioni di mercato future o incoerenti
+    con la realtà. Il Licenziante non garantisce l'accuratezza, la significatività
+    statistica o l'utilità pratica degli Output.
+  </p>
+  <p>
+    Gli Output <strong>non costituiscono</strong>, in nessun caso e a nessun titolo:
+    consulenza finanziaria, consulenza in materia di investimenti, raccomandazione
+    personalizzata, raccomandazione generica di investimento, ricerca in materia
+    di investimenti, sollecitazione al pubblico risparmio, offerta al pubblico,
+    indicazione di acquistare, vendere o mantenere strumenti finanziari
+    (<em>buy/sell/hold</em>), giudizio di rating o di sovrappeso/sottopeso,
+    consulenza fiscale o legale. L'Utente riconosce e accetta che ogni decisione
+    di investimento è assunta in piena autonomia, sotto la propria esclusiva
+    responsabilità e sulla base delle proprie valutazioni professionali e dei
+    propri obblighi regolamentari.
+  </p>
+
+  <h2>11. Esclusione di garanzie</h2>
+  <p>
+    Nei limiti massimi consentiti dalla legge, il Software è fornito
+    <strong>&laquo;COSÌ COM'È&raquo; e &laquo;COME DISPONIBILE&raquo;</strong>,
+    senza garanzie di alcun tipo, espresse o implicite, incluse — a titolo
+    esemplificativo — le garanzie di commerciabilità, idoneità a uno scopo
+    specifico, accuratezza, affidabilità, continuità, non violazione di diritti
+    di terzi o assenza di errori. Il Licenziante non garantisce che le previsioni
+    siano corrette, che i risultati siano conseguibili, che l'esecuzione del
+    Software sia priva di interruzioni o che il Software sia esente da vizi.
+  </p>
+
+  <h2>12. Limitazione di responsabilità</h2>
+  <p>
+    Nei limiti massimi consentiti dalla legge, il Licenziante non risponde di
+    danni indiretti, consequenziali, incidentali, punitivi, di perdite di
+    profitto, di ricavi, di clientela, di dati, di opportunità, di reputazione
+    né di <strong>perdite di investimento</strong> o mancati guadagni derivanti
+    dall'uso, dal mancato uso o dall'affidamento sugli Output del Software. La
+    responsabilità complessiva del Licenziante, per qualsiasi titolo — contrattuale,
+    extracontrattuale, precontrattuale o altro — è in ogni caso limitata
+    all'importo dei corrispettivi di licenza effettivamente pagati dall'Utente al
+    Licenziante nei 12 mesi precedenti l'evento che ha
+    causato il danno. Nulla nel presente Contratto esclude o limita le
+    responsabilità che non possano essere escluse o limitate per legge (a titolo
+    esemplificativo: dolo o colpa grave).
+  </p>
+
+  <h2>13. Risoluzione</h2>
+  <p>
+    Il Licenziante può risolvere il Contratto ai sensi dell'art. 1456 c.c. in
+    caso di violazione delle clausole 3 (Concessione della licenza), 4
+    (Restrizioni d'uso), 5 (Proprietà intellettuale), 6 (Durata, attivazione e
+    controlli), 8 (Corrispettivi) o 9 (Dati e servizi di terze parti) non sanata
+    entro 15 giorni dalla diffida ad adempiere. Alla
+    risoluzione, l'Utente deve cessare immediatamente ogni uso del Software,
+    disinstallarlo da tutte le postazioni e distruggere le copie eventualmente
+    in suo possesso. Le clausole 5, 9, 10, 11, 12, 14, 15 e 16 restano in vigore
+    anche dopo la cessazione, per la loro natura o per espressa previsione.
+  </p>
+
+  <h2>14. Legge applicabile e foro competente</h2>
+  <p>
+    Il presente Contratto è regolato dalla <strong>legge italiana</strong>. Per
+    ogni controversia relativa alla validità, interpretazione, esecuzione o
+    risoluzione del Contratto si applicano le regole generali di competenza
+    territoriale previste dal codice di procedura civile, non essendo individuato
+    un foro esclusivo. Trattandosi di rapporto B2B tra
+    professionisti, non trovano applicazione le norme a tutela del consumatore.
+  </p>
+
+  <h2>15. Disposizioni finali</h2>
+  <ul>
+    <li>Il presente Contratto, insieme ai Termini d'uso e all'Informativa Privacy e agli eventuali ordini/offerte accettati, costituisce l'intero accordo tra le parti in relazione all'oggetto e sostituisce ogni precedente accordo o intesa.</li>
+    <li>L'eventuale invalidità, illegittimità o inefficacia di una clausola non pregiudica la validità delle restanti; le parti si impegnano a sostituirla con una clausola valida di analogo contenuto economico e giuridico.</li>
+    <li>L'Utente non può cedere, in tutto o in parte, il Contratto né i diritti da esso derivanti senza il preventivo consenso scritto del Licenziante.</li>
+    <li>La tolleranza di un inadempimento o il mancato esercizio di un diritto non costituisce rinuncia allo stesso.</li>
+    <li>Ogni modifica del presente Contratto deve essere concordata per iscritto tra le parti.</li>
+  </ul>
+
+  <p>Contatti del Licenziante: previsio.quant@gmail.com</p>
+
+  <h2>16. Approvazione specifica delle clausole onerose</h2>
+  <p>
+    Ai sensi e per gli effetti degli articoli 1341 e 1342 c.c., l'Utente dichiara
+    di aver letto, compreso e specificamente approvato le seguenti clausole:
+    3 (Concessione della licenza — natura non esclusiva, non trasferibile,
+    revocabile), 4 (Restrizioni d'uso — divieti di reverse engineering, SaaS,
+    prodotti concorrenti, elusione dei controlli), 5 (Proprietà intellettuale),
+    6 (Durata, attivazione, chiavi di licenza e controlli tecnici), 8
+    (Corrispettivi non rimborsabili), 9 (Dati dell'Utente, dati di mercato e
+    servizi di terze parti), 10 (Assenza di consulenza finanziaria e natura
+    probabilistica degli output), 11 (Esclusione di garanzie), 12 (Limitazione
+    di responsabilità), 13 (Risoluzione), 14 (Legge applicabile e foro competente
+    esclusivo) e 15 (Disposizioni finali, incluso il divieto di cessione).
+  </p>
+
+  <footer>
+    PREVISIO — Contratto di Licenza con l'Utente Finale, v1.0.
+    <br />
+    <strong>Stato: in attesa di attribuzione della P.IVA.</strong> Tutti i campi
+    sono stati compilati ad eccezione della Partita IVA, in corso di richiesta:
+    il presente documento dovrà essere aggiornato con il numero di P.IVA non
+    appena attribuito, e sottoposto a revisione da parte di un avvocato
+    qualificato prima dell'uso commerciale.
+  </footer>
+</article></div>
+
+<script>
+(function(){
+  var lang = localStorage.getItem('previsio_lang') || localStorage.getItem('previsioLang') || 'en';
+  // FR/DE fallback to EN
+  if (lang !== 'it') lang = 'en';
+  
+  var select = document.getElementById('langSelect');
+  select.value = lang;
+  
+  function setLang(l) {
+    document.getElementById('content-en').style.display = l === 'en' ? '' : 'none';
+    document.getElementById('content-it').style.display = l === 'it' ? '' : 'none';
+    document.getElementById('backLink').textContent = l === 'it' ? '← Torna al sito' : '← Back to site';
+    document.getElementById('subtitle').textContent = "EULA" + (l === 'it' ? ' · Documento legale' : ' · Legal Document');
+    document.documentElement.lang = l;
+  }
+  
+  setLang(lang);
+  select.addEventListener('change', function(){ setLang(this.value); });
+})();
+</script>
+</body>
+</html>

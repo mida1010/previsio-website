@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>FAQ — Previsio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #050505;
+      --bg-panel: rgba(20, 20, 23, 0.70);
+      --bg-card: rgba(28, 28, 32, 0.55);
+      --gold-primary: #D4AF37;
+      --gold-light: #F3E5AB;
+      --gold-dim: #8a7024;
+      --gold-glow: rgba(212, 175, 55, 0.3);
+      --text-main: #EAEAEA;
+      --text-muted: #888888;
+      --text-soft: #B0B0B0;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(212, 175, 55, 0.25);
+      --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 8px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin:0; padding:0; background:var(--bg-deep); color:var(--text-main); font-family:var(--font-ui); font-weight:300; min-height:100vh; line-height:1.6; -webkit-font-smoothing:antialiased; }
+
+    .ambient-bg { position:fixed; top:0; left:0; width:100vw; height:100vh; background: radial-gradient(circle at 15% 15%, rgba(212,175,55,0.04), transparent 40%), radial-gradient(circle at 85% 85%, rgba(50,60,90,0.08), transparent 40%); z-index:-1; pointer-events:none; }
+
+    /* TOPBAR */
+    .topbar { display:flex; justify-content:space-between; align-items:center; padding:18px 36px; background:rgba(5,5,5,0.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--border-subtle); position:sticky; top:0; z-index:100; }
+    .brand-title { font-size:18px; font-weight:700; letter-spacing:0.08em; color:var(--text-main); }
+    .brand-subtitle { font-size:10px; color:var(--gold-primary); text-transform:uppercase; letter-spacing:0.22em; margin-top:4px; opacity:0.85; }
+    .topbar-right { display:flex; align-items:center; gap:14px; }
+    .back-link { font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-primary); text-decoration:none; border:1px solid var(--gold-dim); padding:8px 16px; border-radius:var(--radius-sm); transition:all .2s ease; }
+    .back-link:hover { background:rgba(212,175,55,0.08); border-color:var(--gold-primary); box-shadow:0 0 16px rgba(212,175,55,0.2); }
+
+    .lang-select { background:rgba(0,0,0,0.4); border:1px solid var(--border-gold); border-radius:6px; color:var(--gold-primary); font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:0.08em; padding:7px 28px 7px 12px; cursor:pointer; -webkit-appearance:none; appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23D4AF37' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; background-size:10px 6px; }
+    .lang-select option { background:#141417; color:#eaeaea; }
+
+    /* HERO */
+    .faq-hero { text-align:center; padding:56px 28px 36px; max-width:720px; margin:0 auto; }
+    .faq-hero .eyebrow { font-family:var(--font-mono); font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold-primary); margin-bottom:12px; }
+    .faq-hero h1 { font-size:36px; font-weight:600; margin:0 0 14px; background:linear-gradient(135deg, var(--gold-light), var(--gold-primary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .faq-hero p { font-size:15px; color:var(--text-soft); line-height:1.75; max-width:580px; margin:0 auto 28px; }
+    .faq-search { max-width:480px; margin:0 auto; position:relative; }
+    .faq-search input { width:100%; padding:14px 18px 14px 44px; background:var(--bg-panel); border:1px solid var(--border-gold); border-radius:var(--radius-md); color:var(--text-main); font-size:14px; font-family:var(--font-ui); transition:all .3s ease; outline:none; }
+    .faq-search input:focus { border-color:var(--gold-primary); box-shadow:0 0 20px rgba(212,175,55,0.15); }
+    .faq-search input::placeholder { color:var(--text-muted); }
+    .faq-search::before { content:''; position:absolute; left:16px; top:50%; transform:translateY(-50%); width:18px; height:18px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E"); background-size:contain; background-repeat:no-repeat; pointer-events:none; z-index:1; }
+
+    /* LAYOUT */
+    .faq-layout { display:grid; grid-template-columns:220px 1fr; gap:40px; max-width:1080px; margin:0 auto; padding:0 28px 48px; }
+
+    /* SIDEBAR */
+    .faq-nav { position:sticky; top:90px; align-self:start; max-height:calc(100vh - 110px); overflow-y:auto; padding-right:8px; }
+    .faq-nav h3 { font-family:var(--font-mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-primary); margin:0 0 12px; }
+    .faq-nav ul { list-style:none; padding:0; margin:0; }
+    .faq-nav li { margin-bottom:2px; }
+    .faq-nav a { display:block; padding:8px 12px; font-size:13px; color:var(--text-muted); text-decoration:none; border-radius:6px; border-left:2px solid transparent; transition:all .2s ease; }
+    .faq-nav a:hover { color:var(--text-main); background:rgba(255,255,255,0.03); }
+    .faq-nav a.active { color:var(--gold-primary); background:rgba(212,175,55,0.06); border-left-color:var(--gold-primary); font-weight:500; }
+
+    /* CATEGORIES & ITEMS */
+    .faq-category { margin-bottom:40px; scroll-margin-top:90px; }
+    .faq-category-header { margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--border-subtle); }
+    .cat-num { font-family:var(--font-mono); font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-primary); display:block; margin-bottom:4px; }
+    .faq-category-header h2 { font-size:26px; font-weight:600; margin:0 0 4px; }
+    .cat-desc { font-size:14px; color:var(--text-muted); margin:0; }
+
+    .faq-item { background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); margin-bottom:8px; overflow:hidden; transition:border-color .3s ease; }
+    .faq-item:hover { border-color:var(--border-gold); }
+    .faq-item[open] { border-color:rgba(212,175,55,0.35); background:rgba(28,28,32,0.75); }
+    .faq-item summary { padding:18px 22px; font-size:15px; font-weight:500; cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:12px; transition:color .2s ease; }
+    .faq-item summary::-webkit-details-marker { display:none; }
+    .faq-item summary::after { content:''; flex-shrink:0; width:18px; height:18px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-size:contain; background-repeat:no-repeat; transition:transform .3s ease; }
+    .faq-item[open] summary::after { transform:rotate(180deg); }
+    .faq-item[open] summary { color:var(--gold-light); }
+    .faq-answer { padding:0 22px 22px; font-size:14.5px; line-height:1.75; color:var(--text-soft); animation:fadeIn .3s ease; }
+    .faq-answer p { margin:0 0 12px; }
+    .faq-answer ul,.faq-answer ol { padding-left:20px; margin:8px 0 12px; }
+    .faq-answer li { margin:6px 0; }
+    .faq-answer strong { color:var(--text-main); font-weight:600; }
+    .faq-answer em { color:var(--gold-light); font-style:italic; }
+    .faq-answer code { font-family:var(--font-mono); font-size:12.5px; background:rgba(212,175,55,0.08); padding:2px 6px; border-radius:4px; color:var(--gold-light); }
+    .faq-answer a { color:var(--gold-primary); text-decoration:none; border-bottom:1px solid rgba(212,175,55,0.3); transition:border-color .2s; }
+    .faq-answer a:hover { border-bottom-color:var(--gold-primary); }
+
+    @keyframes fadeIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
+
+    .faq-no-results { display:none; text-align:center; padding:48px 24px; font-size:15px; color:var(--text-muted); }
+    .faq-no-results.visible { display:block; }
+
+    /* FOOTER */
+    .faq-footer { max-width:640px; margin:0 auto; padding:24px 28px 56px; text-align:center; }
+    .contact-card { background:var(--bg-card); border:1px solid var(--border-gold); border-radius:var(--radius-lg); padding:36px 28px; margin-bottom:28px; }
+    .contact-card h3 { font-size:20px; font-weight:600; margin:0 0 8px; }
+    .contact-card p { font-size:14px; color:var(--text-muted); margin:0 0 20px; }
+    .contact-card a { display:inline-block; padding:12px 28px; background:linear-gradient(135deg, var(--gold-primary), #b8941f); color:var(--bg-deep); font-weight:600; font-size:13px; border-radius:var(--radius-sm); text-decoration:none; letter-spacing:0.05em; transition:all .3s ease; }
+    .contact-card a:hover { box-shadow:0 8px 30px rgba(212,175,55,0.4); transform:translateY(-1px); }
+    .legal-note { font-size:12px; color:var(--text-muted); line-height:1.6; max-width:540px; margin:0 auto; }
+
+    @media (max-width: 820px) {
+      .faq-layout { grid-template-columns:1fr; gap:0; }
+      .faq-nav { display:none; }
+      .topbar { padding:14px 18px; }
+      .faq-hero,.faq-layout,.faq-footer { padding-left:18px; padding-right:18px; }
+      .faq-category-header h2 { font-size:22px; }
+      .faq-item summary { padding:16px 18px; font-size:14px; }
+      .faq-answer { padding:0 18px 18px; font-size:14px; }
+      .contact-card { padding:28px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-bg"></div>
+
+  <header class="topbar">
+    <div>
+      <div class="brand-title">PREVISIO</div>
+      <div class="brand-subtitle" id="brandSubtitle"></div>
+    </div>
+    <div class="topbar-right">
+      <select class="lang-select" id="langSelect">
+        <option value="en">EN — English</option>
+        <option value="it">IT — Italiano</option>
+        <option value="fr">FR — Français</option>
+        <option value="de">DE — Deutsch</option>
+      </select>
+      <a href="index.html" class="back-link" id="backLink"></a>
+    </div>
+  </header>
+
+  <section class="faq-hero">
+    <div class="eyebrow">Knowledge Base</div>
+    <h1 id="heroTitle"></h1>
+    <p id="heroDesc"></p>
+    <div class="faq-search">
+      <input type="search" id="faqSearch" autocomplete="off" spellcheck="false" />
+    </div>
+  </section>
+
+  <main class="faq-layout">
+    <aside class="faq-nav" aria-label="Categories">
+      <h3 id="navTitle"></h3>
+      <ul id="navList"></ul>
+    </aside>
+    <div class="faq-content" id="faqContent"></div>
+  </main>
+
+  <footer class="faq-footer">
+    <div class="contact-card">
+      <h3 id="contactTitle"></h3>
+      <p id="contactDesc"></p>
+      <a href="mailto:previsio.quant@gmail.com" id="contactBtn"></a>
+    </div>
+    <p class="legal-note" id="legalNote"></p>
+  </footer>
+
+  <script src="faq-data.js"></script>
+  <script>
+  (function(){
+    var lang = localStorage.getItem('previsio_lang') || localStorage.getItem('previsioLang') || 'en';
+    if (!['en','it','fr','de'].includes(lang)) lang = 'en';
+    var select = document.getElementById('langSelect');
+    select.value = lang;
+
+    var catIds = ['generale','funzionamento','modelli','backtest','intervalli','time-travel','ai-sentiment','report','portfolio','dati','account','licenze','limitazioni','supporto'];
+
+    function render(l) {
+      var D = window.FAQ_DATA;
+      var ui = D.ui[l] || D.ui.en;
+
+      document.documentElement.lang = l;
+      document.title = 'FAQ — Previsio | ' + ui.title;
+      document.getElementById('brandSubtitle').textContent = ui.subtitle;
+      document.getElementById('backLink').textContent = ui.backLink;
+      document.getElementById('heroTitle').textContent = ui.title;
+      document.getElementById('heroDesc').textContent = ui.desc;
+      document.getElementById('faqSearch').placeholder = ui.search;
+      document.getElementById('navTitle').textContent = ui.sidebarTitle;
+      document.getElementById('contactTitle').textContent = ui.contactTitle;
+      document.getElementById('contactDesc').textContent = ui.contactDesc;
+      document.getElementById('contactBtn').textContent = ui.contactBtn;
+      document.getElementById('legalNote').textContent = ui.legalNote;
+
+      // Nav
+      var navHtml = '';
+      D.categories.forEach(function(cat, i){
+        var label = (cat.navLabel && cat.navLabel[l]) || cat.navLabel.en;
+        navHtml += '<li><a href="#' + catIds[i] + '"' + (i===0?' class="active"':'') + '>' + label + '</a></li>';
+      });
+      document.getElementById('navList').innerHTML = navHtml;
+
+      // Content
+      var html = '';
+      D.categories.forEach(function(cat, ci){
+        var tag = (cat.tag && cat.tag[l]) || cat.tag.en;
+        var title = (cat.title && cat.title[l]) || cat.title.en;
+        var desc = (cat.desc && cat.desc[l]) || cat.desc.en;
+        html += '<section class="faq-category" id="' + catIds[ci] + '">';
+        html += '<div class="faq-category-header"><span class="cat-num">' + tag + '</span><h2>' + title + '</h2><p class="cat-desc">' + desc + '</p></div>';
+        cat.questions.forEach(function(q){
+          var question = (q.q && q.q[l]) || q.q.en;
+          var answer = (q.a && q.a[l]) || q.a.en;
+          html += '<details class="faq-item"><summary>' + question + '</summary><div class="faq-answer">' + answer + '</div></details>';
+        });
+        html += '</section>';
+      });
+      html += '<div class="faq-no-results" id="faqNoResults">' + ui.noResults + '</div>';
+      document.getElementById('faqContent').innerHTML = html;
+
+      // Re-bind search + scroll
+      bindSearch();
+      bindScroll();
+    }
+
+    function bindSearch(){
+      var input = document.getElementById('faqSearch');
+      var handler = function(){
+        var q = (input.value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+        var cats = document.querySelectorAll('.faq-category');
+        var total = 0;
+        cats.forEach(function(cat){
+          var vis = 0;
+          cat.querySelectorAll('.faq-item').forEach(function(item){
+            var txt = (item.textContent||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+            var match = !q || txt.indexOf(q) !== -1;
+            item.style.display = match ? '' : 'none';
+            if(match) vis++;
+            if(q && match) item.setAttribute('open','');
+            else if(!q) item.removeAttribute('open');
+          });
+          cat.style.display = vis > 0 ? '' : 'none';
+          total += vis;
+        });
+        var nr = document.getElementById('faqNoResults');
+        if(nr) nr.classList.toggle('visible', q && total === 0);
+      };
+      input.removeEventListener('input', input._h);
+      input._h = handler;
+      input.addEventListener('input', handler);
+      input.addEventListener('search', handler);
+    }
+
+    function bindScroll(){
+      var links = document.querySelectorAll('.faq-nav a');
+      var sections = [];
+      links.forEach(function(a){ var id=a.getAttribute('href').slice(1); var s=document.getElementById(id); if(s) sections.push({link:a,section:s}); });
+      window._faqScroll && window.removeEventListener('scroll', window._faqScroll);
+      window._faqScroll = function(){
+        var scrollY = window.scrollY + 130;
+        var cur = sections[0];
+        sections.forEach(function(s){ if(s.section.offsetTop <= scrollY) cur = s; });
+        links.forEach(function(a){ a.classList.remove('active'); });
+        if(cur) cur.link.classList.add('active');
+      };
+      window.addEventListener('scroll', window._faqScroll, {passive:true});
+
+      links.forEach(function(a){
+        a.onclick = function(e){
+          var href = this.getAttribute('href');
+          if(href && href.charAt(0)==='#'){
+            var tgt = document.querySelector(href);
+            if(tgt){ e.preventDefault(); tgt.scrollIntoView({behavior:'smooth',block:'start'}); history.replaceState(null,'',href); }
+          }
+        };
+      });
+    }
+
+    select.addEventListener('change', function(){
+      lang = this.value;
+      localStorage.setItem('previsio_lang', lang); localStorage.setItem('previsioLang', lang);
+      render(lang);
+    });
+
+    render(lang);
+  })();
+  </script>
+</body>
+</html>

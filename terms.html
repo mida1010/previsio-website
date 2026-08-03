@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Terms of Use — PREVISIO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #050505;
+  --gold-primary: #D4AF37;
+  --gold-light: #F3E5AB;
+  --gold-dim: #8a6d2f;
+  --text-main: #EAEAEA;
+  --text-muted: #888;
+  --text-soft: #B0B0B0;
+  --border-subtle: rgba(255,255,255,0.08);
+  --border-gold: rgba(212,175,55,0.25);
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius-sm: 8px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg-deep);color:var(--text-main);font-family:var(--font-ui);font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:18px 36px;background:rgba(5,5,5,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-subtle);position:sticky;top:0;z-index:100;}
+.brand-title{font-size:18px;font-weight:700;letter-spacing:0.08em;color:var(--text-main);}
+.brand-subtitle{font-size:10px;color:var(--gold-primary);text-transform:uppercase;letter-spacing:0.22em;margin-top:4px;opacity:0.85;}
+.topbar-right{display:flex;align-items:center;gap:14px;}
+.back-link{font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-primary);text-decoration:none;border:1px solid var(--gold-dim);padding:8px 16px;border-radius:var(--radius-sm);transition:all .2s ease;}
+.back-link:hover{background:rgba(212,175,55,0.08);border-color:var(--gold-primary);box-shadow:0 0 16px rgba(212,175,55,0.2);}
+
+.lang-select{background:rgba(0,0,0,0.4);border:1px solid var(--border-gold);border-radius:6px;color:var(--gold-primary);font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:0.08em;padding:7px 28px 7px 12px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23D4AF37' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:10px 6px;}
+.lang-select option{background:#141417;color:#eaeaea;}
+
+.legal-doc{max-width:820px;margin:0 auto;padding:56px 28px 96px;}
+.legal-doc header{border-bottom:2px solid var(--gold-primary);padding-bottom:18px;margin-bottom:28px;}
+.legal-doc .brand-doc{font-family:var(--font-mono);letter-spacing:0.18em;text-transform:uppercase;font-size:12px;color:var(--gold-primary);font-weight:700;}
+.legal-doc h1{font-size:26px;margin:10px 0 4px;line-height:1.25;font-weight:600;}
+.legal-doc .meta{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);}
+.legal-doc h2{font-size:18px;margin:34px 0 10px;padding-top:6px;font-weight:600;color:var(--gold-light);}
+.legal-doc h3{font-size:15px;margin:22px 0 6px;font-weight:500;}
+.legal-doc p,.legal-doc li{font-size:15px;color:var(--text-soft);}
+.legal-doc ul,.legal-doc ol{padding-left:22px;}
+.legal-doc li{margin:6px 0;}
+.legal-doc .lead{font-size:15.5px;color:var(--text-soft);background:rgba(212,175,55,0.04);border-left:3px solid var(--gold-primary);padding:14px 18px;margin:22px 0;border-radius:0 6px 6px 0;}
+.legal-doc .ph{background:rgba(255,193,7,0.12);border-bottom:1px dashed rgba(212,175,55,0.5);padding:0 2px;font-family:var(--font-mono);font-size:13px;color:var(--gold-light);}
+.legal-doc .toc{font-family:var(--font-ui);font-size:13.5px;background:rgba(0,0,0,0.3);border:1px solid var(--border-subtle);border-radius:6px;padding:16px 22px;margin:24px 0;}
+.legal-doc .toc strong{color:var(--gold-primary);}
+.legal-doc .toc ol{padding-left:20px;margin:6px 0 0;}
+.legal-doc .toc li{color:var(--text-soft);}
+.legal-doc footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--border-subtle);font-family:var(--font-mono);font-size:12px;color:var(--text-muted);}
+.legal-doc strong{font-weight:600;color:var(--text-main);}
+
+.ambient-bg{position:fixed;top:0;left:0;width:100vw;height:100vh;background:radial-gradient(circle at 15% 15%,rgba(212,175,55,0.04),transparent 40%),radial-gradient(circle at 85% 85%,rgba(50,60,90,0.08),transparent 40%);z-index:-1;pointer-events:none;}
+
+@media(max-width:600px){.topbar{padding:14px 18px;}.legal-doc{padding:32px 18px 60px;}.legal-doc h1{font-size:22px;}}
+</style>
+</head>
+<body>
+<div class="ambient-bg"></div>
+<header class="topbar">
+  <div>
+    <div class="brand-title">PREVISIO</div>
+    <div class="brand-subtitle" id="subtitle"></div>
+  </div>
+  <div class="topbar-right">
+    <select class="lang-select" id="langSelect">
+      <option value="en">EN — English</option>
+      <option value="it">IT — Italiano</option>
+    </select>
+    <a href="index.html" class="back-link" id="backLink">← Back to site</a>
+  </div>
+</header>
+
+<div id="content-en" style="display:none;"><article class="legal-doc">
+  
+  <header>
+    <div class="brand">PREVISIO</div>
+    <h1>Terms of Use &amp; Risk Disclaimer</h1>
+    <div class="meta">Version 1.0 &middot; Last updated: July 7, 2026 &middot; Software owner: Fabrizio Midaglia — Sole Proprietor, Carnago (VA), Italy (VAT number pending registration)</div>
+  </header>
+
+  <p class="lead">
+    <strong>Key warning.</strong> PREVISIO is a <strong>quantitative
+    decision-support software</strong> intended for professional users. Its
+    outputs are <strong>probabilistic, model-based estimates</strong>,
+    inherently uncertain and subject to error, and do not constitute
+    investment advice, personalized financial advice, investment research,
+    solicitation, an offer, or an inducement to transact in any financial
+    instrument. Every investment, allocation, trading, hedging, portfolio or
+    risk-management decision remains the sole and independent responsibility
+    of the professional User. Invested capital is at risk; past and
+    simulated performance does not guarantee future results.
+  </p>
+
+  <div class="toc">
+    <strong>Contents</strong>
+    <ol>
+      <li>Nature of the service</li>
+      <li>Intended users (professional use)</li>
+      <li>No investment advice or recommendations</li>
+      <li>Probabilistic nature and model limitations</li>
+      <li>Risk warnings</li>
+      <li>User responsibility for input data</li>
+      <li>Market-data licenses and third-party data</li>
+      <li>AI-generated or AI-assisted commentary</li>
+      <li>No warranties</li>
+      <li>Limitation of liability</li>
+      <li>Acceptable use</li>
+      <li>Document updates</li>
+      <li>Governing law and venue</li>
+      <li>Relationship with the EULA and Privacy Notice</li>
+      <li>Contact</li>
+    </ol>
+  </div>
+
+  <h2>1. Nature of the service</h2>
+  <p>
+    PREVISIO combines multiple statistical and machine-learning models (an
+    ensemble approach) to produce numerical estimates, prediction intervals,
+    diagnostic indicators and descriptive materials from historical data
+    supplied by the User. The Software is a
+    <strong>quantitative decision-support tool</strong>: it provides a
+    probabilistic representation of possible scenarios, not a certain
+    prediction of the future and not a judgment on the merits of any
+    financial instrument.
+  </p>
+  <p>
+    PREVISIO <strong>does not perform</strong> investment advisory services,
+    investment research, portfolio management, trading, order execution,
+    order reception and transmission, placement, suitability or
+    appropriateness assessment, or any other activity reserved to entities
+    authorized under applicable law.
+  </p>
+
+  <h2>2. Intended users (professional use)</h2>
+  <p>
+    The Software is intended exclusively for <strong>professional, qualified
+    and institutional users</strong>: including, without limitation, asset
+    management companies, investment firms, portfolio managers, independent
+    financial advisers and advisory firms, family offices, corporate
+    treasuries, quantitative research firms, academic researchers, and
+    professional clients or eligible counterparties under applicable law.
+  </p>
+  <p>
+    The User represents and warrants that it possesses the technical,
+    quantitative, financial and regulatory competence necessary to
+    independently and critically evaluate the Software's outputs, and that
+    it uses the tool in the course of its professional activity and under
+    its own exclusive responsibility.
+  </p>
+
+  <h2>3. No investment advice or recommendations</h2>
+  <p>
+    No content produced or conveyed by the Software — including figures,
+    charts, intervals, probabilities, indicators, scores, narrative comments
+    and reports — constitutes or may be construed as:
+  </p>
+  <ul>
+    <li>investment advice or financial advice;</li>
+    <li>personalized financial advice tailored to the User's or any third party's situation, objectives or risk profile;</li>
+    <li>a recommendation to buy, sell, hold, subscribe or redeem any financial instrument;</li>
+    <li>overweight, underweight, neutral or any other allocation guidance;</li>
+    <li>investment research or financial analysis under applicable law;</li>
+    <li>a solicitation to invest, a public offer, an off-premises offer, or commercial promotion of financial products;</li>
+    <li>an invitation, incentive or inducement to transact in financial instruments or any other asset.</li>
+  </ul>
+  <p>
+    Every investment, divestment, allocation, rebalancing, trading, hedging,
+    risk exposure, position-sizing, stop-loss, take-profit and operational
+    decision remains the <strong>sole, independent and informed
+    responsibility of the professional User</strong>, who bears all related
+    economic, operational, tax, regulatory and reputational risk.
+  </p>
+
+  <h2>4. Probabilistic nature and model limitations</h2>
+  <ul>
+    <li>Outputs are <strong>probabilistic estimates</strong>: they represent possible scenarios with statistical uncertainty, not certainties.</li>
+    <li>Prediction intervals express estimated statistical uncertainty under model assumptions: <strong>the actual outcome may fall outside the interval</strong>, potentially by a wide margin.</li>
+    <li>Directional probabilities are model- and data-conditioned estimates; they are not "true" or guaranteed probabilities. When not sufficiently reliable they may be suppressed or flagged as non-validated: the absence of a probability is itself information.</li>
+    <li>Past performance, whether actual or simulated (including backtesting), <strong>does not guarantee</strong> future results.</li>
+    <li>Models rely on simplifying assumptions that may not hold under real market conditions, in particular during abnormal regimes, extraordinary events, liquidity crises, structural discontinuities or regime changes.</li>
+    <li>Outputs may be <strong>wrong, biased or unstable</strong> and must not be used as the sole basis for any investment decision.</li>
+  </ul>
+
+  <h2>5. Risk warnings</h2>
+  <p>
+    Use of quantitative estimates involves significant risks that the
+    professional User acknowledges and accepts, including:
+  </p>
+  <ul>
+    <li><strong>Market risk:</strong> prices of financial instruments may move significantly and suddenly, resulting in losses up to the total loss of invested capital.</li>
+    <li><strong>Model risk:</strong> quantitative models may be misspecified, fail to capture relevant phenomena, or produce systematically biased results.</li>
+    <li><strong>Data-quality risk:</strong> incorrect, incomplete, misaligned data, survivorship bias, look-ahead bias or adjustment errors produce unreliable outputs.</li>
+    <li><strong>Historical-data limitations:</strong> the availability and depth of historical series is limited and may not be representative of future regimes.</li>
+    <li><strong>Overfitting risk:</strong> models calibrated on historical data may fit noise and show in-sample performance that does not replicate out-of-sample.</li>
+    <li><strong>Regime-change risk:</strong> structural shifts in markets, monetary policy, regulation, microstructure or correlations may invalidate outputs.</li>
+    <li><strong>Liquidity and extraordinary-event risk:</strong> under stress conditions, gaps, trading halts, geopolitical events or "black swan" events, outputs may be highly unreliable.</li>
+    <li><strong>Forecast-interval uncertainty:</strong> intervals are dispersion estimates, not guaranteed bounds.</li>
+    <li><strong>Probability-estimation limitations:</strong> reported probabilities are not calibrated in an absolute frequentist sense and may diverge from observed frequencies.</li>
+    <li><strong>AI-generated text limitations:</strong> narrative commentary may contain inaccuracies, oversimplifications or misleading formulations and must not be used as a basis for decisions.</li>
+  </ul>
+
+  <h2>6. User responsibility for input data</h2>
+  <p>
+    The Software processes data uploaded or made available by the User. The
+    User is solely and exclusively responsible for:
+  </p>
+  <ul>
+    <li><strong>quality, accuracy, completeness, timeliness and integrity</strong> of the data;</li>
+    <li>ownership of the data and the lawfulness of its use, including its transmission to the Software;</li>
+    <li>compliance with <strong>market-data usage licenses</strong> held with third parties and their contractual terms;</li>
+    <li>compliance with <strong>redistribution, reuse, storage, display and derived-output restrictions</strong> imposed by market-data providers (including, without limitation, Bloomberg, Refinitiv/LSEG, ICE, S&amp;P, MSCI, exchanges and other data providers);</li>
+    <li>compliance with applicable law regarding personal data, professional secrecy and confidential information.</li>
+  </ul>
+  <p>
+    PREVISIO <strong>does not verify</strong> the ownership or scope of the
+    User's market-data licenses and <strong>does not warrant</strong> that
+    the data provided is accurate, complete, up to date, lawful or fit for
+    any particular purpose. Incorrect, incomplete or stale data produces
+    unreliable results ("garbage in, garbage out").
+  </p>
+
+  <h2>7. Market-data licenses and third-party data</h2>
+  <p>
+    The User acknowledges that use of the Software with third-party data is
+    subject to compliance with such providers' contractual terms. The User
+    shall indemnify PREVISIO against any third-party claim arising from a use
+    of data that does not comply with the applicable licenses, including any
+    redistribution restrictions on derived outputs.
+  </p>
+
+  <h2>8. AI-generated or AI-assisted commentary</h2>
+  <p>
+    The Software may include descriptive sections, summaries, report
+    comments and qualitative materials generated or assisted by artificial
+    intelligence models. The following rules apply to such content:
+  </p>
+  <ul>
+    <li>AI-generated text is <strong>explanatory only</strong> and narrative in nature;</li>
+    <li>AI-generated text <strong>does not prevail</strong> over the Software's numeric outputs and deterministic calculations: in the event of any discrepancy, <strong>the figures prevail</strong>;</li>
+    <li>the AI must <strong>not invent</strong> numbers, metrics, formulas, performance figures, probabilities or calculation results: any figures mentioned in commentary must match the Software's numeric outputs;</li>
+    <li>qualitative comments, including any sentiment or scenario observations, are <strong>non-quantitative</strong> and do not constitute operational guidance or investment guidance;</li>
+    <li>AI-generated text may contain inaccuracies, omissions or misleading formulations and must always be verified by the professional User before any use.</li>
+  </ul>
+
+  <h2>9. No warranties</h2>
+  <p>
+    To the maximum extent permitted by applicable law, the Software and its
+    outputs are provided "as is" and "as available", without warranty —
+    express or implied — of accuracy, correctness, completeness,
+    timeliness, continuous operation, error-free performance,
+    interoperability, security or fitness for a particular purpose,
+    including any use for investment or risk-management purposes.
+  </p>
+
+  <h2>10. Limitation of liability</h2>
+  <p>
+    To the maximum extent permitted by applicable law, the Licensor is not
+    liable for any loss or damage — including, without limitation,
+    <strong>investment losses, capital losses, lost profits, loss of
+    opportunity, and indirect, incidental, consequential, reputational or
+    punitive damages</strong> — arising directly or indirectly from reliance
+    on, or use of, the Software's outputs. Liability caps and further
+    exclusions are governed by the License Agreement (EULA).
+  </p>
+
+  <h2>11. Acceptable use</h2>
+  <p>
+    The User shall use the Software in compliance with applicable law and
+    regulations — including laws on financial markets, market abuse,
+    anti-money laundering, personal data protection and intellectual
+    property rights — and shall not use it for unlawful, manipulative,
+    market-abusive purposes, to circumvent regulatory obligations, or in
+    violation of third-party rights.
+  </p>
+
+  <h2>12. Document updates</h2>
+  <p>
+    The Licensor may update these Terms of Use &amp; Risk Disclaimer with new
+    Software versions or in response to regulatory, organizational or
+    technical changes. The applicable version is the one accepted by the
+    User at first launch or upon update of the Software.
+  </p>
+
+  <h2>13. Governing law and venue</h2>
+  <p>
+    These Terms are governed by the laws of Italy.
+    Any dispute shall be subject to the general rules of territorial
+    jurisdiction under the Italian Code of Civil Procedure, no exclusive
+    venue being designated, subject to any mandatory consumer-
+    protection rules where applicable.
+  </p>
+
+  <h2>14. Relationship with the EULA and Privacy Notice</h2>
+  <p>
+    These Terms are to be read and applied together with PREVISIO's
+    <strong>End User License Agreement (EULA)</strong> and
+    <strong>Privacy Notice</strong>. In the event of a conflict between
+    these Terms and the EULA regarding licensing, warranties and limitation
+    of liability, the EULA shall prevail. In matters of personal data
+    processing, the Privacy Notice shall prevail.
+  </p>
+
+  <h2>15. Contact</h2>
+  <p>
+    Software owner: Fabrizio Midaglia — Sole Proprietor, Carnago (VA), Italy (VAT number pending registration).
+    Contact for communications relating to these Terms:
+    previsio.quant@gmail.com.
+  </p>
+
+  <footer>
+    <strong>Status: pending VAT number registration.</strong> All fields have
+    been completed except the VAT number, which is being applied for; this
+    document must be updated with the VAT number once assigned, and reviewed
+    by qualified legal counsel before any commercial use.
+    PREVISIO — Terms of Use &amp; Risk Disclaimer, v1.0.
+  </footer>
+</article></div>
+<div id="content-it" style="display:none;"><article class="legal-doc">
+  
+  <header>
+    <div class="brand">PREVISIO</div>
+    <h1>Termini d'uso e Avvertenze sui Rischi</h1>
+    <div class="meta">Versione 1.0 &middot; Ultimo aggiornamento: 7 luglio 2026 &middot; Titolare del Software: Fabrizio Midaglia — Titolare, Carnago (VA) (P.IVA in corso di attribuzione)</div>
+  </header>
+
+  <p class="lead">
+    <strong>Avvertenza fondamentale.</strong> PREVISIO è un software di
+    <strong>supporto decisionale quantitativo</strong> destinato a utenti professionali.
+    Gli output del Software sono <strong>stime probabilistiche basate su modelli</strong>,
+    intrinsecamente incerte, soggette a errore e non costituiscono in alcun modo
+    consulenza finanziaria, consulenza in materia di investimenti, raccomandazione
+    personalizzata, ricerca in materia di investimenti, sollecitazione, offerta né
+    invito a operare su strumenti finanziari. Ogni decisione di investimento,
+    allocazione, negoziazione, copertura, gestione di portafoglio o gestione del
+    rischio resta di esclusiva e autonoma responsabilità dell'Utente professionale.
+    Il capitale investito è a rischio; le performance passate e simulate non
+    garantiscono in alcun modo risultati futuri.
+  </p>
+
+  <div class="toc">
+    <strong>Indice</strong>
+    <ol>
+      <li>Natura del servizio</li>
+      <li>Utenti destinatari (uso professionale)</li>
+      <li>Assenza di consulenza finanziaria e di raccomandazioni</li>
+      <li>Natura probabilistica e limiti dei modelli</li>
+      <li>Avvertenze sui rischi</li>
+      <li>Responsabilità dell'Utente sui dati di input</li>
+      <li>Licenze di mercato e dati di terze parti</li>
+      <li>Commenti generati o assistiti da intelligenza artificiale</li>
+      <li>Assenza di garanzie</li>
+      <li>Limitazione di responsabilità</li>
+      <li>Uso conforme</li>
+      <li>Aggiornamenti del documento</li>
+      <li>Legge applicabile e foro</li>
+      <li>Rapporto con EULA e Informativa Privacy</li>
+      <li>Contatti</li>
+    </ol>
+  </div>
+
+  <h2>1. Natura del servizio</h2>
+  <p>
+    PREVISIO è un software di analisi quantitativa che combina più modelli statistici
+    e di machine learning (approccio d'insieme, o &laquo;ensemble&raquo;) per produrre
+    stime numeriche, intervalli di previsione, indicatori diagnostici e materiali
+    descrittivi a partire da serie storiche fornite dall'Utente. Il Software è uno
+    <strong>strumento di supporto decisionale quantitativo</strong>: fornisce una
+    rappresentazione probabilistica di scenari possibili, non una previsione certa
+    del futuro e non un giudizio di merito su alcuno strumento finanziario.
+  </p>
+  <p>
+    PREVISIO <strong>non svolge</strong> attività di consulenza finanziaria,
+    consulenza in materia di investimenti, ricerca in materia di investimenti,
+    gestione di portafogli, negoziazione, esecuzione di ordini, ricezione e
+    trasmissione di ordini, collocamento, valutazione di adeguatezza o
+    appropriatezza, né alcun'altra attività riservata ai soggetti autorizzati
+    dalla normativa applicabile.
+  </p>
+
+  <h2>2. Utenti destinatari (uso professionale)</h2>
+  <p>
+    Il Software è destinato esclusivamente a <strong>utenti professionali,
+    qualificati e istituzionali</strong>: a titolo esemplificativo e non
+    esaustivo, società di gestione del risparmio (SGR), società di intermediazione
+    mobiliare (SIM), gestori di portafogli, consulenti finanziari autonomi e
+    società di consulenza, family office, tesorerie aziendali, società di ricerca
+    quantitativa, ricercatori accademici e clienti professionali o controparti
+    qualificate ai sensi della normativa applicabile.
+  </p>
+  <p>
+    L'Utente dichiara e garantisce di possedere le competenze tecniche,
+    quantitative, finanziarie e regolamentari necessarie per valutare in modo
+    autonomo, critico e informato gli output del Software, nonché di utilizzare
+    lo strumento nell'ambito della propria attività professionale e sotto la
+    propria esclusiva responsabilità.
+  </p>
+
+  <h2>3. Assenza di consulenza finanziaria e di raccomandazioni</h2>
+  <p>
+    Nessun contenuto prodotto o veicolato dal Software — inclusi numeri, grafici,
+    intervalli, probabilità, indicatori, punteggi, commenti testuali e report —
+    costituisce o può essere interpretato come:
+  </p>
+  <ul>
+    <li>consulenza finanziaria o consulenza in materia di investimenti;</li>
+    <li>consulenza personalizzata rispetto alla situazione, agli obiettivi o al profilo di rischio dell'Utente o di terzi;</li>
+    <li>raccomandazione di acquisto, vendita, mantenimento, sottoscrizione o riscatto di strumenti finanziari;</li>
+    <li>indicazione di sovrappeso (&laquo;overweight&raquo;), sottopeso (&laquo;underweight&raquo;), neutralità o altra guida di allocazione;</li>
+    <li>ricerca in materia di investimenti o analisi finanziaria ai sensi della normativa applicabile;</li>
+    <li>sollecitazione all'investimento, offerta al pubblico, offerta fuori sede o promozione commerciale di prodotti finanziari;</li>
+    <li>invito, incentivo o induzione a compiere operazioni su strumenti finanziari o su qualsivoglia altro asset.</li>
+  </ul>
+  <p>
+    Ogni decisione di investimento, disinvestimento, allocazione, ribilanciamento,
+    negoziazione, copertura, esposizione al rischio, dimensionamento di posizione,
+    stop-loss, take-profit e gestione operativa resta di
+    <strong>esclusiva, autonoma e informata responsabilità dell'Utente
+    professionale</strong>, che assume ogni relativo rischio economico, operativo,
+    fiscale, regolamentare e reputazionale.
+  </p>
+
+  <h2>4. Natura probabilistica e limiti dei modelli</h2>
+  <ul>
+    <li>Gli output sono <strong>stime probabilistiche</strong>: rappresentano scenari possibili con incertezza statistica, non certezze.</li>
+    <li>Gli intervalli di previsione esprimono un'incertezza statistica stimata sotto ipotesi di modello: <strong>l'esito reale può cadere al di fuori dell'intervallo</strong>, anche in misura significativa.</li>
+    <li>Le probabilità direzionali sono stime condizionate al modello e ai dati; non sono probabilità &laquo;vere&raquo; né garantite. Quando non sufficientemente affidabili possono essere soppresse o segnalate come non validate: l'assenza di una probabilità è essa stessa un'informazione.</li>
+    <li>Le performance passate, reali o simulate (incluso il backtesting), <strong>non garantiscono</strong> risultati futuri.</li>
+    <li>I modelli si basano su ipotesi semplificative che possono non reggere in condizioni di mercato reali, in particolare in regimi anomali, eventi straordinari, crisi di liquidità, discontinuità strutturali o cambi di regime.</li>
+    <li>Gli output possono essere <strong>errati, distorti o instabili</strong> e non devono essere utilizzati come unico elemento di una decisione di investimento.</li>
+  </ul>
+
+  <h2>5. Avvertenze sui rischi</h2>
+  <p>
+    L'utilizzo di stime quantitative comporta rischi rilevanti che l'Utente
+    professionale dichiara di conoscere e di accettare, tra cui:
+  </p>
+  <ul>
+    <li><strong>Rischio di mercato:</strong> i prezzi degli strumenti finanziari possono variare in modo significativo e improvviso, generando perdite anche totali del capitale investito.</li>
+    <li><strong>Rischio di modello:</strong> i modelli quantitativi possono essere mal specificati, non catturare fenomeni rilevanti o produrre risultati sistematicamente distorti.</li>
+    <li><strong>Rischio sulla qualità dei dati:</strong> dati errati, incompleti, non allineati, con survivorship bias, look-ahead bias o errori di adjustment producono output inaffidabili.</li>
+    <li><strong>Limiti dei dati storici:</strong> la disponibilità e la profondità delle serie storiche è limitata e può non essere rappresentativa di regimi futuri.</li>
+    <li><strong>Rischio di overfitting:</strong> modelli calibrati su dati storici possono adattarsi al rumore e mostrare performance in-sample non replicabili out-of-sample.</li>
+    <li><strong>Rischio di cambio di regime:</strong> variazioni strutturali di mercato, politica monetaria, regolamentazione, microstruttura o correlazioni possono invalidare gli output.</li>
+    <li><strong>Rischio di liquidità ed eventi straordinari:</strong> in condizioni di stress, gap, sospensioni, eventi geopolitici o &laquo;cigni neri&raquo;, gli output possono risultare fortemente inaffidabili.</li>
+    <li><strong>Incertezza degli intervalli di previsione:</strong> gli intervalli sono stime di dispersione, non limiti garantiti.</li>
+    <li><strong>Limiti della stima delle probabilità:</strong> le probabilità restituite non sono calibrate in senso frequentista assoluto e possono divergere dalla frequenza osservata.</li>
+    <li><strong>Limiti dei testi generati dall'IA:</strong> i commenti testuali possono contenere imprecisioni, semplificazioni o formulazioni fuorvianti e non devono essere usati come base di decisioni.</li>
+  </ul>
+
+  <h2>6. Responsabilità dell'Utente sui dati di input</h2>
+  <p>
+    Il Software elabora i dati caricati o resi disponibili dall'Utente. L'Utente
+    è unico ed esclusivo responsabile di:
+  </p>
+  <ul>
+    <li><strong>qualità, accuratezza, completezza, aggiornamento e integrità</strong> dei dati;</li>
+    <li>titolarità dei dati e legittimità dell'utilizzo, inclusa la trasmissione al Software;</li>
+    <li>rispetto delle <strong>licenze d'uso dei dati di mercato</strong> di soggetti terzi e delle relative condizioni contrattuali;</li>
+    <li>rispetto dei <strong>vincoli di ridistribuzione, riutilizzo, storage, visualizzazione e output derivati</strong> imposti da fornitori di dati di mercato (a titolo esemplificativo e non esaustivo: Bloomberg, Refinitiv/LSEG, ICE, S&amp;P, MSCI, borse e altri data provider);</li>
+    <li>conformità con le normative applicabili in materia di dati personali, segreto professionale e informazioni riservate.</li>
+  </ul>
+  <p>
+    PREVISIO <strong>non verifica</strong> la titolarità o l'ambito delle licenze
+    di mercato dell'Utente e <strong>non garantisce</strong> che i dati forniti
+    siano accurati, completi, aggiornati, leciti o idonei a uno specifico scopo.
+    Dati errati, incompleti o non aggiornati producono risultati inaffidabili
+    (&laquo;garbage in, garbage out&raquo;).
+  </p>
+
+  <h2>7. Licenze di mercato e dati di terze parti</h2>
+  <p>
+    L'Utente riconosce che l'utilizzo del Software con dati di soggetti terzi è
+    subordinato al rispetto delle condizioni contrattuali di tali fornitori.
+    L'Utente manleva PREVISIO da ogni pretesa di terzi derivante da un uso dei
+    dati non conforme alle relative licenze, inclusi eventuali vincoli di
+    ridistribuzione degli output derivati.
+  </p>
+
+  <h2>8. Commenti generati o assistiti da intelligenza artificiale</h2>
+  <p>
+    Il Software può includere sezioni descrittive, sintesi, commenti ai report e
+    materiali qualitativi generati o assistiti da modelli di intelligenza
+    artificiale. Rispetto a tali contenuti si applicano le seguenti regole:
+  </p>
+  <ul>
+    <li>i testi generati dall'IA hanno finalità <strong>esclusivamente esplicativa</strong> e discorsiva;</li>
+    <li>i testi generati dall'IA <strong>non prevalgono</strong> sugli output numerici e sui calcoli deterministici del Software: in caso di discrepanza <strong>prevalgono i numeri</strong>;</li>
+    <li>l'IA <strong>non deve inventare</strong> numeri, metriche, formule, performance, probabilità o risultati di calcolo: eventuali cifre menzionate nei commenti devono corrispondere agli output numerici del Software;</li>
+    <li>i commenti qualitativi, incluse eventuali osservazioni di sentiment o di scenario, sono <strong>non quantitativi</strong> e non costituiscono guida operativa né indicazioni di investimento;</li>
+    <li>i testi generati dall'IA possono contenere imprecisioni, omissioni o formulazioni fuorvianti e devono essere sempre verificati dall'Utente professionale prima di qualsiasi utilizzo.</li>
+  </ul>
+
+  <h2>9. Assenza di garanzie</h2>
+  <p>
+    Nei limiti massimi consentiti dalla legge applicabile, il Software e i suoi
+    output sono forniti &laquo;così com'è&raquo; e &laquo;come disponibili&raquo;,
+    senza garanzia — espressa o implicita — di accuratezza, correttezza,
+    completezza, tempestività, continuità di funzionamento, assenza di errori,
+    interoperabilità, sicurezza o idoneità a uno scopo specifico, incluso ogni
+    uso in ambito di investimento o di gestione del rischio.
+  </p>
+
+  <h2>10. Limitazione di responsabilità</h2>
+  <p>
+    Nei limiti massimi consentiti dalla legge applicabile, il Licenziante non
+    risponde di alcuna perdita o danno — inclusi, a titolo esemplificativo,
+    <strong>perdite di investimento, perdite di capitale, mancati guadagni,
+    perdita di opportunità, danni indiretti, incidentali, consequenziali,
+    reputazionali o punitivi</strong> — derivanti direttamente o indirettamente
+    dall'affidamento sugli output del Software o dal suo utilizzo. Massimali e
+    ulteriori esclusioni sono disciplinati dal Contratto di Licenza (EULA).
+  </p>
+
+  <h2>11. Uso conforme</h2>
+  <p>
+    L'Utente si impegna a utilizzare il Software nel rispetto della legge e delle
+    normative applicabili — inclusa la normativa in materia di mercati finanziari,
+    abusi di mercato, antiriciclaggio, protezione dei dati personali e diritti
+    di proprietà intellettuale — e a non impiegarlo per finalità illecite,
+    manipolative, di abuso di mercato, di elusione di obblighi regolamentari o
+    in violazione di diritti di terzi.
+  </p>
+
+  <h2>12. Aggiornamenti del documento</h2>
+  <p>
+    Il Licenziante può aggiornare i presenti Termini d'uso e Avvertenze sui
+    Rischi in occasione di nuove versioni del Software o di variazioni normative,
+    organizzative o tecniche. La versione applicabile è quella accettata
+    dall'Utente al primo avvio o all'aggiornamento del Software.
+  </p>
+
+  <h2>13. Legge applicabile e foro</h2>
+  <p>
+    I presenti Termini sono regolati dalla legge italiana.
+    Per ogni controversia si applicano le regole generali di competenza
+    territoriale previste dal codice di procedura civile, non essendo
+    individuato un foro esclusivo, salve le norme inderogabili a tutela del
+    consumatore ove applicabili.
+  </p>
+
+  <h2>14. Rapporto con EULA e Informativa Privacy</h2>
+  <p>
+    I presenti Termini si interpretano e si applicano congiuntamente al
+    <strong>Contratto di Licenza d'uso (EULA)</strong> e all'<strong>Informativa
+    Privacy</strong> di PREVISIO. In caso di conflitto tra i presenti Termini e
+    l'EULA in merito a licenza, garanzie e limitazione di responsabilità,
+    prevalgono le disposizioni dell'EULA. In materia di trattamento dei dati
+    personali prevale l'Informativa Privacy.
+  </p>
+
+  <h2>15. Contatti</h2>
+  <p>
+    Titolare del Software: Fabrizio Midaglia — Titolare, Carnago (VA) (P.IVA in corso di attribuzione).
+    Contatti per comunicazioni relative ai presenti Termini:
+    previsio.quant@gmail.com.
+  </p>
+
+  <footer>
+    <strong>Stato: in attesa di attribuzione della P.IVA.</strong> Tutti i campi
+    sono stati compilati ad eccezione della Partita IVA, in corso di richiesta:
+    il presente documento dovrà essere aggiornato con il numero di P.IVA non
+    appena attribuito, e sottoposto a revisione legale qualificata prima di
+    qualsiasi uso commerciale.
+    PREVISIO — Termini d'uso e Avvertenze sui Rischi, v1.0.
+  </footer>
+</article></div>
+
+<script>
+(function(){
+  var lang = localStorage.getItem('previsio_lang') || localStorage.getItem('previsioLang') || 'en';
+  // FR/DE fallback to EN
+  if (lang !== 'it') lang = 'en';
+  
+  var select = document.getElementById('langSelect');
+  select.value = lang;
+  
+  function setLang(l) {
+    document.getElementById('content-en').style.display = l === 'en' ? '' : 'none';
+    document.getElementById('content-it').style.display = l === 'it' ? '' : 'none';
+    document.getElementById('backLink').textContent = l === 'it' ? '← Torna al sito' : '← Back to site';
+    document.getElementById('subtitle').textContent = "Terms of Use" + (l === 'it' ? ' · Documento legale' : ' · Legal Document');
+    document.documentElement.lang = l;
+  }
+  
+  setLang(lang);
+  select.addEventListener('change', function(){ setLang(this.value); });
+})();
+</script>
+</body>
+</html>
