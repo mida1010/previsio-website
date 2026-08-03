@@ -1,0 +1,59 @@
+name: Apply founder AI positioning
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-p2-founder-positioning.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace AI brand parade
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('landing-v11.jsx')
+          s = p.read_text(encoding='utf-8')
+          start = '                    <div className="about-ai-header" style={{ flexWrap: \'wrap\', gap: \'6px 16px\' }}>'
+          end = '                    <div className="about-ai-role"'
+          if start not in s or end not in s:
+              raise SystemExit('Founder AI brand block not found')
+          i = s.index(start)
+          j = s.index(end, i)
+          header = """                    <div className="about-ai-header" style={{ display: 'block' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <span className="about-ai-dot" style={{ background: '#D4AF37', boxShadow: '0 0 8px rgba(212,175,55,0.55)' }}></span>
+                        <span className="about-ai-name">
+                          {{ en: 'AI-assisted engineering under human control', it: 'Ingegneria assistita da AI sotto controllo umano', fr: 'Ingénierie assistée par IA sous contrôle humain', de: 'KI-gestütztes Engineering unter menschlicher Kontrolle' }[lang]}
+                        </span>
+                      </span>
+                    </div>
+"""
+          s = s[:i] + header + s[j:]
+          old = "                      {'AI-ASSISTED ENGINEERING · HUMAN VALIDATION · NO AI-GENERATED NUMBERS'}"
+          new = "                      {{ en: 'QUANTITATIVE ENGINE · HUMAN VALIDATION · NO AI-GENERATED NUMBERS', it: 'MOTORE QUANTITATIVO · VALIDAZIONE UMANA · NESSUN NUMERO GENERATO DALL’AI', fr: 'MOTEUR QUANTITATIF · VALIDATION HUMAINE · AUCUN CHIFFRE GÉNÉRÉ PAR L’IA', de: 'QUANTITATIVE ENGINE · MENSCHLICHE VALIDIERUNG · KEINE KI-GENERIERTEN ZAHLEN' }[lang]}"
+          if old not in s:
+              raise SystemExit('Founder governance label not found')
+          s = s.replace(old, new, 1)
+          for name in ("{ name: 'Claude'", "{ name: 'ChatGPT'", "{ name: 'Grok'", "{ name: 'Gemini'"):
+              if name in s:
+                  raise SystemExit(f'AI brand remains: {name}')
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/apply-p2-founder-positioning.yml
+          git add landing-v11.jsx
+          git diff --cached --check
+          git commit -m "Replace AI brand parade with governance statement"
+          git push origin main
