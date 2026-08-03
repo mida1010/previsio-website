@@ -3,8 +3,8 @@
  *
  * The current website is intentionally delivered as JSX and compiled in the
  * browser by Babel Standalone. Load the responsive layer and application
- * source, apply the verified navbar scroll-spy correction, then compile and
- * execute the application.
+ * source, align navigation with the rendered section order, apply the verified
+ * navbar scroll-spy correction, then compile and execute the application.
  *
  * This compatibility layer can be removed when the site moves to the planned
  * production build pipeline.
@@ -28,6 +28,42 @@
   }
 
   const source = await response.text();
+
+  const legacyNavigationOrder = `  const links = [
+  { href: '#engine', label: nl[0] },
+  { href: '#features', label: nl[1] },
+  { href: '#analytics', label: nl[2] },
+  { href: '#validation', label: nl[3] },
+  { href: '#use-cases', label: nl[4] },
+  { href: '#dashboard', label: nl[5] },
+  { href: '#pricing', label: nl[6] },
+  { href: '#about', label: nl[7] }];`;
+
+  const renderedNavigationOrder = `  const links = [
+  { href: '#dashboard', label: nl[5] },
+  { href: '#engine', label: nl[0] },
+  { href: '#features', label: nl[1] },
+  { href: '#analytics', label: nl[2] },
+  { href: '#validation', label: nl[3] },
+  { href: '#use-cases', label: nl[4] },
+  { href: '#pricing', label: nl[6] },
+  { href: '#about', label: nl[7] }];`;
+
+  const legacySectionOrder = `    const sectionIds = ['engine', 'features', 'analytics', 'validation', 'use-cases', 'dashboard', 'pricing', 'about'];`;
+  const renderedSectionOrder = `    const sectionIds = ['dashboard', 'engine', 'features', 'analytics', 'validation', 'use-cases', 'pricing', 'about'];`;
+
+  const navigationOccurrences = source.split(legacyNavigationOrder).length - 1;
+  const sectionOrderOccurrences = source.split(legacySectionOrder).length - 1;
+
+  if (navigationOccurrences !== 1 || sectionOrderOccurrences !== 1) {
+    throw new Error(
+      `Navbar order compatibility check failed: links=${navigationOccurrences}, sections=${sectionOrderOccurrences}.`
+    );
+  }
+
+  let correctedSource = source
+    .replace(legacyNavigationOrder, renderedNavigationOrder)
+    .replace(legacySectionOrder, renderedSectionOrder);
 
   const legacyScrollSpy = `    const handleScroll = () => {
       const navH = 72;
@@ -61,14 +97,14 @@
       setActiveId(current);
     };`;
 
-  const occurrences = source.split(legacyScrollSpy).length - 1;
-  if (occurrences !== 1) {
+  const scrollSpyOccurrences = correctedSource.split(legacyScrollSpy).length - 1;
+  if (scrollSpyOccurrences !== 1) {
     throw new Error(
-      `Navbar scroll-spy compatibility check failed: expected 1 legacy block, found ${occurrences}.`
+      `Navbar scroll-spy compatibility check failed: expected 1 legacy block, found ${scrollSpyOccurrences}.`
     );
   }
 
-  const correctedSource = source.replace(legacyScrollSpy, correctedScrollSpy);
+  correctedSource = correctedSource.replace(legacyScrollSpy, correctedScrollSpy);
   const compiledSource = Babel.transform(correctedSource, {
     presets: ['react'],
     sourceType: 'script',
