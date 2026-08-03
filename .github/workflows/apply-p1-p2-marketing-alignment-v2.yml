@@ -1,0 +1,260 @@
+name: Retry P1 and P2 website alignment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/apply-p1-p2-marketing-alignment-v2.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply-alignment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply resilient website alignment
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          landing_path = Path('landing-v11.jsx')
+          privacy_path = Path('privacy.html')
+          eula_path = Path('eula.html')
+
+          landing = landing_path.read_text(encoding='utf-8')
+          privacy = privacy_path.read_text(encoding='utf-8')
+          eula = eula_path.read_text(encoding='utf-8')
+
+          validation_start = 'function PerformanceSnapshot() {'
+          validation_end = 'const PX_DOCS_URL ='
+          if validation_start not in landing or validation_end not in landing:
+              raise SystemExit('Validation section boundaries not found')
+          validation_before = landing.split(validation_start, 1)[1].split(validation_end, 1)[0]
+
+          def exact_once(text, old, new, label):
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected one match, found {count}')
+              return text.replace(old, new, 1)
+
+          def regex_once(text, pattern, replacement, label):
+              updated, count = re.subn(pattern, replacement, text, count=1, flags=re.S)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected one regex match, found {count}')
+              return updated
+
+          # P1.2 — Store product: local Ollama only, no marketed cloud-AI option.
+          landing = regex_once(
+              landing,
+              r"""              en: 'Local configuration via Ollama is the standard mode\..*?\n              it: 'La configurazione locale tramite Ollama è la modalità standard\..*?\n              fr: 'La configuration locale via Ollama est le mode standard\..*?\n              de: 'Die lokale Konfiguration über Ollama ist der Standardmodus\..*?'""",
+              """              en: 'The Microsoft Store desktop version uses only Ollama running locally on the client device. External cloud AI providers, remote LLM endpoints and dedicated cloud infrastructure are not part of the standard product or licence. Any future enterprise deployment would require a separate, explicitly documented technical and contractual project.',
+              it: 'La versione desktop distribuita tramite Microsoft Store utilizza esclusivamente Ollama in esecuzione locale sul dispositivo del cliente. Provider AI cloud esterni, endpoint LLM remoti e infrastrutture cloud dedicate non fanno parte del prodotto o della licenza standard. Qualsiasi futuro deployment enterprise richiederebbe un progetto tecnico e contrattuale separato ed esplicitamente documentato.',
+              fr: 'La version desktop distribuée via Microsoft Store utilise exclusivement Ollama exécuté localement sur l’appareil du client. Les fournisseurs d’IA cloud externes, les endpoints LLM distants et les infrastructures cloud dédiées ne font pas partie du produit ni de la licence standard. Tout futur déploiement enterprise nécessiterait un projet technique et contractuel séparé et explicitement documenté.',
+              de: 'Die über den Microsoft Store vertriebene Desktopversion verwendet ausschließlich Ollama lokal auf dem Gerät des Kunden. Externe Cloud-KI-Anbieter, entfernte LLM-Endpunkte und dedizierte Cloud-Infrastruktur sind nicht Bestandteil des Standardprodukts oder der Standardlizenz. Jede künftige Enterprise-Bereitstellung würde ein separates, ausdrücklich dokumentiertes technisches und vertragliches Projekt erfordern.'""",
+              'pricing local-only statement',
+          )
+
+          landing = regex_once(
+              landing,
+              r"""    d: \{ en: 'Encrypted authentication with credentials kept out of every log\..*?optional cloud services.*?de: '.*?optionale Cloud-Dienste.*?' \}""",
+              """    d: { en: 'Encrypted authentication with credentials kept out of every log. In the Microsoft Store desktop version, datasets, quantitative results, reports and narrative commentary remain within the client’s local environment. Only the minimum technical data required for licence activation may leave the calculation perimeter.', it: 'Autenticazione cifrata con credenziali escluse da ogni log. Nella versione desktop distribuita tramite Microsoft Store, dataset, risultati quantitativi, report e commento narrativo rimangono nell’ambiente locale del cliente. Solo i dati tecnici minimi necessari all’attivazione della licenza possono uscire dal perimetro di calcolo.', fr: 'Authentification chiffrée avec identifiants exclus de tous les journaux. Dans la version desktop distribuée via Microsoft Store, les jeux de données, résultats quantitatifs, rapports et commentaires narratifs restent dans l’environnement local du client. Seules les données techniques minimales nécessaires à l’activation de la licence peuvent quitter le périmètre de calcul.', de: 'Verschlüsselte Authentifizierung, wobei Anmeldedaten aus allen Protokollen ausgeschlossen bleiben. In der über den Microsoft Store vertriebenen Desktopversion verbleiben Datensätze, quantitative Ergebnisse, Berichte und narrative Kommentare in der lokalen Umgebung des Kunden. Nur die für die Lizenzaktivierung erforderlichen minimalen technischen Daten dürfen den Berechnungsperimeter verlassen.' }""",
+              'trust local perimeter statement',
+          )
+
+          # P1.3 — Import formats must match the real parser contract.
+          pairs = [
+              ("    data_card3_title: 'Compatible with any provider',\n    data_card3_body: 'Bloomberg Excel, Refinitiv CSV, FactSet exports, internal databases: if it has a date column and a price column, Previsio reads it. Change provider at any time without modifying the system.',",
+               "    data_card3_title: 'Documented CSV and XLSX imports',\n    data_card3_body: 'Previsio imports CSV and XLSX files exported from Bloomberg, Refinitiv, FactSet and internal databases when they match one of the documented layouts: Bloomberg wide, simple long (Date, Ticker, Close), simple wide, or Bloomberg paired blocks. Unsupported layouts are rejected rather than interpreted as valid data.',"),
+              ("    data_card3_title: 'Compatibile con qualsiasi provider',\n    data_card3_body: 'Excel Bloomberg, CSV Refinitiv, export FactSet, database interni: se ha una colonna data e una colonna prezzo, Previsio lo legge. Cambiate provider in qualsiasi momento senza modificare il sistema.',",
+               "    data_card3_title: 'Import CSV e XLSX documentati',\n    data_card3_body: 'Previsio importa file CSV e XLSX esportati da Bloomberg, Refinitiv, FactSet e database interni quando rispettano uno dei layout documentati: Bloomberg wide, simple long (Date, Ticker, Close), simple wide o Bloomberg paired blocks. I layout non supportati vengono rifiutati anziché interpretati come dati validi.',"),
+              ("    data_card3_title: 'Compatible avec tout fournisseur',\n    data_card3_body: 'Excel Bloomberg, CSV Refinitiv, exports FactSet, bases de données internes: s\\'il y a une colonne date et une colonne prix, Previsio le lit. Changez de fournisseur à tout moment sans modifier le système.',",
+               "    data_card3_title: 'Imports CSV et XLSX documentés',\n    data_card3_body: 'Previsio importe les fichiers CSV et XLSX exportés depuis Bloomberg, Refinitiv, FactSet et des bases de données internes lorsqu’ils respectent l’un des formats documentés : Bloomberg wide, simple long (Date, Ticker, Close), simple wide ou Bloomberg paired blocks. Les formats non pris en charge sont rejetés plutôt qu’interprétés comme des données valides.',"),
+              ("    data_card3_title: 'Kompatibel mit jedem Anbieter',\n    data_card3_body: 'Bloomberg Excel, Refinitiv CSV, FactSet-Exporte, interne Datenbanken: wenn es eine Datumsspalte und eine Preisspalte hat, liest Previsio es. Wechseln Sie den Anbieter jederzeit, ohne das System anzupassen.',",
+               "    data_card3_title: 'Dokumentierte CSV- und XLSX-Importe',\n    data_card3_body: 'Previsio importiert CSV- und XLSX-Dateien aus Bloomberg, Refinitiv, FactSet und internen Datenbanken, wenn sie einem der dokumentierten Layouts entsprechen: Bloomberg wide, simple long (Date, Ticker, Close), simple wide oder Bloomberg paired blocks. Nicht unterstützte Layouts werden abgelehnt, statt als gültige Daten interpretiert zu werden.',"),
+          ]
+          for idx, (old, new) in enumerate(pairs, 1):
+              landing = exact_once(landing, old, new, f'import format translation {idx}')
+
+          # P2.5 — Replace named third-party AI brands with a governance statement.
+          landing = regex_once(
+              landing,
+              r"""                      \{\[\n                      \{ name: 'Claude'.*?\n                      \)\}""",
+              """                      <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <span className="about-ai-dot" style={{ background: '#D4AF37', boxShadow: '0 0 8px rgba(212,175,55,0.55)' }}></span>
+                        <span className="about-ai-name">
+                          {{
+                            en: 'AI-assisted engineering under human control',
+                            it: 'Ingegneria assistita da AI sotto controllo umano',
+                            fr: 'Ingénierie assistée par IA sous contrôle humain',
+                            de: 'KI-gestütztes Engineering unter menschlicher Kontrolle'
+                          }[lang]}
+                        </span>
+                      </span>""",
+              'founder AI brands',
+          )
+          landing = exact_once(
+              landing,
+              "                      {'AI-ASSISTED ENGINEERING · HUMAN VALIDATION · NO AI-GENERATED NUMBERS'}",
+              "                      {{ en: 'QUANTITATIVE ENGINE · HUMAN VALIDATION · NO AI-GENERATED NUMBERS', it: 'MOTORE QUANTITATIVO · VALIDAZIONE UMANA · NESSUN NUMERO GENERATO DALL’AI', fr: 'MOTEUR QUANTITATIF · VALIDATION HUMAINE · AUCUN CHIFFRE GÉNÉRÉ PAR L’IA', de: 'QUANTITATIVE ENGINE · MENSCHLICHE VALIDIERUNG · KEINE KI-GENERIERTEN ZAHLEN' }[lang]}",
+              'founder governance label',
+          )
+
+          # P2.8 — Show the actual interface and report immediately after the hero.
+          landing = exact_once(
+              landing,
+              """      <Hero />
+
+      <ModelsPipeline />
+      <Features />
+      <AnalyticsSection />
+      <Methodology />
+      <AdvancedCapabilities />
+      <PerformanceSnapshot />
+      <UseCases />
+      <DashboardPreview />
+      <ReportDownload />
+      <DataPrivacy />""",
+              """      <Hero />
+      <DashboardPreview />
+      <ReportDownload />
+
+      <ModelsPipeline />
+      <Features />
+      <AnalyticsSection />
+      <Methodology />
+      <AdvancedCapabilities />
+      <PerformanceSnapshot />
+      <UseCases />
+      <DataPrivacy />""",
+              'homepage product-proof order',
+          )
+
+          # Privacy notice: local Ollama only, both languages.
+          privacy = privacy.replace('API keys for optional LLM/cloud services. These credentials are stored', 'credentials required by supported optional features. These credentials are stored')
+          privacy = privacy.replace('chiavi API per servizi LLM/cloud opzionali. Tali credenziali sono conservate', 'credenziali richieste dalle funzionalità opzionali supportate. Tali credenziali sono conservate')
+          privacy = privacy.replace('diagnostic bundles or support materials, or configures external services described in the\n    following sections.', 'diagnostic bundles or support materials, or configures the optional Telegram delivery\n    described below.')
+          privacy = privacy.replace('volontariamente di inviare pacchetti diagnostici o materiali di supporto, ovvero configuri\n    servizi esterni descritti nelle sezioni successive.', 'volontariamente di inviare pacchetti diagnostici o materiali di supporto, oppure configuri\n    la consegna opzionale tramite Telegram descritta nelle sezioni successive.')
+
+          privacy = regex_once(
+              privacy,
+              r"""  <h2>9\. Optional AI/LLM services</h2>.*?  <h2>10\. Optional Telegram delivery</h2>""",
+              """  <h2>9. Local AI commentary</h2>
+  <p>
+    The Microsoft Store desktop version may generate narrative commentary through Ollama running
+    locally on the User's device. Market datasets, quantitative results and report content used by
+    this function are not sent to external AI providers. Remote LLM endpoints and third-party cloud
+    AI providers are not supported by the standard Microsoft Store product.
+  </p>
+  <p>
+    The language model produces qualitative narrative commentary only. Forecasts, probabilities,
+    metrics, formulas and all other numerical results are calculated by the Software's quantitative
+    engine before the commentary stage.
+  </p>
+
+  <h2>10. Optional Telegram delivery</h2>""",
+              'privacy English AI section',
+          )
+          privacy = regex_once(
+              privacy,
+              r"""  <h2>9\. Servizi opzionali di intelligenza artificiale \(AI/LLM\)</h2>.*?  <h2>10\. Consegna opzionale tramite Telegram</h2>""",
+              """  <h2>9. Commento AI locale</h2>
+  <p>
+    La versione desktop distribuita tramite Microsoft Store può generare commenti narrativi tramite
+    Ollama in esecuzione locale sul dispositivo dell'Utente. I dataset di mercato, i risultati
+    quantitativi e i contenuti del report utilizzati da questa funzione non vengono inviati a provider
+    AI esterni. Endpoint LLM remoti e provider AI cloud di terze parti non sono supportati dal prodotto
+    standard distribuito tramite Microsoft Store.
+  </p>
+  <p>
+    Il modello linguistico produce esclusivamente commenti narrativi qualitativi. Forecast,
+    probabilità, metriche, formule e ogni altro risultato numerico sono calcolati dal motore
+    quantitativo del Software prima della fase di commento.
+  </p>
+
+  <h2>10. Consegna opzionale tramite Telegram</h2>""",
+              'privacy Italian AI section',
+          )
+          privacy = privacy.replace('Telegram bot token, API keys of optional services, other credentials', 'Telegram bot token and other credentials required by supported optional features')
+          privacy = privacy.replace('bot token\n    Telegram, chiavi API di servizi opzionali, altre credenziali', 'bot token\n    Telegram e altre credenziali richieste dalle funzionalità opzionali supportate')
+          privacy = privacy.replace('cloud LLMs,\n    Telegram, etc.', 'Telegram and other supported third-party delivery services')
+          privacy = privacy.replace('LLM cloud,\n    Telegram, ecc.', 'Telegram e altri servizi di consegna di terze parti supportati')
+          privacy = privacy.replace('cloud LLMs, Telegram, etc.', 'Telegram and other supported third-party delivery services')
+          privacy = privacy.replace('LLM cloud, Telegram, ecc.', 'Telegram e altri servizi di consegna di terze parti supportati')
+
+          # EULA: remove the cloud-LLM configuration right from the standard licence.
+          eula = regex_once(
+              eula,
+              r"""Certain optional features may integrate\n    with third-party services \(for example a local language model or, if\n    configured by the User, a cloud service\); in such cases the relevant\n    provider's terms apply, and the User undertakes to comply with them\.""",
+              """Certain optional features may integrate with supported third-party delivery
+    services. Narrative AI commentary in the Microsoft Store desktop version uses a local
+    Ollama model only; remote LLM endpoints and cloud AI providers are not supported by the
+    standard product. Where a supported third-party delivery service is configured, the
+    relevant provider's terms apply and the User undertakes to comply with them.""",
+              'EULA English service scope',
+          )
+          eula = eula.replace(
+              "Alcune funzionalità opzionali possono integrarsi con servizi di terze parti (ad esempio un modello linguistico locale o, se configurato dall'Utente, un servizio cloud); in tali casi si applicano le condizioni del relativo fornitore e l'Utente si impegna a rispettarle.",
+              "Alcune funzionalità opzionali possono integrarsi con servizi di consegna di terze parti supportati. Nella versione desktop distribuita tramite Microsoft Store, il commento AI utilizza esclusivamente un modello Ollama locale; endpoint LLM remoti e provider AI cloud non sono supportati dal prodotto standard. Quando viene configurato un servizio di consegna di terze parti supportato, si applicano le condizioni del relativo fornitore e l'Utente si impegna a rispettarle."
+          )
+
+          validation_after = landing.split(validation_start, 1)[1].split(validation_end, 1)[0]
+          if validation_after != validation_before:
+              raise SystemExit('Validation section changed unexpectedly')
+
+          forbidden = [
+              'Compatibile con qualsiasi provider',
+              'Compatible with any provider',
+              'Compatible avec tout fournisseur',
+              'Kompatibel mit jedem Anbieter',
+              'Any integration with cloud AI providers',
+              'Eventuali integrazioni con provider AI cloud',
+              "{ name: 'Claude'",
+              "{ name: 'ChatGPT'",
+              "{ name: 'Grok'",
+              "{ name: 'Gemini'",
+          ]
+          for token in forbidden:
+              if token in landing:
+                  raise SystemExit(f'Legacy landing copy remains: {token}')
+
+          required = [
+              'Documented CSV and XLSX imports',
+              'Import CSV e XLSX documentati',
+              'The Microsoft Store desktop version uses only Ollama',
+              'AI-assisted engineering under human control',
+              '<Hero />\n      <DashboardPreview />\n      <ReportDownload />',
+          ]
+          for token in required:
+              if token not in landing:
+                  raise SystemExit(f'Required landing copy missing: {token}')
+
+          if 'The User may optionally configure third-party endpoints or cloud services' in privacy:
+              raise SystemExit('Legacy privacy cloud LLM statement remains')
+          if 'configured by the User, a cloud service' in eula:
+              raise SystemExit('Legacy EULA cloud service statement remains')
+
+          landing_path.write_text(landing, encoding='utf-8')
+          privacy_path.write_text(privacy, encoding='utf-8')
+          eula_path.write_text(eula, encoding='utf-8')
+          PY
+
+      - name: Commit changes and remove one-time workflows
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/apply-p1-p2-marketing-alignment.yml
+          git rm .github/workflows/apply-p1-p2-marketing-alignment-v2.yml
+          git add landing-v11.jsx privacy.html eula.html
+          git diff --cached --check
+          git commit -m "Align product claims and surface product proof"
+          git push origin main
