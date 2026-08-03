@@ -1,0 +1,54 @@
+name: Apply homepage order by component boundaries
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-homepage-order-indexed.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Rebuild App component order
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('landing-v11.jsx')
+          s = p.read_text(encoding='utf-8')
+          app = s.index('function App() {')
+          start = s.index('      <Hero />', app)
+          end = s.index('      <DataPrivacy />', start)
+          block = """      <Hero />
+      <DashboardPreview />
+      <ReportDownload />
+
+      <ModelsPipeline />
+      <Features />
+      <AnalyticsSection />
+      <Methodology />
+      <AdvancedCapabilities />
+      <PerformanceSnapshot />
+      <UseCases />
+"""
+          out = s[:start] + block + s[end:]
+          if out == s:
+              raise SystemExit('Homepage order already unchanged')
+          p.write_text(out, encoding='utf-8')
+          PY
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add landing-v11.jsx
+          git diff --cached --check
+          git commit -m "Surface product interface and report after hero"
+          git push origin main
