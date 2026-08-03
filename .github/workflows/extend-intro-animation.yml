@@ -1,0 +1,50 @@
+name: Extend intro animation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/extend-intro-animation.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply-change:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extend intro hold by two seconds
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          website = Path("landing-v11.jsx")
+          content = website.read_text(encoding="utf-8")
+          old = "    const HOLD = 2100; // hold before fracture starts"
+          new = "    const HOLD = 4100; // hold before fracture starts"
+
+          occurrences = content.count(old)
+          if occurrences != 1:
+              raise SystemExit(
+                  f"Expected exactly one intro timing definition, found {occurrences}."
+              )
+
+          website.write_text(content.replace(old, new), encoding="utf-8")
+          Path(".github/workflows/extend-intro-animation.yml").unlink()
+          PY
+
+      - name: Commit change to main
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          git commit -m "Extend intro animation by two seconds"
+          git push origin HEAD:main
