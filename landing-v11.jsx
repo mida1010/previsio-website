@@ -2,14 +2,25 @@
  * PREVISIO website bootstrap.
  *
  * The current website is intentionally delivered as JSX and compiled in the
- * browser by Babel Standalone. Load the application source, apply the single
- * verified navbar scroll-spy correction, then compile and execute it.
+ * browser by Babel Standalone. Load the responsive layer and application
+ * source, apply the verified navbar scroll-spy correction, then compile and
+ * execute the application.
  *
  * This compatibility layer can be removed when the site moves to the planned
  * production build pipeline.
  */
 (async function loadPrevisioWebsite() {
+  const responsiveStylesheet = 'mobile-responsive.css';
   const sourceUrl = 'landing-v11.source.jsx';
+
+  if (!document.querySelector(`link[data-previsio-responsive="${responsiveStylesheet}"]`)) {
+    const responsiveLink = document.createElement('link');
+    responsiveLink.rel = 'stylesheet';
+    responsiveLink.href = responsiveStylesheet;
+    responsiveLink.dataset.previsioResponsive = responsiveStylesheet;
+    document.head.appendChild(responsiveLink);
+  }
+
   const response = await fetch(sourceUrl, { cache: 'no-cache' });
 
   if (!response.ok) {
