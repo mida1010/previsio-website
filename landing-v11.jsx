@@ -3042,22 +3042,16 @@ function AboutFounder() {
                 </p>
                 <div className="about-ai-grid" style={{ gridTemplateColumns: '1fr' }}>
                   <div className="about-ai-card" style={{ background: 'rgba(212,175,55,0.06)', borderColor: 'rgba(212,175,55,0.22)' }}>
-                    <div className="about-ai-header" style={{ flexWrap: 'wrap', gap: '6px 16px' }}>
-                      {[
-                      { name: 'Claude', co: 'Anthropic', dot: '#D4AF37' },
-                      { name: 'ChatGPT', co: 'OpenAI', dot: '#6AD28A' },
-                      { name: 'Grok', co: 'xAI', dot: '#7EB8DA' },
-                      { name: 'Gemini', co: 'Google', dot: '#E8A87C' }].
-                      map((ai) =>
-                      <span key={ai.name} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                          <span className="about-ai-dot" style={{ background: ai.dot, boxShadow: `0 0 8px ${ai.dot}88` }}></span>
-                          <span className="about-ai-name">{ai.name}</span>
-                          <span className="about-ai-co">{ai.co}</span>
-                        </span>
-                      )}
-                    </div>
-                    <div className="about-ai-role" style={{ color: 'var(--gold-primary)', marginTop: 10 }}>
-                      {'AI-ASSISTED ENGINEERING · HUMAN VALIDATION · NO AI-GENERATED NUMBERS'}
+                    <div className="about-ai-header" style={{ display: 'block' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="about-ai-dot" style={{ background: '#D4AF37', boxShadow: '0 0 8px rgba(212,175,55,0.55)' }}></span>
+              <span className="about-ai-name">
+                {{ en: 'AI-assisted engineering under human control', it: 'Ingegneria assistita da AI sotto controllo umano', fr: 'Ingénierie assistée par IA sous contrôle humain', de: 'KI-gestütztes Engineering unter menschlicher Kontrolle' }[lang]}
+              </span>
+            </span>
+          </div>
+          <div className="about-ai-role" style={{ color: 'var(--gold-primary)', marginTop: 10 }}>
+                      {{ en: 'QUANTITATIVE ENGINE · HUMAN VALIDATION · NO AI-GENERATED NUMBERS', it: 'MOTORE QUANTITATIVO · VALIDAZIONE UMANA · NESSUN NUMERO GENERATO DALL’AI', fr: 'MOTEUR QUANTITATIF · VALIDATION HUMAINE · AUCUN CHIFFRE GÉNÉRÉ PAR L’IA', de: 'QUANTITATIVE ENGINE · MENSCHLICHE VALIDIERUNG · KEINE KI-GENERIERTEN ZAHLEN' }[lang]}
                     </div>
                   </div>
                 </div>
