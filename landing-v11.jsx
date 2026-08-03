@@ -22,7 +22,7 @@ function IntroSplash() {
       return;
     }
 
-    const HOLD = 4100; // hold before fracture starts
+    const HOLD = 3100; // hold before fracture starts
     const FRACTURE = 1200; // fracture animation duration
     const FADE_OUT = 900; // screen fade out
 
