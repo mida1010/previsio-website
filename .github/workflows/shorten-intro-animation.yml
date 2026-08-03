@@ -1,0 +1,45 @@
+name: Shorten intro animation
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Reduce intro duration by one second
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('landing-v11.jsx')
+          text = path.read_text(encoding='utf-8')
+          old = '    const HOLD = 4100; // hold before fracture starts'
+          new = '    const HOLD = 3100; // hold before fracture starts'
+
+          if text.count(old) != 1:
+              raise SystemExit(f'Expected exactly one intro HOLD value, found {text.count(old)}')
+
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Commit update
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f intro-animation-trigger.txt
+          rm -f .github/workflows/shorten-intro-animation.yml
+          git add -A
+          git diff --cached --check
+          git commit -m "Shorten intro animation by one second"
+          git push origin main
