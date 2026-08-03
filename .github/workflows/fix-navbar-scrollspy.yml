@@ -1,0 +1,87 @@
+name: Fix navbar scroll-spy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - navbar-scrollspy-trigger.txt
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fix active navigation section selection
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('landing-v11.jsx')
+          text = path.read_text(encoding='utf-8')
+
+          old = """    const handleScroll = () => {
+      const navH = 72;
+      let current = '';
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top;
+        if (top <= navH + 60) current = id;
+      }
+      setActiveId(current);
+    };"""
+
+          new = """    const handleScroll = () => {
+      const navH = 72;
+      const activationLine = navH + 60;
+      let current = '';
+      let closestTop = Number.NEGATIVE_INFINITY;
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+
+        const top = el.getBoundingClientRect().top;
+        if (top <= activationLine && top > closestTop) {
+          closestTop = top;
+          current = id;
+        }
+      }
+
+      setActiveId(current);
+    };"""
+
+          count = text.count(old)
+          if count != 1:
+              raise RuntimeError(f'Expected exactly one legacy scroll-spy block, found {count}')
+
+          updated = text.replace(old, new, 1)
+
+          if old in updated:
+              raise RuntimeError('Legacy scroll-spy block still present')
+          if updated.count('let closestTop = Number.NEGATIVE_INFINITY;') != 1:
+              raise RuntimeError('New scroll-spy block was not applied exactly once')
+
+          path.write_text(updated, encoding='utf-8')
+          PY
+
+      - name: Commit fix and remove temporary files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f navbar-scrollspy-trigger.txt
+          rm -f .github/workflows/fix-navbar-scrollspy.yml
+          git add -A
+          git diff --cached --check
+          git commit -m "Fix navbar active section after homepage reorder"
+          git push origin main
