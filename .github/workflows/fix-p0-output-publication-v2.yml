@@ -1,0 +1,225 @@
+name: Complete P0 conditional output corrections
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/fix-p0-output-publication-v2.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply-change:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Align every output claim with publication gates
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          source = Path('landing-v11.jsx')
+          text = source.read_text(encoding='utf-8')
+
+          validation_start = 'function PerformanceSnapshot() {'
+          validation_end = 'const PX_DOCS_URL ='
+          if validation_start not in text or validation_end not in text:
+              raise SystemExit('Validation section boundaries not found')
+          validation_before = text.split(validation_start, 1)[1].split(validation_end, 1)[0]
+
+          replacements = [
+              # Analytics: output availability
+              ("['Two probability outputs', 'The probability that the closing price on the target date meets a threshold you set (≥ or ≤), and the probability that it falls within a price range you define — closing, not touch-anytime, probabilities. Both computed from the asset\\'s own error history — not a generic model assumption.']",
+               "['Probability outputs, when estimable', 'When requested, the engine estimates the probability that the closing price on the target date meets a threshold you set (≥ or ≤), and the probability that it falls within a price range you define — closing, not touch-anytime, probabilities. Each result is published only when its calibration sample passes the required adequacy and validation checks; otherwise it is explicitly reported as not estimable.']"),
+              ("['Due output probabilistici', 'La probabilità che il prezzo di chiusura alla data obiettivo soddisfi una soglia da voi impostata (≥ oppure ≤), e la probabilità che sia compreso nel range di prezzo definito — probabilità di chiusura, non di tocco. Entrambi calcolati dalla storia degli errori dell\\'asset — non un\\'ipotesi generica.']",
+               "['Output probabilistici, quando stimabili', 'Quando richiesto, il motore stima la probabilità che il prezzo di chiusura alla data obiettivo soddisfi una soglia da voi impostata (≥ oppure ≤) e la probabilità che sia compreso nel range di prezzo definito — probabilità di chiusura, non di tocco. Ogni risultato viene pubblicato solo quando il relativo campione di calibrazione supera i controlli di adeguatezza e validazione previsti; in caso contrario è indicato esplicitamente come non stimabile.']"),
+              ("['Deux sorties probabilistes', 'La probabilité que le prix de clôture à la date cible remplisse un seuil que vous fixez (≥ ou ≤), et la probabilité qu\\'il soit compris dans une fourchette de prix que vous définissez — probabilités de clôture, pas de contact à tout moment. Calculées à partir de l\\'historique d\\'erreurs de l\\'actif — pas une hypothèse générique.']",
+               "['Sorties probabilistes, lorsqu’elles sont estimables', 'Lorsqu’elles sont demandées, le moteur estime la probabilité que le prix de clôture à la date cible respecte un seuil défini (≥ ou ≤) et la probabilité qu’il se situe dans une fourchette de prix définie — probabilités de clôture, et non de simple contact. Chaque résultat n’est publié que si son échantillon de calibration satisfait les contrôles d’adéquation et de validation requis ; sinon, il est explicitement indiqué comme non estimable.']"),
+              ("['Zwei Wahrscheinlichkeitsausgaben', 'Die Wahrscheinlichkeit, dass der Schlusskurs am Zieldatum eine von Ihnen gesetzte Schwelle erfüllt (≥ oder ≤), und die Wahrscheinlichkeit, dass er innerhalb einer von Ihnen definierten Preisspanne liegt — Schlusskurs-, keine Berühr-jederzeit-Wahrscheinlichkeiten. Beide aus der Fehlerhistorie des Assets berechnet — keine generische Modellannahme.']",
+               "['Wahrscheinlichkeitsausgaben, sofern schätzbar', 'Auf Anforderung schätzt die Engine die Wahrscheinlichkeit, dass der Schlusskurs am Zieldatum eine festgelegte Schwelle erfüllt (≥ oder ≤), sowie die Wahrscheinlichkeit, dass er innerhalb einer definierten Preisspanne liegt — Schlusskurswahrscheinlichkeiten, keine bloßen Berührungswahrscheinlichkeiten. Jedes Ergebnis wird nur veröffentlicht, wenn die zugehörige Kalibrierungsstichprobe die erforderlichen Eignungs- und Validierungsprüfungen besteht; andernfalls wird es ausdrücklich als nicht schätzbar ausgewiesen.']"),
+
+              # Pipeline: interval and probabilities are conditional
+              ("['Build the range', 'Calculate upper and lower bounds from the asset\\'s own forecast errors.']",
+               "['Assess the prediction interval', 'Construct upper and lower bounds from the asset’s own forecast errors only when the calibration evidence passes the required adequacy checks; otherwise mark the interval as not estimable.']"),
+              ("['Compute probabilities', 'Two probability outputs: the probability that the closing price on the target date meets the selected threshold condition (≥ or ≤), and the probability that it falls within a price range you define — both with a conservative floor.']",
+               "['Assess requested probabilities', 'When requested, estimate threshold and range-closing probabilities from the calibrated forecast-error history. Publish each probability only if its sample and validation gates are sufficient; otherwise report it as not estimable.']"),
+              ("['Bundle the answer', 'All four computed outputs — predicted price, prediction interval, threshold probability, range closing probability — plus diagnostics, compiled into a single results package.']",
+               "['Bundle the supported results', 'Compile the point forecast, every interval or probability that passed its publication gates, explicit not-estimable statuses for unsupported requested outputs, and the supporting diagnostics into one results package.']"),
+              ("['Costruire il range', 'Calcolo del limite superiore e inferiore dagli errori di previsione dell\\'asset.']",
+               "['Valutare l’intervallo di predizione', 'Costruzione del limite superiore e inferiore dagli errori previsionali dell’asset solo quando l’evidenza di calibrazione supera i controlli di adeguatezza previsti; in caso contrario l’intervallo viene indicato come non stimabile.']"),
+              ("['Calcolare le probabilità', 'Due output probabilistici: la probabilità che il prezzo di chiusura alla data obiettivo soddisfi la condizione di soglia selezionata (≥ oppure ≤), e la probabilità che sia compreso nel range di prezzo definito — entrambi con un floor conservativo.']",
+               "['Valutare le probabilità richieste', 'Quando richiesto, il motore stima le probabilità di soglia e di chiusura nel range dalla storia calibrata degli errori previsionali. Ogni probabilità viene pubblicata solo se campione e gate di validazione sono sufficienti; altrimenti viene indicata come non stimabile.']"),
+              ("['Assemblare la risposta', 'Tutti e quattro gli output calcolati — prezzo previsto, intervallo di predizione, probabilità di soglia, probabilità di chiusura nel range — più diagnostica, compilati in un unico pacchetto di risultati.']",
+               "['Assemblare i risultati supportati', 'Il pacchetto finale comprende il forecast puntuale, gli intervalli e le probabilità che hanno superato i rispettivi gate di pubblicazione, lo stato esplicito di non stimabilità per gli output richiesti ma non supportati e la diagnostica di calcolo.']"),
+              ("['Construire la fourchette', 'Calcul des bornes haute et basse à partir des erreurs de prévision de l\\'actif.']",
+               "['Évaluer l’intervalle de prédiction', 'Construction des bornes haute et basse à partir des erreurs de prévision de l’actif uniquement lorsque les éléments de calibration satisfont les contrôles d’adéquation requis ; sinon, l’intervalle est indiqué comme non estimable.']"),
+              ("['Calculer les probabilités', 'Deux sorties probabilistes : la probabilité que le prix de clôture à la date cible remplisse la condition de seuil sélectionnée (≥ ou ≤), et la probabilité qu\\'il soit compris dans la fourchette définie — avec un plancher conservateur.']",
+               "['Évaluer les probabilités demandées', 'Lorsqu’elles sont demandées, le moteur estime les probabilités de seuil et de clôture dans la fourchette à partir de l’historique calibré des erreurs de prévision. Chaque probabilité n’est publiée que si son échantillon et ses seuils de validation sont suffisants ; sinon, elle est indiquée comme non estimable.']"),
+              ("['Assembler la réponse', 'Les quatre résultats calculés — prix prévu, intervalle de prédiction, probabilité de seuil, probabilité de clôture dans la fourchette — plus diagnostics, compilés en un seul package de résultats.']",
+               "['Assembler les résultats étayés', 'Le package final comprend la prévision ponctuelle, les intervalles et probabilités ayant franchi leurs seuils de publication, un statut explicite non estimable pour les sorties demandées mais insuffisamment étayées, ainsi que les diagnostics de calcul.']"),
+              ("['Spanne berechnen', 'Berechnung von Ober- und Untergrenzen aus den Prognosefehlern des Assets.']",
+               "['Prognoseintervall bewerten', 'Ober- und Untergrenzen werden nur dann aus den Prognosefehlern des Assets konstruiert, wenn die Kalibrierungsgrundlage die erforderlichen Eignungsprüfungen besteht; andernfalls wird das Intervall als nicht schätzbar ausgewiesen.']"),
+              ("['Wahrscheinlichkeiten berechnen', 'Zwei Wahrscheinlichkeitsausgaben: die Wahrscheinlichkeit, dass der Schlusskurs am Zieldatum die gewählte Schwellenbedingung erfüllt (≥ oder ≤), und die Wahrscheinlichkeit, dass er innerhalb der definierten Preisspanne liegt — beide mit konservativem Minimum.']",
+               "['Angeforderte Wahrscheinlichkeiten bewerten', 'Auf Anforderung schätzt die Engine Schwellen- und Spannenwahrscheinlichkeiten aus der kalibrierten Historie der Prognosefehler. Jede Wahrscheinlichkeit wird nur veröffentlicht, wenn Stichprobe und Validierungsschwellen ausreichend sind; andernfalls wird sie als nicht schätzbar ausgewiesen.']"),
+              ("['Antwort bündeln', 'Alle vier berechneten Ausgaben — Prognospreis, Prognoseintervall, Schwellenwahrscheinlichkeit, Schließen-Wahrscheinlichkeit in der Spanne — plus Diagnostik, in einem Ergebnispaket zusammengefasst.']",
+               "['Gestützte Ergebnisse bündeln', 'Das Ergebnispaket enthält die Punktprognose, alle Intervalle und Wahrscheinlichkeiten, die ihre Veröffentlichungsschwellen bestanden haben, ausdrückliche Nicht-schätzbar-Status für angeforderte, aber nicht ausreichend gestützte Ausgaben sowie die Berechnungsdiagnostik.']"),
+
+              # Feature cards: remove guaranteed interval/probability language
+              ("['A prediction interval', 'Every forecast comes with an upper and a lower bound — measured from how far past forecasts on this exact asset have actually missed. Not a textbook bell curve.']",
+               "['A prediction interval, when estimable', 'When the calibration evidence is sufficient, the engine publishes upper and lower bounds measured from how far past forecasts on this exact asset have actually missed. If the evidence is insufficient, the interval is explicitly marked as not estimable.']"),
+              ("['Threshold probability on the target date', 'Set a target price and a direction (≥ or ≤). The engine returns the probability that the closing price on the target date meets that condition, with a deliberately conservative lower bound — a closing-price probability, not the probability of touching the target beforehand.']",
+               "['Threshold probability on the target date', 'Set a target price and a direction (≥ or ≤). When the calibration sample passes the required checks, the engine publishes the probability that the closing price on the target date meets that condition — a closing-price probability, not the probability of touching the target beforehand. Otherwise it is marked as not estimable.']"),
+              ("['Range closing probability', 'Define a lower and upper price bound. The engine returns the probability that the closing price on the target date falls within your range — the fourth computed output.']",
+               "['Range closing probability', 'Define a lower and upper price bound. When the calibration sample passes the required checks, the engine publishes the probability that the closing price on the target date falls within your range. Otherwise it is marked as not estimable.']"),
+              ("['Un intervallo di predizione', 'Ogni previsione include un limite superiore e uno inferiore — misurati da quanto le previsioni passate su questo stesso asset hanno effettivamente sbagliato. Non una curva a campana da manuale.']",
+               "['Un intervallo di predizione, quando stimabile', 'Quando l’evidenza di calibrazione è sufficiente, il motore pubblica un limite superiore e uno inferiore misurati dagli errori previsionali storici dello stesso asset. Se l’evidenza è insufficiente, l’intervallo viene indicato esplicitamente come non stimabile.']"),
+              ("['Probabilità di soglia alla data obiettivo', 'Impostate un prezzo target e una direzione (≥ o ≤). Il motore restituisce la probabilità che il prezzo di chiusura alla data obiettivo soddisfi quella condizione, con un floor deliberatamente conservativo — una probabilità di chiusura, non di tocco del target prima della data.']",
+               "['Probabilità di soglia alla data obiettivo', 'Impostate un prezzo target e una direzione (≥ o ≤). Quando il campione di calibrazione supera i controlli previsti, il motore pubblica la probabilità che il prezzo di chiusura alla data obiettivo soddisfi quella condizione — una probabilità di chiusura, non di tocco del target prima della data. Altrimenti viene indicata come non stimabile.']"),
+              ("['Probabilità di chiusura nel range', 'Definite un prezzo minimo e massimo. Il motore restituisce la probabilità che il prezzo di chiusura alla data obiettivo sia compreso nel vostro range — il quarto output calcolato.']",
+               "['Probabilità di chiusura nel range', 'Definite un prezzo minimo e massimo. Quando il campione di calibrazione supera i controlli previsti, il motore pubblica la probabilità che il prezzo di chiusura alla data obiettivo sia compreso nel vostro range. Altrimenti viene indicata come non stimabile.']"),
+              ("['Un intervalle de prédiction', 'Chaque prévision inclut une borne haute et basse — mesurées à partir des écarts réels des prévisions passées sur cet actif précis. Pas une courbe en cloche théorique.']",
+               "['Un intervalle de prédiction, lorsqu’il est estimable', 'Lorsque les éléments de calibration sont suffisants, le moteur publie des bornes haute et basse mesurées à partir des erreurs historiques de prévision sur cet actif. Si les éléments sont insuffisants, l’intervalle est explicitement indiqué comme non estimable.']"),
+              ("['Probabilité de seuil à la date cible', 'Définissez un prix cible et une direction (≥ ou ≤). Le moteur retourne la probabilité que le prix de clôture à la date cible remplisse cette condition, avec un plancher délibérément conservateur — une probabilité de clôture, pas de contact préalable avec la cible.']",
+               "['Probabilité de seuil à la date cible', 'Définissez un prix cible et une direction (≥ ou ≤). Lorsque l’échantillon de calibration satisfait les contrôles requis, le moteur publie la probabilité que le prix de clôture à la date cible respecte cette condition — une probabilité de clôture, et non de contact préalable avec la cible. Sinon, elle est indiquée comme non estimable.']"),
+              ("['Probabilité de clôture dans la fourchette', 'Définissez un prix plancher et plafond. Le moteur retourne la probabilité que le prix de clôture à la date cible soit compris dans votre fourchette — la quatrième sortie calculée.']",
+               "['Probabilité de clôture dans la fourchette', 'Définissez un prix plancher et plafond. Lorsque l’échantillon de calibration satisfait les contrôles requis, le moteur publie la probabilité que le prix de clôture à la date cible soit compris dans votre fourchette. Sinon, elle est indiquée comme non estimable.']"),
+              ("['Ein Prognoseintervall', 'Jede Prognose enthält eine Ober- und Untergrenze — gemessen daran, wie weit vergangene Prognosen auf genau diesem Asset tatsächlich danebenlagen. Keine Lehrbuch-Glockenkurve.']",
+               "['Ein Prognoseintervall, sofern schätzbar', 'Bei ausreichender Kalibrierungsgrundlage veröffentlicht die Engine Ober- und Untergrenzen, die aus historischen Prognosefehlern dieses Assets gemessen werden. Ist die Grundlage unzureichend, wird das Intervall ausdrücklich als nicht schätzbar ausgewiesen.']"),
+              ("['Schwellenwahrscheinlichkeit am Zieldatum', 'Legen Sie einen Zielpreis und eine Richtung fest (≥ oder ≤). Die Engine liefert die Wahrscheinlichkeit, dass der Schlusskurs am Zieldatum diese Bedingung erfüllt, mit einem bewusst konservativen Minimum — eine Schlusskurs-Wahrscheinlichkeit, kein vorheriges Berühren des Ziels.']",
+               "['Schwellenwahrscheinlichkeit am Zieldatum', 'Legen Sie einen Zielpreis und eine Richtung fest (≥ oder ≤). Wenn die Kalibrierungsstichprobe die erforderlichen Prüfungen besteht, veröffentlicht die Engine die Wahrscheinlichkeit, dass der Schlusskurs am Zieldatum diese Bedingung erfüllt — eine Schlusskurswahrscheinlichkeit, kein vorheriges Berühren des Ziels. Andernfalls wird sie als nicht schätzbar ausgewiesen.']"),
+              ("['Schließen-Wahrscheinlichkeit in der Spanne', 'Definieren Sie eine Unter- und Obergrenze. Die Engine liefert die Wahrscheinlichkeit, dass der Schlusskurs am Zieldatum innerhalb Ihrer Spanne liegt — die vierte berechnete Ausgabe.']",
+               "['Schließen-Wahrscheinlichkeit in der Spanne', 'Definieren Sie eine Unter- und Obergrenze. Wenn die Kalibrierungsstichprobe die erforderlichen Prüfungen besteht, veröffentlicht die Engine die Wahrscheinlichkeit, dass der Schlusskurs am Zieldatum innerhalb Ihrer Spanne liegt. Andernfalls wird sie als nicht schätzbar ausgewiesen.']"),
+
+              # Methodology: qualify interval construction
+              ("['§ 03', 'The range is measured, not assumed', 'The range comes from how far past forecasts on this asset actually missed.', 'Instead of assuming a textbook bell curve, the upper and lower bounds are measured from this asset\\'s own past errors — so they widen on hard-to-predict assets and tighten on steady ones.']",
+               "['§ 03', 'The range is measured, not assumed', 'When estimable, the range comes from how far past forecasts on this asset actually missed.', 'Instead of assuming a textbook bell curve, the engine measures upper and lower bounds from this asset’s own past errors when the calibration evidence is sufficient. If it is not sufficient, the interval is reported as not estimable.']"),
+              ("['§ 03', 'Il range è misurato, non ipotizzato', 'Il range deriva da quanto le previsioni passate su questo asset hanno effettivamente sbagliato.', 'Invece di ipotizzare una curva a campana, il limite superiore e quello inferiore sono ricavati dagli errori passati di questo asset — si allargano sugli asset più volatili e si restringono su quelli stabili.']",
+               "['§ 03', 'Il range è misurato, non ipotizzato', 'Quando stimabile, il range deriva dagli errori previsionali storici dello stesso asset.', 'Invece di ipotizzare una curva a campana, il motore misura il limite superiore e quello inferiore dagli errori passati dell’asset quando l’evidenza di calibrazione è sufficiente. In caso contrario, l’intervallo viene indicato come non stimabile.']"),
+              ("['§ 03', 'La fourchette est mesurée, pas supposée', 'La fourchette provient des écarts réels des prévisions passées sur cet actif.', 'Au lieu de supposer une courbe en cloche, les bornes haute et basse sont mesurées à partir des erreurs passées de cet actif — elles s\\'élargissent sur les actifs difficiles et se resserrent sur les stables.']",
+               "['§ 03', 'La fourchette est mesurée, pas supposée', 'Lorsqu’elle est estimable, la fourchette provient des erreurs historiques de prévision sur cet actif.', 'Au lieu de supposer une courbe en cloche, le moteur mesure les bornes haute et basse à partir des erreurs passées de l’actif lorsque les éléments de calibration sont suffisants. Sinon, l’intervalle est indiqué comme non estimable.']"),
+              ("['§ 03', 'Die Spanne wird gemessen, nicht angenommen', 'Die Spanne ergibt sich daraus, wie weit vergangene Prognosen auf diesem Asset tatsächlich danebenlagen.', 'Statt eine Lehrbuch-Glockenkurve anzunehmen, werden Ober- und Untergrenzen aus den vergangenen Fehlern dieses Assets gemessen — sie weiten sich bei schwer vorhersagbaren Assets und verengen sich bei stabilen.']",
+               "['§ 03', 'Die Spanne wird gemessen, nicht angenommen', 'Sofern schätzbar, ergibt sich die Spanne aus den historischen Prognosefehlern dieses Assets.', 'Statt eine Lehrbuch-Glockenkurve anzunehmen, misst die Engine Ober- und Untergrenzen aus vergangenen Fehlern dieses Assets, wenn die Kalibrierungsgrundlage ausreichend ist. Andernfalls wird das Intervall als nicht schätzbar ausgewiesen.']"),
+
+              # Portfolio interval: only when all required per-ticker intervals exist
+              ("the prediction interval is the weighted linear combination of per-ticker interval extremes — correlations feed the volatility and risk-contribution metrics, not this interval.",
+               "when publishable per-ticker intervals are available for every included asset, the portfolio interval is their weighted linear combination — correlations feed the volatility and risk-contribution metrics, not this interval. Otherwise, the portfolio interval is not reported."),
+              ("l\\'intervallo di previsione è la combinazione lineare pesata degli estremi degli intervalli per-ticker — le correlazioni alimentano la volatilità e il contributo al rischio, non questo intervallo.",
+               "quando sono disponibili intervalli per-ticker pubblicabili per tutti gli asset inclusi, l’intervallo di portafoglio è la loro combinazione lineare pesata — le correlazioni alimentano la volatilità e il contributo al rischio, non questo intervallo. In caso contrario, l’intervallo di portafoglio non viene pubblicato."),
+              ("l\\'intervalle de prédiction est la combinaison linéaire pondérée des extrêmes des intervalles par ticker — les corrélations alimentent la volatilité et la contribution au risque, pas cet intervalle.",
+               "lorsque des intervalles publiables sont disponibles pour tous les actifs inclus, l’intervalle du portefeuille est leur combinaison linéaire pondérée — les corrélations alimentent la volatilité et la contribution au risque, pas cet intervalle. Sinon, l’intervalle du portefeuille n’est pas publié."),
+              ("das Vorhersageintervall ist die gewichtete lineare Kombination der Pro-Ticker-Intervallextrema — Korrelationen fließen in Volatilität und Risikobeitrag ein, nicht in dieses Intervall.",
+               "wenn für alle enthaltenen Assets veröffentlichbare Einzelintervalle vorliegen, ist das Portfoliointervall deren gewichtete lineare Kombination — Korrelationen fließen in Volatilität und Risikobeitrag ein, nicht in dieses Intervall. Andernfalls wird kein Portfoliointervall veröffentlicht."),
+
+              # Use cases: remove universal and trading-oriented wording
+              ("Every weight, every interval, every input is traceable", "Every published weight, interval, probability and input is traceable"),
+              ("Ogni peso, ogni intervallo, ogni input è tracciabile", "Ogni peso, intervallo e probabilità pubblicati, insieme agli input, sono tracciabili"),
+              ("Chaque poids, chaque intervalle, chaque entrée est traçable", "Chaque poids, intervalle et probabilité publiés, ainsi que chaque entrée, sont traçables"),
+              ("Jedes Gewicht, jedes Intervall, jeder Input ist nachvollziehbar", "Jedes veröffentlichte Gewicht, Intervall und jede Wahrscheinlichkeit sowie jeder Input sind nachvollziehbar"),
+              ("with calibrated probabilities for the directional bet you actually want to place.", "with calibrated probabilities for the scenario selected for analysis, when those probabilities pass their publication gates."),
+              ("avec des probabilités calibrées pour le pari directionnel que vous voulez placer.", "avec des probabilités calibrées pour le scénario sélectionné, lorsque celles-ci franchissent leurs seuils de publication."),
+              ("mit kalibrierten Wahrscheinlichkeiten für die Richtungswette, die Sie platzieren möchten.", "mit kalibrierten Wahrscheinlichkeiten für das ausgewählte Analyseszenario, sofern diese ihre Veröffentlichungsschwellen bestehen."),
+              ("'Probability for any target'", "'Target probability, when estimable'"),
+              ("'Probabilità per qualsiasi target'", "'Probabilità sul target, quando stimabile'"),
+              ("'Probabilité pour toute cible'", "'Probabilité cible, lorsqu’elle est estimable'"),
+              ("'Wahrscheinlichkeit für jedes Ziel'", "'Zielwahrscheinlichkeit, sofern schätzbar'"),
+
+              # Report description: include only publishable quantitative outputs
+              ("with every research detail and statistic already inside: forecast, prediction intervals, model weights, diagnostics and AI commentary.",
+               "with the point forecast, model weights, diagnostics, AI commentary and every interval or probability that passed its publication gates. Requested outputs that are not statistically supported are identified as not estimable."),
+              ("con tutti i dettagli della ricerca e le statistiche già all\\u2019interno: previsione, intervalli di predizione, pesi dei modelli, diagnostica e commento AI.",
+               "con forecast puntuale, pesi dei modelli, diagnostica, commento AI e ogni intervallo o probabilità che abbia superato i relativi gate di pubblicazione. Gli output richiesti ma non statisticamente supportati vengono indicati come non stimabili."),
+              ("avec chaque détail de la recherche et chaque statistique déjà à l\\u2019intérieur : prévision, intervalles de prédiction, poids des modèles, diagnostics et commentaire IA.",
+               "avec la prévision ponctuelle, les poids des modèles, les diagnostics, le commentaire IA et chaque intervalle ou probabilité ayant franchi ses seuils de publication. Les sorties demandées mais insuffisamment étayées sont indiquées comme non estimables."),
+              ("mit jedem Recherchedetail und jeder Statistik bereits enthalten: Prognose, Prognoseintervalle, Modellgewichte, Diagnostik und KI-Kommentar.",
+               "mit Punktprognose, Modellgewichten, Diagnostik, KI-Kommentar und jedem Intervall oder jeder Wahrscheinlichkeit, die ihre Veröffentlichungsschwellen bestanden haben. Angeforderte, aber statistisch nicht ausreichend gestützte Ergebnisse werden als nicht schätzbar ausgewiesen."),
+
+              # FAQ: describe assessment gates rather than guaranteed construction
+              ("prediction interval construction; accuracy metrics and diagnostics", "prediction interval assessment with adequacy checks; accuracy metrics and diagnostics"),
+              ("construction des intervalles de prédiction ; métriques de précision et diagnostics", "évaluation des intervalles de prédiction avec contrôles d’adéquation ; métriques de précision et diagnostics"),
+              ("costruzione degli intervalli di predizione; metriche di accuratezza e diagnostica", "valutazione degli intervalli di predizione con controlli di adeguatezza; metriche di accuratezza e diagnostica"),
+              ("Vorhersageintervall-Konstruktion; Genauigkeitsmetriken und Diagnostik", "Bewertung von Prognoseintervallen mit Eignungsprüfungen; Genauigkeitsmetriken und Diagnostik"),
+              ("computes empirically calibrated prediction intervals and produces", "publishes empirically calibrated prediction intervals when estimable and produces"),
+              ("calcola intervalli di predizione calibrati empiricamente e produce", "pubblica intervalli di predizione calibrati empiricamente quando stimabili e produce"),
+              ("calcule des intervalles de prédiction calibrés empiriquement et produit", "publie des intervalles de prédiction calibrés empiriquement lorsqu’ils sont estimables et produit"),
+              ("berechnet empirisch kalibrierte Vorhersageintervalle und erstellt", "veröffentlicht empirisch kalibrierte Prognoseintervalle, sofern sie schätzbar sind, und erstellt"),
+          ]
+
+          changed = 0
+          missing = []
+          for old, new in replacements:
+              count = text.count(old)
+              if count:
+                  text = text.replace(old, new)
+                  changed += count
+              elif new not in text:
+                  missing.append(old[:120])
+
+          if missing:
+              raise SystemExit('Expected source text missing:\n' + '\n'.join(missing))
+
+          banned = [
+              'All four computed outputs',
+              'Tutti e quattro gli output calcolati',
+              'Les quatre résultats calculés',
+              'Alle vier berechneten Ausgaben',
+              'the fourth computed output',
+              'il quarto output calcolato',
+              'la quatrième sortie calculée',
+              'die vierte berechnete Ausgabe',
+              'Every forecast comes with an upper and a lower bound',
+              'Ogni previsione include un limite superiore e uno inferiore',
+              'Chaque prévision inclut une borne haute et basse',
+              'Jede Prognose enthält eine Ober- und Untergrenze',
+              'Probability for any target',
+              'Probabilità per qualsiasi target',
+              'Probabilité pour toute cible',
+              'Wahrscheinlichkeit für jedes Ziel',
+              'directional bet you actually want to place',
+          ]
+          residual = [phrase for phrase in banned if phrase in text]
+          if residual:
+              raise SystemExit('Residual unconditional claims: ' + ', '.join(residual))
+
+          validation_after = text.split(validation_start, 1)[1].split(validation_end, 1)[0]
+          if validation_after != validation_before:
+              raise SystemExit('Validation section changed unexpectedly')
+
+          required = [
+              'Output probabilistici, quando stimabili',
+              'Assemblare i risultati supportati',
+              'Un intervallo di predizione, quando stimabile',
+              'Gli output richiesti ma non statisticamente supportati vengono indicati come non stimabili.',
+              'Probability outputs, when estimable',
+              'nicht schätzbar',
+          ]
+          absent = [phrase for phrase in required if phrase not in text]
+          if absent:
+              raise SystemExit('Required corrected copy absent: ' + ', '.join(absent))
+
+          if changed == 0:
+              raise SystemExit('No website copy changed')
+
+          source.write_text(text, encoding='utf-8')
+          for workflow in [
+              Path('.github/workflows/fix-p0-output-publication.yml'),
+              Path('.github/workflows/fix-p0-output-publication-v2.yml'),
+          ]:
+              if workflow.exists():
+                  workflow.unlink()
+          PY
+
+      - name: Commit correction to main
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add landing-v11.jsx .github/workflows
+          git commit -m "Complete conditional output publication copy"
+          git push origin HEAD:main
