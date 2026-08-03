@@ -178,8 +178,8 @@ const T = {
     data_card1_body: 'Control of the source remains in your hands. No third-party feed, no silent revisions, no outdated data. The data that enters the engine is exactly what you have verified and approved.',
     data_card2_title: 'Controlled data processing',
     data_card2_body: "In the Microsoft Store desktop application, market datasets, quantitative results, reports and narrative commentary are processed locally. Ollama is restricted to the client device and external cloud AI providers are disabled for product execution. Any technical communications required for licence activation remain separate from the local calculation workflow.",
-    data_card3_title: 'Compatible with any provider',
-    data_card3_body: 'Bloomberg Excel, Refinitiv CSV, FactSet exports, internal databases: if it has a date column and a price column, Previsio reads it. Change provider at any time without modifying the system.',
+    data_card3_title: 'Documented CSV and XLSX imports',
+    data_card3_body: 'Previsio imports CSV and XLSX files exported from Bloomberg, Refinitiv, FactSet and internal databases when they match one of the documented layouts: Bloomberg wide, simple long (Date, Ticker, Close), simple wide, or Bloomberg paired blocks. Unsupported layouts are rejected rather than interpreted as valid data.',
     whats_next_label: "What's Next",
     whats_next_subtitle: 'A glimpse at what we are building',
     whats_next_status: 'In development',
@@ -301,8 +301,8 @@ const T = {
     data_card1_body: 'Il controllo della fonte rimane nelle vostre mani. Nessun feed di terze parti, nessuna rettifica silenziosa, nessun dato obsoleto. I dati che entrano nel motore sono esattamente quelli che avete verificato e approvato.',
     data_card2_title: 'Elaborazione controllata dei dati',
     data_card2_body: "Nell’applicazione desktop distribuita tramite Microsoft Store, dataset di mercato, risultati quantitativi, report e commento narrativo vengono elaborati localmente. Ollama è limitato al dispositivo del cliente e i provider AI cloud esterni sono disabilitati durante l’esecuzione del prodotto. Le eventuali comunicazioni tecniche necessarie all’attivazione della licenza restano separate dal flusso locale di calcolo.",
-    data_card3_title: 'Compatibile con qualsiasi provider',
-    data_card3_body: 'Excel Bloomberg, CSV Refinitiv, export FactSet, database interni: se ha una colonna data e una colonna prezzo, Previsio lo legge. Cambiate provider in qualsiasi momento senza modificare il sistema.',
+    data_card3_title: 'Import CSV e XLSX documentati',
+    data_card3_body: 'Previsio importa file CSV e XLSX esportati da Bloomberg, Refinitiv, FactSet e database interni quando rispettano uno dei layout documentati: Bloomberg wide, simple long (Date, Ticker, Close), simple wide o Bloomberg paired blocks. I layout non supportati vengono rifiutati anziché interpretati come dati validi.',
     whats_next_label: "What's Next",
     whats_next_subtitle: 'Uno sguardo a ciò che stiamo costruendo',
     whats_next_status: 'In sviluppo',
@@ -424,8 +424,8 @@ const T = {
     data_card1_body: 'Le contrôle de la source reste entre vos mains. Aucun flux tiers, aucune correction silencieuse, aucune donnée obsolète. Les données qui entrent dans le moteur sont exactement celles que vous avez vérifiées et approuvées.',
     data_card2_title: 'Traitement contrôlé des données',
     data_card2_body: "Dans l’application de bureau distribuée via Microsoft Store, les jeux de données de marché, les résultats quantitatifs, les rapports et les commentaires narratifs sont traités localement. Ollama est limité à l’appareil du client et les fournisseurs d’IA cloud externes sont désactivés pendant l’exécution du produit. Les communications techniques éventuellement nécessaires à l’activation de la licence restent séparées du flux de calcul local.",
-    data_card3_title: 'Compatible avec tout fournisseur',
-    data_card3_body: 'Excel Bloomberg, CSV Refinitiv, exports FactSet, bases de données internes: s\'il y a une colonne date et une colonne prix, Previsio le lit. Changez de fournisseur à tout moment sans modifier le système.',
+    data_card3_title: 'Imports CSV et XLSX documentés',
+    data_card3_body: 'Previsio importe les fichiers CSV et XLSX exportés depuis Bloomberg, Refinitiv, FactSet et des bases de données internes lorsqu’ils respectent l’un des formats documentés : Bloomberg wide, simple long (Date, Ticker, Close), simple wide ou Bloomberg paired blocks. Les formats non pris en charge sont rejetés plutôt qu’interprétés comme des données valides.',
     whats_next_label: "What's Next",
     whats_next_subtitle: 'Un aperçu de ce que nous construisons',
     whats_next_status: 'En développement',
@@ -546,8 +546,8 @@ const T = {
     data_card1_body: 'Die Kontrolle über die Quelle bleibt in Ihren Händen. Kein Drittanbieter-Feed, keine stillen Korrekturen, keine veralteten Daten. Die Daten, die in die Engine fließen, sind genau die, die Sie geprüft und freigegeben haben.',
     data_card2_title: 'Kontrollierte Datenverarbeitung',
     data_card2_body: "In der über den Microsoft Store vertriebenen Desktopanwendung werden Marktdatensätze, quantitative Ergebnisse, Berichte und narrative Kommentare lokal verarbeitet. Ollama ist auf das Gerät des Kunden beschränkt; externe Cloud-KI-Anbieter sind während der Produktausführung deaktiviert. Etwaige technische Kommunikation zur Lizenzaktivierung bleibt vom lokalen Berechnungsablauf getrennt.",
-    data_card3_title: 'Kompatibel mit jedem Anbieter',
-    data_card3_body: 'Bloomberg Excel, Refinitiv CSV, FactSet-Exporte, interne Datenbanken: wenn es eine Datumsspalte und eine Preisspalte hat, liest Previsio es. Wechseln Sie den Anbieter jederzeit, ohne das System anzupassen.',
+    data_card3_title: 'Dokumentierte CSV- und XLSX-Importe',
+    data_card3_body: 'Previsio importiert CSV- und XLSX-Dateien aus Bloomberg, Refinitiv, FactSet und internen Datenbanken, wenn sie einem der dokumentierten Layouts entsprechen: Bloomberg wide, simple long (Date, Ticker, Close), simple wide oder Bloomberg paired blocks. Nicht unterstützte Layouts werden abgelehnt, statt als gültige Daten interpretiert zu werden.',
     whats_next_label: "What's Next",
     whats_next_subtitle: 'Ein Blick auf das, was wir entwickeln',
     whats_next_status: 'In Entwicklung',
@@ -1527,7 +1527,7 @@ function DataPrivacy() {
 
         <Reveal delay="2">
           <div style={dataProviderStyles}>
-            {['BLOOMBERG', 'REFINITIV', 'FACTSET', 'CSV / XLSX', 'OTHER'].map((p) =>
+            {['BLOOMBERG', 'REFINITIV', 'FACTSET', 'CSV / XLSX', 'INTERNAL DATABASE EXPORTS'].map((p) =>
             <span key={p} style={providerTagStyle}>{p}</span>
             )}
           </div>
