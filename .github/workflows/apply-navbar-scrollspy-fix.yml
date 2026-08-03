@@ -1,0 +1,79 @@
+name: Apply navbar scroll-spy fix
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Correct active-section selection
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('landing-v11.jsx')
+          text = path.read_text(encoding='utf-8')
+
+          old = """    const handleScroll = () => {
+      const navH = 72;
+      let current = '';
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top;
+        if (top <= navH + 60) current = id;
+      }
+      setActiveId(current);
+    };"""
+
+          new = """    const handleScroll = () => {
+      const navH = 72;
+      const activationLine = navH + 60;
+      let current = '';
+      let closestTop = Number.NEGATIVE_INFINITY;
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+
+        const top = el.getBoundingClientRect().top;
+        if (top <= activationLine && top > closestTop) {
+          closestTop = top;
+          current = id;
+        }
+      }
+
+      setActiveId(current);
+    };"""
+
+          if text.count(old) != 1:
+              raise RuntimeError(f'Expected exactly one legacy scroll-spy block, found {text.count(old)}')
+
+          updated = text.replace(old, new, 1)
+          if updated.count('let closestTop = Number.NEGATIVE_INFINITY;') != 1:
+              raise RuntimeError('Corrected scroll-spy block missing or duplicated')
+
+          path.write_text(updated, encoding='utf-8')
+          PY
+
+      - name: Commit navbar fix
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add landing-v11.jsx
+          git diff --cached --check
+          git commit -m "Fix navbar active section after homepage reorder"
+          git push origin main
