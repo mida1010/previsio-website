@@ -1350,7 +1350,7 @@ function Features() {
     ['Up to eight models in parallel', 'A mix of classical statistical models, gradient boosting and deep learning, run when compatible with the horizon and history. No single approach dominates — the combination is the product.'],
     ['Weights earned on the asset', 'Each model\'s weight comes from how it actually performed on the past of the asset you\'re forecasting. Recent performance and long-run track record are blended.'],
     ['Time-travel replay', 'Set the reference date in the past and rerun the engine blind. Useful to see what the platform would have said before a known event happened.'],
-    ['Your data, your source, your control', 'In the standard configuration, market files, quantitative calculations and the Ollama-generated commentary are processed locally. If a cloud configuration is requested, the related data flow is defined and documented separately.'],
+    ['Your data, your source, your control', 'In the Microsoft Store desktop version, market files, quantitative calculations and Ollama-generated commentary are processed locally on the client device. External cloud AI providers and remote LLM endpoints are not supported by the standard product.'],
     ['Reproducible by design', 'Given the same dataset, parameters and engine version, Previsio produces the same quantitative outputs — a requirement for research you can defend later.'],
     ['Directional classifier probability', 'Is the price going up or down versus the last close in the dataset — not versus your chosen target? A logistic classifier trained on the ensemble\'s own walk-forward history answers with a calibrated probability — validated on a purged chronological holdout, published only when it clears accuracy and sample-size gates.']],
 
@@ -1362,7 +1362,7 @@ function Features() {
     ['Fino a otto modelli in parallelo', 'Un mix di modelli statistici classici, gradient boosting e deep learning, eseguiti quando compatibili con orizzonte e storico. Nessun singolo approccio domina — la combinazione è il prodotto.'],
     ['Pesi guadagnati sull\'asset', 'Il peso di ogni modello deriva dalla sua effettiva performance sullo storico dell\'asset in previsione. Performance recente e track record di lungo periodo vengono bilanciati.'],
     ['Replay time-travel', 'Impostate la data di riferimento nel passato e rieseguite il motore alla cieca. Utile per verificare cosa avrebbe detto la piattaforma prima di un evento noto.'],
-    ['I vostri dati, la vostra fonte, il vostro controllo', 'Nella configurazione standard, i file di mercato, i calcoli quantitativi e il commento generato tramite Ollama vengono elaborati localmente. Qualora venga richiesta una configurazione cloud, il relativo flusso dati viene definito e documentato separatamente.'],
+    ['I vostri dati, la vostra fonte, il vostro controllo', 'Nella versione desktop distribuita tramite Microsoft Store, file di mercato, calcoli quantitativi e commento generato tramite Ollama vengono elaborati localmente sul dispositivo del cliente. Provider AI cloud esterni ed endpoint LLM remoti non sono supportati dal prodotto standard.'],
     ['Riproducibile per costruzione', 'A parità di dataset, parametri e versione del motore, Previsio produce gli stessi output quantitativi — un requisito per una ricerca difendibile nel tempo.'],
     ['Probabilità direzionale del classificatore', 'Un classificatore direzionale stima la probabilità che il prezzo di chiusura sia superiore o inferiore all\'ultima chiusura del dataset — non alla soglia che inserite voi. Il risultato viene mostrato solo quando supera i controlli minimi di campione, accuratezza e stabilità previsti dal motore.']],
 
@@ -1374,7 +1374,7 @@ function Features() {
     ['Jusqu\'à huit modèles en parallèle', 'Un mix de modèles statistiques classiques, gradient boosting et deep learning, exécutés lorsqu\'ils sont compatibles avec l\'horizon et l\'historique. Aucune approche ne domine — la combinaison est le produit.'],
     ['Poids gagnés sur l\'actif', 'Le poids de chaque modèle provient de sa performance réelle sur le passé de l\'actif. Performance récente et historique long terme sont mélangés.'],
     ['Replay voyage dans le temps', 'Placez la date de référence dans le passé et relancez le moteur à l\'aveugle. Utile pour voir ce que la plateforme aurait dit avant un événement connu.'],
-    ['Vos données, votre source, votre contrôle', 'Dans la configuration standard, les fichiers de marché, les calculs quantitatifs et le commentaire généré via Ollama sont traités localement. Si une configuration cloud est demandée, le flux de données correspondant est défini et documenté séparément.'],
+    ['Vos données, votre source, votre contrôle', 'Dans la version desktop distribuée via Microsoft Store, les fichiers de marché, les calculs quantitatifs et le commentaire généré via Ollama sont traités localement sur l’appareil du client. Les fournisseurs d’IA cloud externes et les endpoints LLM distants ne sont pas pris en charge par le produit standard.'],
     ['Reproductible par conception', 'À dataset, paramètres et version du moteur identiques, Previsio produit les mêmes sorties quantitatives — une exigence pour une recherche défendable dans le temps.'],
     ['Probabilité directionnelle du classificateur', 'Le prix va-t-il monter ou baisser par rapport à la dernière clôture du jeu de données — pas par rapport à votre cible ? Un modèle supplémentaire qui répond à cette question avec une probabilité fiable — testé dans le temps et publié uniquement quand il fonctionne vraiment.']],
 
@@ -1386,7 +1386,7 @@ function Features() {
     ['Bis zu acht Modelle parallel', 'Eine Mischung aus klassischen statistischen Modellen, Gradient Boosting und Deep Learning, ausgeführt, wenn mit Horizont und Historie kompatibel. Kein einzelner Ansatz dominiert — die Kombination ist das Produkt.'],
     ['Auf dem Asset verdiente Gewichte', 'Das Gewicht jedes Modells ergibt sich aus seiner tatsächlichen Performance auf der Vergangenheit des Assets. Aktuelle Performance und langfristige Erfolgsbilanz werden gemischt.'],
     ['Zeitreise-Replay', 'Setzen Sie das Referenzdatum in die Vergangenheit und führen Sie die Engine blind erneut aus. Nützlich um zu sehen, was die Plattform vor einem bekannten Ereignis gesagt hätte.'],
-    ['Ihre Daten, Ihre Quelle, Ihre Kontrolle', 'In der Standardkonfiguration werden Marktdateien, quantitative Berechnungen und der über Ollama erzeugte Kommentar lokal verarbeitet. Wird eine Cloud-Konfiguration angefragt, wird der entsprechende Datenfluss separat definiert und dokumentiert.'],
+    ['Ihre Daten, Ihre Quelle, Ihre Kontrolle', 'In der über den Microsoft Store vertriebenen Desktopversion werden Marktdateien, quantitative Berechnungen und der über Ollama erzeugte Kommentar lokal auf dem Gerät des Kunden verarbeitet. Externe Cloud-KI-Anbieter und entfernte LLM-Endpunkte werden vom Standardprodukt nicht unterstützt.'],
     ['Reproduzierbar durch Konstruktion', 'Bei gleichem Datensatz, gleichen Parametern und gleicher Engine-Version liefert Previsio dieselben quantitativen Ausgaben — eine Voraussetzung für später verteidigbare Research.'],
     ['Direktionale Klassifikator-Wahrscheinlichkeit', 'Steigt oder fällt der Kurs im Vergleich zum letzten Schlusskurs im Datensatz — nicht zu Ihrem gewählten Ziel? Ein zusätzliches Modell, das diese Frage mit einer zuverlässigen Wahrscheinlichkeit beantwortet — über die Zeit getestet und nur veröffentlicht, wenn es wirklich funktioniert.']]
 
@@ -2617,10 +2617,10 @@ function Pricing() {
 
           <p style={{ maxWidth: 640, margin: '18px auto 0', textAlign: 'center', fontSize: 13, lineHeight: 1.7, color: 'var(--text-muted)' }}>
             {{
-              en: 'Local configuration via Ollama is the standard mode. Any integration with cloud AI providers, private endpoints or dedicated infrastructure is quoted separately based on the provider chosen, usage volumes and security and compliance requirements.',
-              it: 'La configurazione locale tramite Ollama è la modalità standard. Eventuali integrazioni con provider AI cloud, endpoint privati o infrastrutture dedicate vengono quotate separatamente in base al provider scelto, ai volumi di utilizzo e ai requisiti di sicurezza e compliance.',
-              fr: 'La configuration locale via Ollama est le mode standard. Toute intégration avec des fournisseurs d\u2019IA cloud, des endpoints privés ou des infrastructures dédiées est chiffrée séparément selon le fournisseur choisi, les volumes d\u2019utilisation et les exigences de sécurité et de conformité.',
-              de: 'Die lokale Konfiguration über Ollama ist der Standardmodus. Etwaige Integrationen mit Cloud-KI-Anbietern, privaten Endpunkten oder dedizierter Infrastruktur werden separat angeboten, abhängig vom gewählten Anbieter, den Nutzungsvolumina und den Sicherheits- und Compliance-Anforderungen.'
+              en: 'The Microsoft Store desktop version uses only Ollama running locally on the client device. External cloud AI providers, remote LLM endpoints and dedicated cloud infrastructure are not part of the standard product or licence. Any future enterprise deployment would require a separate, explicitly documented technical and contractual project.',
+              it: 'La versione desktop distribuita tramite Microsoft Store utilizza esclusivamente Ollama in esecuzione locale sul dispositivo del cliente. Provider AI cloud esterni, endpoint LLM remoti e infrastrutture cloud dedicate non fanno parte del prodotto o della licenza standard. Qualsiasi futuro deployment enterprise richiederebbe un progetto tecnico e contrattuale separato ed esplicitamente documentato.',
+              fr: 'La version desktop distribuée via Microsoft Store utilise exclusivement Ollama exécuté localement sur l’appareil du client. Les fournisseurs d’IA cloud externes, les endpoints LLM distants et les infrastructures cloud dédiées ne font pas partie du produit ni de la licence standard. Tout futur déploiement enterprise nécessiterait un projet technique et contractuel séparé et explicitement documenté.',
+              de: 'Die über den Microsoft Store vertriebene Desktopversion verwendet ausschließlich Ollama lokal auf dem Gerät des Kunden. Externe Cloud-KI-Anbieter, entfernte LLM-Endpunkte und dedizierte Cloud-Infrastruktur sind nicht Bestandteil des Standardprodukts oder der Standardlizenz. Jede künftige Enterprise-Bereitstellung würde ein separates, ausdrücklich dokumentiertes technisches und vertragliches Projekt erfordern.'
             }[lang]}
           </p>
 
@@ -2677,7 +2677,7 @@ function Trust() {
     d: { en: 'All nine pipeline stages emit a trace — inputs, weights, intermediate outputs and timings, available on request for any committee memo or compliance review.', it: 'Tutti e nove gli stadi della pipeline emettono una traccia — input, pesi, output intermedi e tempi, disponibile su richiesta per qualsiasi memo per il comitato o revisione di compliance.', fr: 'Les neuf étapes du pipeline émettent une trace — entrées, poids, sorties intermédiaires et temps, disponible sur demande pour tout mémo de comité ou revue de conformité.', de: 'Alle neun Pipeline-Stufen erzeugen eine Spur — Eingaben, Gewichte, Zwischenausgaben und Zeiten, auf Anfrage verfügbar für jedes Gremien-Memo oder jede Compliance-Prüfung.' } },
   { i: '⎈',
     t: { en: 'Processing stays within the configured perimeter', it: 'Elaborazione nel perimetro configurato', fr: 'Traitement dans le périmètre configuré', de: 'Verarbeitung innerhalb des konfigurierten Perimeters' },
-    d: { en: 'Encrypted authentication with credentials kept out of every log. In the standard configuration, datasets and results stay within the client’s local environment. Any optional cloud services use only the content and data flows agreed before activation.', it: 'Autenticazione cifrata con credenziali tenute fuori da ogni log. Nella configurazione standard, i dataset e i risultati rimangono nell’ambiente locale del cliente. Eventuali servizi cloud opzionali utilizzano esclusivamente i contenuti e i flussi concordati prima dell’attivazione.', fr: 'Authentification chiffrée avec identifiants tenus hors de tout journal. Dans la configuration standard, les jeux de données et les résultats restent dans l’environnement local du client. Tout service cloud optionnel n’utilise que les contenus et flux convenus avant l’activation.', de: 'Verschlüsselte Authentifizierung, Anmeldedaten bleiben aus jedem Log heraus. In der Standardkonfiguration verbleiben Datensätze und Ergebnisse in der lokalen Umgebung des Kunden. Etwaige optionale Cloud-Dienste nutzen ausschließlich die vor der Aktivierung vereinbarten Inhalte und Datenflüsse.' } },
+    d: { en: 'Encrypted authentication with credentials kept out of every log. In the Microsoft Store desktop version, datasets, quantitative results, reports and narrative commentary remain within the client’s local environment. Only the minimum technical data required for licence activation may leave the calculation perimeter.', it: 'Autenticazione cifrata con credenziali escluse da ogni log. Nella versione desktop distribuita tramite Microsoft Store, dataset, risultati quantitativi, report e commento narrativo rimangono nell’ambiente locale del cliente. Solo i dati tecnici minimi necessari all’attivazione della licenza possono uscire dal perimetro di calcolo.', fr: 'Authentification chiffrée avec identifiants exclus de tous les journaux. Dans la version desktop distribuée via Microsoft Store, les jeux de données, résultats quantitatifs, rapports et commentaires narratifs restent dans l’environnement local du client. Seules les données techniques minimales nécessaires à l’activation de la licence peuvent quitter le périmètre de calcul.', de: 'Verschlüsselte Authentifizierung, wobei Anmeldedaten aus allen Protokollen ausgeschlossen bleiben. In der über den Microsoft Store vertriebenen Desktopversion verbleiben Datensätze, quantitative Ergebnisse, Berichte und narrative Kommentare in der lokalen Umgebung des Kunden. Nur die für die Lizenzaktivierung erforderlichen minimalen technischen Daten dürfen den Berechnungsperimeter verlassen.' } },
   { i: '⌭',
     t: { en: 'The AI interprets. The engine calculates.', it: 'L\u2019AI interpreta. Il motore calcola.', fr: 'L\u2019IA interprète. Le moteur calcule.', de: 'Die KI interpretiert. Die Engine berechnet.' },
     d: { en: 'Forecasts, intervals, probabilities, weights and metrics are produced exclusively by Previsio\u2019s quantitative engine. In the standard configuration, the narrative commentary is generated locally via Ollama using only results already computed by the platform. The AI is never a source of numbers.', it: 'Forecast, intervalli, probabilità, pesi e metriche sono prodotti esclusivamente dal motore quantitativo di Previsio. Nella configurazione standard, il commento narrativo viene generato localmente tramite Ollama utilizzando soltanto risultati già calcolati dalla piattaforma. L\u2019AI non è mai una fonte di numeri.', fr: 'Prévisions, intervalles, probabilités, poids et métriques sont produits exclusivement par le moteur quantitatif de Previsio. Dans la configuration standard, le commentaire narratif est généré localement via Ollama en utilisant uniquement des résultats déjà calculés par la plateforme. L\u2019IA n\u2019est jamais une source de chiffres.', de: 'Prognosen, Intervalle, Wahrscheinlichkeiten, Gewichte und Metriken werden ausschließlich von Previsios quantitativer Engine erzeugt. In der Standardkonfiguration wird der narrative Kommentar lokal über Ollama generiert und nutzt dabei nur bereits von der Plattform berechnete Ergebnisse. Die KI ist niemals eine Quelle für Zahlen.' } }];
@@ -2766,7 +2766,7 @@ function Trust() {
 }
 
 /* ============================================================
-   AI PROCESSING — local Ollama disclosure + optional cloud config
+   AI PROCESSING — local Ollama disclosure
    ============================================================ */
 function AIProcessing() {
   const { lang } = useLanguage();
@@ -2788,22 +2788,6 @@ function AIProcessing() {
     detailQ: { en: 'What information does the AI component read?', it: 'Quali informazioni legge la componente AI?', fr: 'Quelles informations la composante IA reçoit-elle ?', de: 'Welche Informationen liest die KI-Komponente?' },
     detailA: { en: 'The model may receive the analyzed ticker, the reference and target dates, the point forecast, the last available close, the horizon, the prediction intervals, the publishable probabilities and the diagnostics needed for the explanation. All these elements have already been calculated and checked by the quantitative engine before the text is generated.', it: 'Il modello può ricevere il ticker analizzato, le date di riferimento e obiettivo, la previsione centrale, l\u2019ultima chiusura disponibile, l\u2019orizzonte, gli intervalli di predizione, le probabilità pubblicabili e le diagnostiche necessarie alla spiegazione. Tutti questi elementi sono già stati calcolati e controllati dal motore quantitativo prima della generazione del testo.', fr: 'Le modèle peut recevoir le ticker analysé, les dates de référence et cible, la prévision centrale, la dernière clôture disponible, l\u2019horizon, les intervalles de prédiction, les probabilités publiables et les diagnostics nécessaires à l\u2019explication. Tous ces éléments ont déjà été calculés et contrôlés par le moteur quantitatif avant la génération du texte.', de: 'Das Modell kann den analysierten Ticker, das Referenz- und Zieldatum, die Punktprognose, den letzten verfügbaren Schlusskurs, den Horizont, die Prognoseintervalle, die veröffentlichbaren Wahrscheinlichkeiten und die für die Erklärung nötige Diagnostik erhalten. Alle diese Elemente wurden bereits vom quantitativen Engine berechnet und geprüft, bevor der Text erzeugt wird.' },
     detailNote: { en: 'The AI receives values that have already been calculated in order to describe them; it does not originate, recalculate or modify them.', it: 'L\u2019AI riceve valori già calcolati per descriverli, ma non li origina, non li ricalcola e non li modifica.', fr: 'L\u2019IA reçoit des valeurs déjà calculées pour les décrire ; elle ne les crée pas, ne les recalcule pas et ne les modifie pas.', de: 'Die KI erhält bereits berechnete Werte, um sie zu beschreiben; sie erzeugt, berechnet oder verändert sie nicht neu.' }
-  };
-
-  const cloud = {
-    eyebrow: { en: 'OPTIONAL CONFIGURATION · ADDITIONAL SERVICE', it: 'CONFIGURAZIONE OPZIONALE · SERVIZIO AGGIUNTIVO', fr: 'CONFIGURATION OPTIONNELLE · SERVICE SUPPLÉMENTAIRE', de: 'OPTIONALE KONFIGURATION · ZUSATZLEISTUNG' },
-    h: { en: 'Cloud AI provider chosen by the client.', it: 'Provider AI cloud scelto dal cliente.', fr: 'Fournisseur d\u2019IA cloud choisi par le client.', de: 'Vom Kunden gewählter Cloud-KI-Anbieter.' },
-    b: { en: 'On request, Previsio can evaluate and set up a dedicated integration with a cloud AI provider selected or approved by the client, subject to technical and contractual feasibility review. This configuration is separate from the standard local mode and may involve an additional cost.', it: 'Su richiesta, Previsio può valutare e predisporre un\u2019integrazione dedicata con un provider AI cloud selezionato o approvato dal cliente, previa verifica di fattibilità tecnica e contrattuale. Questa configurazione è separata dalla modalità locale standard e può comportare un costo aggiuntivo.', fr: 'Sur demande, Previsio peut évaluer et mettre en place une intégration dédiée avec un fournisseur d\u2019IA cloud sélectionné ou approuvé par le client, sous réserve d\u2019une vérification de faisabilité technique et contractuelle. Cette configuration est distincte du mode local standard et peut entraîner un coût supplémentaire.', de: 'Auf Anfrage kann Previsio eine dedizierte Integration mit einem vom Kunden ausgewählten oder genehmigten Cloud-KI-Anbieter prüfen und einrichten, vorbehaltlich einer technischen und vertraglichen Machbarkeitsprüfung. Diese Konfiguration ist von der lokalen Standardmethode getrennt und kann zusätzliche Kosten verursachen.' },
-    items: [
-    { t: { en: 'Agreed provider', it: 'Provider concordato', fr: 'Fournisseur convenu', de: 'Vereinbarter Anbieter' },
-      d: { en: 'The provider, model and endpoint are defined together with the client based on technical, security and compliance requirements.', it: 'Il provider, il modello e l\u2019endpoint vengono definiti insieme al cliente in base ai requisiti tecnici, di sicurezza e di compliance.', fr: 'Le fournisseur, le modèle et l\u2019endpoint sont définis avec le client en fonction des exigences techniques, de sécurité et de conformité.', de: 'Anbieter, Modell und Endpunkt werden gemeinsam mit dem Kunden auf Basis der technischen, sicherheits- und compliance-relevanten Anforderungen festgelegt.' } },
-    { t: { en: 'Documented data flow', it: 'Flusso dati documentato', fr: 'Flux de données documenté', de: 'Dokumentierter Datenfluss' },
-      d: { en: 'Before activation, the transmitted content, retention conditions, processing location and the provider\u2019s applicable terms are specified.', it: 'Prima dell\u2019attivazione vengono specificati i contenuti trasmessi, le condizioni di conservazione, la localizzazione del trattamento e i termini applicabili del provider.', fr: 'Avant l\u2019activation, les contenus transmis, les conditions de conservation, la localisation du traitement et les conditions applicables du fournisseur sont précisés.', de: 'Vor der Aktivierung werden die übermittelten Inhalte, die Aufbewahrungsbedingungen, der Verarbeitungsort und die geltenden Bedingungen des Anbieters festgelegt.' } },
-    { t: { en: 'Unchanged engine', it: 'Motore invariato', fr: 'Moteur inchangé', de: 'Unveränderte Engine' },
-      d: { en: 'Even in the cloud configuration, forecasts, probabilities, intervals, weights and metrics continue to be calculated exclusively by Previsio\u2019s quantitative engine.', it: 'Anche nella configurazione cloud, forecast, probabilità, intervalli, pesi e metriche continuano a essere calcolati esclusivamente dal motore quantitativo di Previsio.', fr: 'Même dans la configuration cloud, les prévisions, probabilités, intervalles, poids et métriques continuent d\u2019être calculés exclusivement par le moteur quantitatif de Previsio.', de: 'Auch in der Cloud-Konfiguration werden Prognosen, Wahrscheinlichkeiten, Intervalle, Gewichte und Metriken weiterhin ausschließlich von Previsios quantitativer Engine berechnet.' } },
-    { t: { en: 'Separate cost', it: 'Costo separato', fr: 'Coût séparé', de: 'Separate Kosten' },
-      d: { en: 'Any use of cloud providers, dedicated infrastructure, API consumption and configuration work is not included in the standard price and is defined in the commercial proposal.', it: 'L\u2019eventuale utilizzo di provider cloud, infrastrutture dedicate, consumo API e attività di configurazione non è incluso nel prezzo standard e viene definito nella proposta commerciale.', fr: 'L\u2019utilisation éventuelle de fournisseurs cloud, d\u2019infrastructures dédiées, de consommation d\u2019API et d\u2019activités de configuration n\u2019est pas incluse dans le prix standard et est définie dans la proposition commerciale.', de: 'Eine etwaige Nutzung von Cloud-Anbietern, dedizierter Infrastruktur, API-Verbrauch und Konfigurationsarbeiten ist nicht im Standardpreis enthalten und wird im kommerziellen Angebot festgelegt.' } }]
-
   };
 
   const itemGrid = { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginTop: 24 };
@@ -2837,21 +2821,6 @@ function AIProcessing() {
               <p style={{ fontSize: 13.5, color: 'var(--text-muted)', lineHeight: 1.7, margin: 0, maxWidth: '66ch' }}>{L(local.detailA)}</p>
               <p style={{ fontSize: 13.5, color: 'var(--gold-light)', lineHeight: 1.7, margin: '12px 0 0', maxWidth: '66ch' }}>{L(local.detailNote)}</p>
             </div>}
-          </div>
-        </div>
-
-        <div className="card" style={{ maxWidth: 980, margin: '28px auto 0', padding: 'clamp(24px, 3.6vw, 36px)', background: 'transparent' }}>
-          <span className="eyebrow no-rule" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-faint)', letterSpacing: '0.2em' }}>{L(cloud.eyebrow)}</span>
-          <h4 style={{ fontSize: 'clamp(18px, 1.8vw, 22px)', fontWeight: 500, margin: '12px 0 14px', color: 'var(--text-main)' }}>{L(cloud.h)}</h4>
-          <p style={{ fontSize: 13.5, color: 'var(--text-muted)', lineHeight: 1.7, margin: 0, maxWidth: '68ch' }}>{L(cloud.b)}</p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, marginTop: 22 }}>
-            {cloud.items.map((it, i) =>
-            <div key={i} style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: 12 }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-main)', marginBottom: 6 }}>{L(it.t)}</div>
-              <p style={{ fontSize: 12.5, color: 'var(--text-muted)', margin: 0, lineHeight: 1.6 }}>{L(it.d)}</p>
-            </div>
-            )}
           </div>
         </div>
 
@@ -4088,6 +4057,8 @@ function App() {
       <GlobalVideoBackground />
       <Nav />
       <Hero />
+      <DashboardPreview />
+      <ReportDownload />
 
       <ModelsPipeline />
       <Features />
@@ -4096,8 +4067,6 @@ function App() {
       <AdvancedCapabilities />
       <PerformanceSnapshot />
       <UseCases />
-      <DashboardPreview />
-      <ReportDownload />
       <DataPrivacy />
       <Trust />
       <AIProcessing />
