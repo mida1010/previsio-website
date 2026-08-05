@@ -1,71 +1,141 @@
-/* PREVISIO website-only chatbot language contract.
-   Intercepts only chatbot start requests and preserves every other fetch call. */
 (function installPrevisioChatLanguageContract() {
+  'use strict';
+
   if (window.__PREVISIO_CHAT_LANGUAGE_CONTRACT__) return;
   window.__PREVISIO_CHAT_LANGUAGE_CONTRACT__ = true;
 
-  var originalFetch = window.fetch.bind(window);
+  var nativeFetch = window.fetch.bind(window);
+  var supported = ['en', 'it', 'fr', 'de'];
   var languageNames = {
     en: 'English',
-    it: 'Italian (italiano)',
-    fr: 'French (français)',
-    de: 'German (Deutsch)'
-  };
-  var languageContracts = {
-    en: 'MANDATORY OUTPUT LANGUAGE: ENGLISH. Write the complete final answer in English only, including headings, bullet points, warnings and closing text. Do not answer in Italian, French or German, even if the retrieved context or other instructions use another language.',
-    it: 'LINGUA DI RISPOSTA OBBLIGATORIA: ITALIANO. Scrivi l’intera risposta finale esclusivamente in italiano, inclusi titoli, elenchi, avvertenze e testo conclusivo. Non rispondere in inglese, francese o tedesco, anche se il contesto recuperato o altre istruzioni usano un’altra lingua.',
-    fr: 'LANGUE DE SORTIE OBLIGATOIRE : FRANÇAIS. Rédigez la réponse finale complète uniquement en français, y compris les titres, listes, avertissements et le texte de conclusion. Ne répondez pas en italien, en anglais ou en allemand, même si le contexte récupéré ou d’autres instructions utilisent une autre langue.',
-    de: 'VERBINDLICHE AUSGABESPRACHE: DEUTSCH. Schreiben Sie die vollständige endgültige Antwort ausschließlich auf Deutsch, einschließlich Überschriften, Aufzählungen, Hinweise und Abschlusstext. Antworten Sie nicht auf Italienisch, Englisch oder Französisch, auch wenn der abgerufene Kontext oder andere Anweisungen eine andere Sprache verwenden.'
+    it: 'Italian',
+    fr: 'French',
+    de: 'German'
   };
 
-  function normaliseLanguage(value) {
-    var raw = String(value || '').trim().toLowerCase();
-    if (raw.indexOf('it') === 0 || raw.indexOf('ital') >= 0) return 'it';
-    if (raw.indexOf('fr') === 0 || raw.indexOf('french') >= 0 || raw.indexOf('français') >= 0) return 'fr';
-    if (raw.indexOf('de') === 0 || raw.indexOf('german') >= 0 || raw.indexOf('deutsch') >= 0) return 'de';
+  var disclosurePatterns = [
+    /\n+\s*(?:\*\*|##+\s*|__|\*)?\s*(?:fonti(?:\s+interne(?:\s+usate)?)?|riferimenti|bibliografia|references|sources?\s+used|sources?|quellen|sources\s+internes)\s*(?:\*\*|__)?\s*[:.\-]?\s*\n[\s\S]*$/gi,
+    /^\s*(?:la\s+)?risposta\s+(?:si\s+basa|[eè]\s+basata)\s+sulle?\s+fonti\s+(?:interne\s+)?recuperate\.?\s*$/gim,
+    /^\s*(?:questa\s+)?risposta\s+e\s+stata\s+generata\s+(?:usando|sulla\s+base\s+di)\s+fonti\s+interne\.?\s*$/gim,
+    /^\s*(?:the\s+)?answer\s+is\s+based\s+on\s+(?:the\s+)?(?:retrieved\s+)?internal\s+sources\.?\s*$/gim,
+    /^\s*(?:this\s+)?response\s+(?:is|was)\s+(?:based|generated)\s+on\s+(?:the\s+)?(?:retrieved\s+)?internal\s+sources\.?\s*$/gim,
+    /^\s*(?:la\s+)?r[eé]ponse\s+(?:est|se\s+fonde)\s+(?:bas[eé]e\s+)?sur\s+(?:les\s+)?sources\s+internes\s+r[eé]cup[eé]r[eé]es\.?\s*$/gim,
+    /^\s*(?:diese\s+)?antwort\s+basiert\s+auf\s+(?:den\s+)?abgerufenen\s+internen\s+quellen\.?\s*$/gim,
+    /^\s*(?:fonti(?:\s+interne(?:\s+usate)?)?|riferimenti|bibliografia|references|sources?\s+used|sources?|quellen|sources\s+internes)\s*[:.\-]?\s*$/gim
+  ];
+
+  function selectedLanguage(payload) {
+    var candidates = [
+      payload && payload.language,
+      payload && payload.lang,
+      localStorage.getItem('previsio_lang'),
+      localStorage.getItem('previsioLang'),
+      document.documentElement.lang
+    ];
+
+    for (var i = 0; i < candidates.length; i += 1) {
+      var value = String(candidates[i] || '').trim().toLowerCase().slice(0, 2);
+      if (supported.indexOf(value) !== -1) return value;
+    }
     return 'en';
   }
 
-  function buildQuestion(question, language) {
-    var text = String(question || '').trim();
-    if (!text || text.indexOf('[MANDATORY RESPONSE CONTRACT]') >= 0) return text;
-    var contract = languageContracts[language] || languageContracts.en;
-    return (
-      '[MANDATORY RESPONSE CONTRACT]\n' +
-      contract + '\n' +
-      'Preserve the factual meaning of the approved product documentation. Do not invent numbers, calculations or features, and do not provide investment recommendations.\n\n' +
-      '[USER QUESTION]\n' + text + '\n\n' +
-      '[FINAL OUTPUT LANGUAGE]\n' + contract
-    );
+  function sanitizeAnswer(value) {
+    var text = String(value || '');
+    disclosurePatterns.forEach(function(pattern) {
+      text = text.replace(pattern, '');
+    });
+
+    text = text
+      .replace(/\[\s*(?:fonte|source|quelle)\s+\d+\s*\]/gi, '')
+      .replace(/\(\s*(?:fonte|source|quelle)\s+\d+\s*\)/gi, '')
+      .replace(/\b(?:fonte|source|quelle)\s+\d+\b/gi, '')
+      .replace(/[ \t]+\n/g, '\n')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+
+    return text;
   }
 
-  window.fetch = function previsioLanguageAwareFetch(input, init) {
+  function isChatStart(url, method) {
+    return method === 'POST' && /\/api\/chat\/start(?:\?|$)/i.test(url);
+  }
+
+  function isChatStatus(url, method) {
+    return method === 'GET' && /\/api\/chat\/status\//i.test(url);
+  }
+
+  async function sanitizeStatusResponse(response) {
+    var contentType = response.headers.get('content-type') || '';
+    if (!response.ok || contentType.indexOf('application/json') === -1) return response;
+
+    var data;
     try {
-      var url = typeof input === 'string' ? input : input && input.url;
-      var isChatStart = /\/api\/chat\/start(?:[?#]|$)/i.test(String(url || ''));
-      if (isChatStart && init && String(init.method || 'GET').toUpperCase() === 'POST' && typeof init.body === 'string') {
-        var payload = JSON.parse(init.body);
-        var language = normaliseLanguage(
-          payload.language || payload.lang || payload.response_language
-        );
-
-        payload.question = buildQuestion(payload.question, language);
-        payload.language = language;
-        payload.lang = language;
-        payload.response_language = languageNames[language] || languageNames.en;
-
-        var headers = new Headers(init.headers || {});
-        headers.set('Accept-Language', language);
-
-        init = Object.assign({}, init, {
-          headers: headers,
-          body: JSON.stringify(payload)
-        });
-      }
+      data = await response.clone().json();
     } catch (error) {
-      console.error('[Previsio] Chat language contract could not be applied.', error);
+      return response;
     }
 
-    return originalFetch(input, init);
+    if (!data || data.status !== 'completed') return response;
+    if (typeof data.answer === 'string') data.answer = sanitizeAnswer(data.answer);
+    if (typeof data.response === 'string') data.response = sanitizeAnswer(data.response);
+
+    var headers = new Headers(response.headers);
+    headers.delete('content-length');
+    return new Response(JSON.stringify(data), {
+      status: response.status,
+      statusText: response.statusText,
+      headers: headers
+    });
+  }
+
+  window.fetch = async function previsioLanguageFetch(input, init) {
+    var request = input instanceof Request ? input : null;
+    var url = request ? request.url : String(input || '');
+    var method = String((init && init.method) || (request && request.method) || 'GET').toUpperCase();
+
+    if (isChatStatus(url, method)) {
+      return sanitizeStatusResponse(await nativeFetch(input, init));
+    }
+
+    if (!isChatStart(url, method)) return nativeFetch(input, init);
+
+    var rawBody = init && init.body;
+    if (rawBody == null && request) {
+      try {
+        rawBody = await request.clone().text();
+      } catch (error) {
+        return nativeFetch(input, init);
+      }
+    }
+
+    var payload;
+    try {
+      payload = JSON.parse(String(rawBody || '{}'));
+    } catch (error) {
+      return nativeFetch(input, init);
+    }
+
+    if (!payload || typeof payload.question !== 'string') {
+      return nativeFetch(input, init);
+    }
+
+    var language = selectedLanguage(payload);
+    payload.language = language;
+    payload.lang = language;
+    payload.response_language = languageNames[language];
+
+    var headers = new Headers((init && init.headers) || (request && request.headers) || undefined);
+    headers.set('Content-Type', 'application/json');
+    headers.set('Accept-Language', language);
+
+    var nextInit = Object.assign({}, init || {}, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(payload)
+    });
+
+    if (request) return nativeFetch(new Request(request, nextInit));
+    return nativeFetch(input, nextInit);
   };
 })();
