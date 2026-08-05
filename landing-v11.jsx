@@ -66,6 +66,13 @@
       console.error('[Previsio] Founder education layer failed to load.', error);
     })
     .then(function() {
+      return appendScript('chat-language-override.js?v=20260805-1', {
+        'data-previsio-layer': 'chat-language'
+      }).catch(function(error) {
+        console.error('[Previsio] Chat language layer failed to load.', error);
+      });
+    })
+    .then(function() {
       return appendScript('landing-v11.bootstrap.js?v=20260805', {
         'data-previsio-bootstrap': 'current'
       });
