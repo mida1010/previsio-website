@@ -1,0 +1,21 @@
+{
+  "name": "previsio-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-production.mjs",
+    "verify:production": "node scripts/verify-production.mjs"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "cheerio": "1.1.2",
+    "esbuild": "0.25.9"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
