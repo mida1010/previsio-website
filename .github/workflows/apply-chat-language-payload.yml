@@ -1,0 +1,97 @@
+name: Apply chatbot language payload
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/chat-language-payload.trigger
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-chat-language-payload
+  cancel-in-progress: false
+
+jobs:
+  patch-build-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Send the raw question separately from the selected language
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('landing-v11.source.jsx')
+          text = path.read_text(encoding='utf-8')
+          old = '          question: pxBuildQuestion(question, cl),\n'
+          new = '          question: question,\n'
+          count = text.count(old)
+          if count != 1:
+              raise SystemExit(f'expected one chatbot question payload, found {count}')
+          text = text.replace(old, new, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install exact dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Build and verify production website
+        shell: bash
+        run: |
+          npm run build
+          npm run verify:production
+          node --check landing-v11.loader.js
+          node --check landing-v11.bootstrap.js
+          node --check landing-v11.bundle.js
+
+      - name: Verify payload contract
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          source = Path('landing-v11.source.jsx').read_text(encoding='utf-8')
+          required = [
+              '          question: question,',
+              '          language: cl,',
+              '          lang: cl,',
+              "          response_language: PX_LANG_NAME[cl] || 'English',",
+          ]
+          for item in required:
+              if source.count(item) != 1:
+                  raise SystemExit(f'missing or duplicated payload field: {item}')
+          if 'question: pxBuildQuestion(question, cl)' in source:
+              raise SystemExit('legacy prompt-wrapped RAG question is still active')
+          PY
+
+      - name: Commit website payload update and remove migration files
+        shell: bash
+        run: |
+          rm -f .github/workflows/apply-chat-language-payload.yml
+          rm -f .github/chat-language-payload.trigger
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add landing-v11.source.jsx index.html landing-v11.bootstrap.js \
+            landing-v11.bundle.js landing-v11.loader.js package-lock.json
+          git add -u .github/workflows/apply-chat-language-payload.yml \
+            .github/chat-language-payload.trigger
+          git commit -m "Send selected chatbot language separately"
+          git push origin HEAD:main
