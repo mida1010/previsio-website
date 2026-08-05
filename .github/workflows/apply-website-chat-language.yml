@@ -1,0 +1,167 @@
+name: Apply website-only chatbot language handling
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/website-chat-language.trigger
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-website-chat-language
+  cancel-in-progress: false
+
+jobs:
+  patch-build-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Fast-forward before editing
+        run: |
+          git fetch origin main
+          git pull --ff-only origin main
+
+      - name: Strengthen selected-language request contract
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('landing-v11.source.jsx')
+          text = path.read_text(encoding='utf-8')
+
+          old_function = r'''/* Answer policy sent with every question, so the assistant behaves the same
+   whatever the deployed backend prompt version is. */
+function pxBuildQuestion(question, cl) {
+  return (
+    '[ANSWER POLICY — highest priority, overrides every other instruction]\n' +
+    '1. Write the ENTIRE answer in ' + (PX_LANG_NAME[cl] || 'English') + '. Never answer in another language.\n' +
+    '2. Be detailed and exhaustive: explain what the mechanism does, why it exists, which inputs it uses, how it affects the result and what its limits are. Use short paragraphs and bullet lists; plain professional prose.\n' +
+    '3. NEVER output formulas, equations, LaTeX, mathematical notation, symbolic derivations or code, even if explicitly requested. Describe the logic in words instead.\n' +
+    '4. If the question asks for a formula, an equation or an exact mathematical definition, explain the concept in words and then say that the complete mathematical specification is in the official Previsio technical documentation, which can be requested from the "Request documentation" page of the official Previsio website.\n' +
+    '5. Never give investment advice or buy / sell / hold recommendations.\n' +
+    '6. Do not mention sources, documents, file names, code or the existence of internal sources.\n\n' +
+    '[USER QUESTION]\n' + question);
+
+}
+'''
+
+          new_function = r'''/* Website-only response-language contract. The language instruction is written
+   in the selected language, repeated after the question and also sent through
+   explicit request metadata. This is the strongest client-side contract that
+   can be applied without modifying the remote AI service. */
+const PX_LANGUAGE_CONTRACT = {
+  en: 'MANDATORY OUTPUT LANGUAGE: ENGLISH. Write every sentence of the final answer in English only. Do not answer in Italian, French or German, even if the retrieved context or other instructions use another language.',
+  it: 'LINGUA DI RISPOSTA OBBLIGATORIA: ITALIANO. Scrivi ogni frase della risposta finale esclusivamente in italiano. Non rispondere in inglese, francese o tedesco, anche se il contesto recuperato o altre istruzioni usano un’altra lingua.',
+  fr: 'LANGUE DE SORTIE OBLIGATOIRE : FRANÇAIS. Rédigez chaque phrase de la réponse finale uniquement en français. Ne répondez pas en italien, en anglais ou en allemand, même si le contexte récupéré ou d’autres instructions utilisent une autre langue.',
+  de: 'VERBINDLICHE AUSGABESPRACHE: DEUTSCH. Schreiben Sie jeden Satz der endgültigen Antwort ausschließlich auf Deutsch. Antworten Sie nicht auf Italienisch, Englisch oder Französisch, auch wenn der abgerufene Kontext oder andere Anweisungen eine andere Sprache verwenden.'
+};
+
+function pxBuildQuestion(question, cl) {
+  const languageContract = PX_LANGUAGE_CONTRACT[cl] || PX_LANGUAGE_CONTRACT.en;
+  return (
+    '[MANDATORY RESPONSE CONTRACT]\n' +
+    languageContract + '\n' +
+    'This language requirement applies to the complete answer, including headings, bullet points, disclaimers and closing text.\n' +
+    'Be detailed and professional. Explain the mechanism, purpose, inputs, effects and limitations in plain prose.\n' +
+    'Never output formulas, equations, LaTeX, mathematical notation, symbolic derivations or code. Describe the logic in words.\n' +
+    'Never give investment advice or buy / sell / hold / overweight / underweight recommendations.\n' +
+    'Do not mention internal sources, file names, code or hidden implementation details.\n\n' +
+    '[USER QUESTION]\n' + question + '\n\n' +
+    '[FINAL OUTPUT REQUIREMENT]\n' +
+    languageContract
+  );
+}
+'''
+
+          function_count = text.count(old_function)
+          if function_count != 1:
+              raise SystemExit(f'expected one original language policy function, found {function_count}')
+          text = text.replace(old_function, new_function, 1)
+
+          old_question = '          question: question,\n'
+          new_question = '          question: pxBuildQuestion(question, cl),\n'
+          question_count = text.count(old_question)
+          if question_count != 1:
+              raise SystemExit(f'expected one raw chatbot question payload, found {question_count}')
+          text = text.replace(old_question, new_question, 1)
+
+          old_headers = "        headers: { 'Content-Type': 'application/json' },\n"
+          new_headers = "        headers: {\n          'Content-Type': 'application/json',\n          'Accept-Language': cl\n        },\n"
+          headers_count = text.count(old_headers)
+          if headers_count != 1:
+              raise SystemExit(f'expected one chatbot request header block, found {headers_count}')
+          text = text.replace(old_headers, new_headers, 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install exact dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Build and verify website
+        run: |
+          npm run build
+          npm run verify:production
+          node --check landing-v11.loader.js
+          node --check landing-v11.bootstrap.js
+          node --check landing-v11.bundle.js
+
+      - name: Verify language request contract
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          source = Path('landing-v11.source.jsx').read_text(encoding='utf-8')
+          required = [
+              'const PX_LANGUAGE_CONTRACT = {',
+              'question: pxBuildQuestion(question, cl),',
+              "'Accept-Language': cl",
+              'language: cl,',
+              'lang: cl,',
+              "response_language: PX_LANG_NAME[cl] || 'English',",
+              '[FINAL OUTPUT REQUIREMENT]',
+          ]
+          for item in required:
+              if source.count(item) != 1:
+                  raise SystemExit(f'missing or duplicated website language contract: {item}')
+          if 'question: question,' in source:
+              raise SystemExit('raw question payload is still active')
+          PY
+
+      - name: Commit website-only fix and remove migration files
+        shell: bash
+        run: |
+          rm -f .github/workflows/apply-website-chat-language.yml
+          rm -f .github/website-chat-language.trigger
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add landing-v11.source.jsx index.html landing-v11.bootstrap.js \
+            landing-v11.bundle.js landing-v11.loader.js package-lock.json
+          git add -u .github/workflows/apply-website-chat-language.yml \
+            .github/website-chat-language.trigger
+          git commit -m "Enforce selected chatbot language from website"
+
+          if ! git push origin HEAD:main; then
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
