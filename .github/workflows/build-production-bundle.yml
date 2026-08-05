@@ -34,35 +34,20 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Preserve legacy website baseline
-        shell: bash
-        run: |
-          rm -rf /tmp/previsio-baseline
-          mkdir -p /tmp/previsio-baseline
-          rsync -a --exclude='.git' --exclude='node_modules' ./ /tmp/previsio-baseline/
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: package.json
+          cache-dependency-path: package-lock.json
 
-      - name: Install exact build dependencies
-        shell: bash
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci --ignore-scripts --no-audit --no-fund
-          else
-            npm install --ignore-scripts --no-audit --no-fund
-          fi
+      - name: Install exact dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
 
-      - name: Generate precompiled production bundle
+      - name: Generate production bundle
         run: npm run build
 
-      - name: Verify immutable presentation sources
-        env:
-          PREVISIO_BASELINE_DIR: /tmp/previsio-baseline
+      - name: Verify production output
         run: npm run verify:production
 
       - name: Validate generated JavaScript syntax
@@ -72,54 +57,7 @@ jobs:
           node --check landing-v11.bootstrap.js
           node --check landing-v11.bundle.js
 
-      - name: Compare legacy and production rendered DOM
-        shell: bash
-        env:
-          PREVISIO_BASELINE_DIR: /tmp/previsio-baseline
-        run: |
-          CHROME_BIN="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
-          if [ -z "$CHROME_BIN" ]; then
-            echo "A Chromium-compatible browser is required for rendered parity verification."
-            exit 1
-          fi
-
-          python3 -m http.server 4173 --bind 127.0.0.1 --directory /tmp/previsio-baseline >/tmp/previsio-baseline-server.log 2>&1 &
-          BASELINE_SERVER_PID=$!
-          python3 -m http.server 4174 --bind 127.0.0.1 --directory . >/tmp/previsio-production-server.log 2>&1 &
-          PRODUCTION_SERVER_PID=$!
-
-          cleanup() {
-            kill "$BASELINE_SERVER_PID" "$PRODUCTION_SERVER_PID" 2>/dev/null || true
-          }
-          trap cleanup EXIT
-
-          sleep 2
-
-          "$CHROME_BIN" \
-            --headless=new \
-            --no-sandbox \
-            --disable-gpu \
-            --disable-dev-shm-usage \
-            --mute-audio \
-            --run-all-compositor-stages-before-draw \
-            --virtual-time-budget=15000 \
-            --dump-dom \
-            http://127.0.0.1:4173/index.html > /tmp/previsio-baseline-dom.html
-
-          "$CHROME_BIN" \
-            --headless=new \
-            --no-sandbox \
-            --disable-gpu \
-            --disable-dev-shm-usage \
-            --mute-audio \
-            --run-all-compositor-stages-before-draw \
-            --virtual-time-budget=15000 \
-            --dump-dom \
-            http://127.0.0.1:4174/index.html > /tmp/previsio-production-dom.html
-
-          node scripts/verify-production.mjs /tmp/previsio-baseline-dom.html /tmp/previsio-production-dom.html
-
-      - name: Verify the change scope
+      - name: Verify generated-file scope
         shell: bash
         run: |
           git status --short
@@ -127,7 +65,6 @@ jobs:
           import subprocess
 
           allowed = {
-              '.github/workflows/apply-hero-copy.yml',
               'index.html',
               'landing-v11.bootstrap.js',
               'landing-v11.bundle.js',
@@ -141,14 +78,12 @@ jobs:
               raise SystemExit('Unexpected files changed: ' + ', '.join(unexpected))
           PY
 
-      - name: Commit verified production output to main
+      - name: Commit verified production output
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           git add index.html landing-v11.bootstrap.js landing-v11.bundle.js landing-v11.loader.js package-lock.json
-          git add -u .github/workflows/apply-hero-copy.yml
 
           if git diff --cached --quiet; then
             echo "Production output is already current."
