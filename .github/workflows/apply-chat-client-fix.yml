@@ -1,0 +1,39 @@
+name: Apply chatbot client language and disclosure fix
+
+on:
+  push:
+    paths:
+      - .github/chat-client-fix.trigger
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Apply controlled patch
+        run: python .github/scripts/apply_chat_client_fix.py
+      - name: Validate client runtime
+        shell: bash
+        run: |
+          node --check chat-language-override.js
+          npm ci
+          npm run verify:production
+      - name: Commit patch and remove runner
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -f .github/workflows/apply-chat-client-fix.yml .github/scripts/apply_chat_client_fix.py .github/chat-client-fix.trigger
+          git add chat-language-override.js landing-v11.loader.js landing-v11.jsx index.html scripts/build-production.mjs scripts/verify-production.mjs
+          git commit -m "Sanitize chatbot disclosures and preserve clean retrieval queries"
+          git push origin HEAD:main
