@@ -1,0 +1,140 @@
+name: Run verified production build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/production-build.trigger
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: previsio-production-build-run
+  cancel-in-progress: false
+
+jobs:
+  build-verify-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Run build, parity verification and publication
+        shell: bash
+        run: |
+          set +e
+          exec > >(tee /tmp/previsio-production-build.log) 2>&1
+
+          rm -rf /tmp/previsio-baseline
+          mkdir -p /tmp/previsio-baseline
+          rsync -a --exclude='.git' --exclude='node_modules' ./ /tmp/previsio-baseline/
+
+          export PREVISIO_BASELINE_DIR=/tmp/previsio-baseline
+
+          npm install --ignore-scripts --no-audit --no-fund
+          BUILD_STATUS=$?
+
+          if [ "$BUILD_STATUS" -eq 0 ]; then
+            npm run build
+            BUILD_STATUS=$?
+          fi
+
+          if [ "$BUILD_STATUS" -eq 0 ]; then
+            npm run verify:production
+            BUILD_STATUS=$?
+          fi
+
+          if [ "$BUILD_STATUS" -eq 0 ]; then
+            node --check landing-v11.loader.js
+            BUILD_STATUS=$?
+          fi
+
+          if [ "$BUILD_STATUS" -eq 0 ]; then
+            node --check landing-v11.bootstrap.js
+            BUILD_STATUS=$?
+          fi
+
+          if [ "$BUILD_STATUS" -eq 0 ]; then
+            node --check landing-v11.bundle.js
+            BUILD_STATUS=$?
+          fi
+
+          if [ "$BUILD_STATUS" -eq 0 ]; then
+            CHROME_BIN="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+            if [ -z "$CHROME_BIN" ]; then
+              echo "A Chromium-compatible browser is required for rendered parity verification."
+              BUILD_STATUS=1
+            else
+              python3 -m http.server 4173 --bind 127.0.0.1 --directory /tmp/previsio-baseline >/tmp/previsio-baseline-server.log 2>&1 &
+              BASELINE_SERVER_PID=$!
+              python3 -m http.server 4174 --bind 127.0.0.1 --directory . >/tmp/previsio-production-server.log 2>&1 &
+              PRODUCTION_SERVER_PID=$!
+              sleep 2
+
+              "$CHROME_BIN" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --mute-audio --run-all-compositor-stages-before-draw --virtual-time-budget=15000 --dump-dom http://127.0.0.1:4173/index.html > /tmp/previsio-baseline-dom.html
+              BASELINE_CHROME_STATUS=$?
+
+              "$CHROME_BIN" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --mute-audio --run-all-compositor-stages-before-draw --virtual-time-budget=15000 --dump-dom http://127.0.0.1:4174/index.html > /tmp/previsio-production-dom.html
+              PRODUCTION_CHROME_STATUS=$?
+
+              kill "$BASELINE_SERVER_PID" "$PRODUCTION_SERVER_PID" 2>/dev/null || true
+
+              if [ "$BASELINE_CHROME_STATUS" -ne 0 ] || [ "$PRODUCTION_CHROME_STATUS" -ne 0 ]; then
+                echo "Browser rendering failed."
+                BUILD_STATUS=1
+              else
+                node scripts/verify-production.mjs /tmp/previsio-baseline-dom.html /tmp/previsio-production-dom.html
+                BUILD_STATUS=$?
+              fi
+            fi
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if [ "$BUILD_STATUS" -ne 0 ]; then
+            cp /tmp/previsio-production-build.log production-build-error.log
+            git add production-build-error.log
+            git commit -m "Record production build failure" || true
+            git push origin HEAD:main || true
+            exit "$BUILD_STATUS"
+          fi
+
+          rm -f production-build-error.log
+
+          python3 - <<'PY'
+          import subprocess
+
+          allowed = {
+              '.github/workflows/apply-hero-copy.yml',
+              'index.html',
+              'landing-v11.bootstrap.js',
+              'landing-v11.bundle.js',
+              'landing-v11.loader.js',
+              'package-lock.json',
+              'production-build-error.log',
+          }
+          output = subprocess.check_output(['git', 'status', '--porcelain'], text=True)
+          changed = {line[3:] for line in output.splitlines() if line.strip()}
+          unexpected = sorted(changed - allowed)
+          if unexpected:
+              raise SystemExit('Unexpected files changed: ' + ', '.join(unexpected))
+          PY
+
+          git add index.html landing-v11.bootstrap.js landing-v11.bundle.js landing-v11.loader.js package-lock.json
+          git add -u .github/workflows/apply-hero-copy.yml production-build-error.log
+
+          if git diff --cached --quiet; then
+            echo "Production output is already current."
+            exit 0
+          fi
+
+          git commit -m "Build production website bundle"
+          git push origin HEAD:main
