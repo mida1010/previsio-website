@@ -132,126 +132,29 @@
     document.head.appendChild(mobileNavigationStyle);
   }
 
-  const response = await fetch(sourceUrl, { cache: 'no-cache' });
-
-  if (!response.ok) {
-    throw new Error(`Unable to load ${sourceUrl}: HTTP ${response.status}`);
-  }
-
-  const source = await response.text();
-
-  const legacyNavigationOrder = `  const links = [
-  { href: '#engine', label: nl[0] },
-  { href: '#features', label: nl[1] },
-  { href: '#analytics', label: nl[2] },
-  { href: '#validation', label: nl[3] },
-  { href: '#use-cases', label: nl[4] },
-  { href: '#dashboard', label: nl[5] },
-  { href: '#pricing', label: nl[6] },
-  { href: '#about', label: nl[7] }];`;
-
-  const renderedNavigationOrder = `  const links = [
-  { href: '#dashboard', label: nl[5] },
-  { href: '#engine', label: nl[0] },
-  { href: '#features', label: nl[1] },
-  { href: '#analytics', label: nl[2] },
-  { href: '#validation', label: nl[3] },
-  { href: '#use-cases', label: nl[4] },
-  { href: '#pricing', label: nl[6] },
-  { href: '#about', label: nl[7] }];`;
-
-  const legacySectionOrder = `    const sectionIds = ['engine', 'features', 'analytics', 'validation', 'use-cases', 'dashboard', 'pricing', 'about'];`;
-  const renderedSectionOrder = `    const sectionIds = ['dashboard', 'engine', 'features', 'analytics', 'validation', 'use-cases', 'pricing', 'about'];`;
-
-  const navigationOccurrences = source.split(legacyNavigationOrder).length - 1;
-  const sectionOrderOccurrences = source.split(legacySectionOrder).length - 1;
-
-  if (navigationOccurrences !== 1 || sectionOrderOccurrences !== 1) {
-    throw new Error(
-      `Navbar order compatibility check failed: links=${navigationOccurrences}, sections=${sectionOrderOccurrences}.`
-    );
-  }
-
-  let correctedSource = source
-    .replace(legacyNavigationOrder, renderedNavigationOrder)
-    .replace(legacySectionOrder, renderedSectionOrder);
-
-  const founderBioUpdates = [
-    {
-      from: "I bring to this project a background in Business Analytics for Management at LIUC Business University, with a focus on financial analysis, statistical modelling and AI-assisted software development.",
-      to: "I bring to this project a background in Business Analytics for Management at LIUC Business University, with a focus on financial analysis, statistical modelling and AI-assisted software development. I am also pursuing the CFA Program, one of the most prestigious and internationally recognised professional pathways in financial analysis and investment management."
-    },
-    {
-      from: "Porto in questo percorso una formazione in Business Analytics for Management alla LIUC Business University, con un focus su analisi finanziaria, modellistica statistica e sviluppo software assistito da AI.",
-      to: "Porto in questo percorso una formazione in Business Analytics for Management alla LIUC Business University, con un focus su analisi finanziaria, modellistica statistica e sviluppo software assistito da AI. Sto inoltre seguendo il CFA Program, uno dei percorsi di qualificazione professionale più prestigiosi e riconosciuti a livello internazionale nell’analisi finanziaria e nell’investment management."
-    },
-    {
-      from: "J’apporte à ce projet une formation en Business Analytics for Management à la LIUC Business University, avec un accent sur l’analyse financière, la modélisation statistique et le développement logiciel assisté par IA.",
-      to: "J’apporte à ce projet une formation en Business Analytics for Management à la LIUC Business University, avec un accent sur l’analyse financière, la modélisation statistique et le développement logiciel assisté par IA. Je poursuis également le CFA Program, l’un des parcours de qualification professionnelle les plus prestigieux et reconnus à l’échelle internationale en analyse financière et en gestion d’investissement."
-    },
-    {
-      from: "Ich bringe in dieses Projekt eine Ausbildung in Business Analytics for Management an der LIUC Business University ein, mit Fokus auf Finanzanalyse, statistische Modellierung und KI-gestützte Softwareentwicklung.",
-      to: "Ich bringe in dieses Projekt eine Ausbildung in Business Analytics for Management an der LIUC Business University ein, mit Fokus auf Finanzanalyse, statistische Modellierung und KI-gestützte Softwareentwicklung. Darüber hinaus absolviere ich das CFA Program, einen der weltweit renommiertesten und anerkanntesten professionellen Qualifikationswege in Finanzanalyse und Investment Management."
+  await new Promise((resolve, reject) => {
+    const existing = document.querySelector('script[data-previsio-production-bundle="current"]');
+    if (existing) {
+      if (existing.dataset.previsioLoaded === 'true') {
+        resolve();
+        return;
+      }
+      existing.addEventListener('load', resolve, { once: true });
+      existing.addEventListener('error', () => reject(new Error('Unable to load landing-v11.bundle.js')), { once: true });
+      return;
     }
-  ];
 
-  founderBioUpdates.forEach(({ from, to }, index) => {
-    const occurrences = correctedSource.split(from).length - 1;
-    if (occurrences !== 1) {
-      throw new Error(
-        `Founder CFA copy compatibility check failed for language index ${index}: found ${occurrences}.`
-      );
-    }
-    correctedSource = correctedSource.replace(from, to);
+    const script = document.createElement('script');
+    script.src = 'landing-v11.bundle.js?v=20260805';
+    script.async = false;
+    script.dataset.previsioProductionBundle = 'current';
+    script.onload = () => {
+      script.dataset.previsioLoaded = 'true';
+      resolve();
+    };
+    script.onerror = () => reject(new Error('Unable to load landing-v11.bundle.js'));
+    document.head.appendChild(script);
   });
-
-  const legacyScrollSpy = `    const handleScroll = () => {
-      const navH = 72;
-      let current = '';
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const top = el.getBoundingClientRect().top;
-        if (top <= navH + 60) current = id;
-      }
-      setActiveId(current);
-    };`;
-
-  const correctedScrollSpy = `    const handleScroll = () => {
-      const navH = 72;
-      const activationLine = navH + 60;
-      let current = '';
-      let closestTop = Number.NEGATIVE_INFINITY;
-
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-
-        const top = el.getBoundingClientRect().top;
-        if (top <= activationLine && top > closestTop) {
-          closestTop = top;
-          current = id;
-        }
-      }
-
-      setActiveId(current);
-    };`;
-
-  const scrollSpyOccurrences = correctedSource.split(legacyScrollSpy).length - 1;
-  if (scrollSpyOccurrences !== 1) {
-    throw new Error(
-      `Navbar scroll-spy compatibility check failed: expected 1 legacy block, found ${scrollSpyOccurrences}.`
-    );
-  }
-
-  correctedSource = correctedSource.replace(legacyScrollSpy, correctedScrollSpy);
-  const compiledSource = Babel.transform(correctedSource, {
-    presets: ['react'],
-    sourceType: 'script',
-    filename: sourceUrl
-  }).code;
-
-  (0, eval)(compiledSource);
 })().catch((error) => {
   console.error('[Previsio] Website bootstrap failed.', error);
 
