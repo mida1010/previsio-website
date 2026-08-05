@@ -66,7 +66,7 @@
       console.error('[Previsio] Founder education layer failed to load.', error);
     })
     .then(function() {
-      return appendScript('landing-v11.bootstrap.js?v=20260803', {
+      return appendScript('landing-v11.bootstrap.js?v=20260805', {
         'data-previsio-bootstrap': 'current'
       });
     })
