@@ -3821,7 +3821,7 @@ function PrevisioChatBot() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          question: pxBuildQuestion(question, cl),
+          question: question,
           language: cl,
           lang: cl,
           response_language: PX_LANG_NAME[cl] || 'English',
