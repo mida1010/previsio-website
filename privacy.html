@@ -2,651 +2,137 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Privacy Notice — PREVISIO</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="description" content="Previsio privacy notice for the website and Microsoft Store desktop application." />
+<title>Privacy Notice — Previsio</title>
 <style>
-:root {
-  --bg-deep: #050505;
-  --gold-primary: #D4AF37;
-  --gold-light: #F3E5AB;
-  --gold-dim: #8a6d2f;
-  --text-main: #EAEAEA;
-  --text-muted: #888;
-  --text-soft: #B0B0B0;
-  --border-subtle: rgba(255,255,255,0.08);
-  --border-gold: rgba(212,175,55,0.25);
-  --font-ui: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --radius-sm: 8px;
-}
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;background:var(--bg-deep);color:var(--text-main);font-family:var(--font-ui);font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased;}
-
-.topbar{display:flex;justify-content:space-between;align-items:center;padding:18px 36px;background:rgba(5,5,5,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-subtle);position:sticky;top:0;z-index:100;}
-.brand-title{font-size:18px;font-weight:700;letter-spacing:0.08em;color:var(--text-main);}
-.brand-subtitle{font-size:10px;color:var(--gold-primary);text-transform:uppercase;letter-spacing:0.22em;margin-top:4px;opacity:0.85;}
-.topbar-right{display:flex;align-items:center;gap:14px;}
-.back-link{font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-primary);text-decoration:none;border:1px solid var(--gold-dim);padding:8px 16px;border-radius:var(--radius-sm);transition:all .2s ease;}
-.back-link:hover{background:rgba(212,175,55,0.08);border-color:var(--gold-primary);box-shadow:0 0 16px rgba(212,175,55,0.2);}
-
-.lang-select{background:rgba(0,0,0,0.4);border:1px solid var(--border-gold);border-radius:6px;color:var(--gold-primary);font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:0.08em;padding:7px 28px 7px 12px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23D4AF37' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:10px 6px;}
-.lang-select option{background:#141417;color:#eaeaea;}
-
-.legal-doc{max-width:820px;margin:0 auto;padding:56px 28px 96px;}
-.legal-doc header{border-bottom:2px solid var(--gold-primary);padding-bottom:18px;margin-bottom:28px;}
-.legal-doc .brand-doc{font-family:var(--font-mono);letter-spacing:0.18em;text-transform:uppercase;font-size:12px;color:var(--gold-primary);font-weight:700;}
-.legal-doc h1{font-size:26px;margin:10px 0 4px;line-height:1.25;font-weight:600;}
-.legal-doc .meta{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);}
-.legal-doc h2{font-size:18px;margin:34px 0 10px;padding-top:6px;font-weight:600;color:var(--gold-light);}
-.legal-doc h3{font-size:15px;margin:22px 0 6px;font-weight:500;}
-.legal-doc p,.legal-doc li{font-size:15px;color:var(--text-soft);}
-.legal-doc ul,.legal-doc ol{padding-left:22px;}
-.legal-doc li{margin:6px 0;}
-.legal-doc .lead{font-size:15.5px;color:var(--text-soft);background:rgba(212,175,55,0.04);border-left:3px solid var(--gold-primary);padding:14px 18px;margin:22px 0;border-radius:0 6px 6px 0;}
-.legal-doc .ph{background:rgba(255,193,7,0.12);border-bottom:1px dashed rgba(212,175,55,0.5);padding:0 2px;font-family:var(--font-mono);font-size:13px;color:var(--gold-light);}
-.legal-doc .toc{font-family:var(--font-ui);font-size:13.5px;background:rgba(0,0,0,0.3);border:1px solid var(--border-subtle);border-radius:6px;padding:16px 22px;margin:24px 0;}
-.legal-doc .toc strong{color:var(--gold-primary);}
-.legal-doc .toc ol{padding-left:20px;margin:6px 0 0;}
-.legal-doc .toc li{color:var(--text-soft);}
-.legal-doc footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--border-subtle);font-family:var(--font-mono);font-size:12px;color:var(--text-muted);}
-.legal-doc strong{font-weight:600;color:var(--text-main);}
-
-.ambient-bg{position:fixed;top:0;left:0;width:100vw;height:100vh;background:radial-gradient(circle at 15% 15%,rgba(212,175,55,0.04),transparent 40%),radial-gradient(circle at 85% 85%,rgba(50,60,90,0.08),transparent 40%);z-index:-1;pointer-events:none;}
-
-@media(max-width:600px){.topbar{padding:14px 18px;}.legal-doc{padding:32px 18px 60px;}.legal-doc h1{font-size:22px;}}
+:root{--bg:#050505;--panel:#0d0d0f;--gold:#d4af37;--gold-light:#f3e5ab;--text:#eaeaea;--muted:#aaa;--border:rgba(255,255,255,.1);--font:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"SFMono-Regular",Consolas,monospace}*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.65}.ambient{position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 15% 10%,rgba(212,175,55,.08),transparent 40%),radial-gradient(circle at 85% 90%,rgba(45,55,90,.12),transparent 42%)}.topbar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:16px 28px;background:rgba(5,5,5,.9);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}.brand{font-weight:750;letter-spacing:.13em}.subtitle{font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.16em;text-transform:uppercase}.actions{display:flex;align-items:center;gap:10px}.actions select,.actions a{border:1px solid rgba(212,175,55,.38);border-radius:7px;background:#090909;color:var(--gold);font-family:var(--mono);font-size:11px;padding:8px 11px;text-decoration:none}.doc{width:min(860px,calc(100% - 36px));margin:0 auto;padding:52px 0 90px}.doc header{padding-bottom:20px;border-bottom:2px solid var(--gold)}h1{font-size:clamp(25px,4vw,34px);line-height:1.2;margin:10px 0 6px}h2{font-size:19px;color:var(--gold-light);margin:34px 0 10px}p,li{color:var(--muted);font-size:15px}strong{color:var(--text)}a{color:var(--gold)}.meta{font-family:var(--mono);font-size:11px;color:#808080}.lead,.notice{background:rgba(212,175,55,.045);border:1px solid rgba(212,175,55,.18);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:15px 18px}.links{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}.links a{border:1px solid var(--border);border-radius:7px;padding:8px 12px;text-decoration:none;font-family:var(--mono);font-size:11px}.doc footer{margin-top:46px;padding-top:16px;border-top:1px solid var(--border);font-family:var(--mono);font-size:11px;color:#777}@media(max-width:620px){.topbar{padding:13px 15px;align-items:flex-start}.actions{flex-direction:column;align-items:stretch}.doc{padding-top:32px}}
 </style>
 </head>
 <body>
-<div class="ambient-bg"></div>
+<div class="ambient"></div>
 <header class="topbar">
-  <div>
-    <div class="brand-title">PREVISIO</div>
-    <div class="brand-subtitle" id="subtitle"></div>
-  </div>
-  <div class="topbar-right">
-    <select class="lang-select" id="langSelect">
-      <option value="en">EN — English</option>
-      <option value="it">IT — Italiano</option>
-    </select>
-    <a href="index.html" class="back-link" id="backLink">← Back to site</a>
+  <div><div class="brand">PREVISIO</div><div class="subtitle" id="pageSubtitle">Privacy · Legal document</div></div>
+  <div class="actions">
+    <select id="langSelect" aria-label="Language"><option value="en">EN — English</option><option value="it">IT — Italiano</option></select>
+    <a href="index.html" id="backLink">← Back to site</a>
   </div>
 </header>
 
-<div id="content-en" style="display:none;"><article class="legal-doc">
-  
-  <header>
-    <div class="brand">PREVISIO</div>
-    <h1>Personal Data Processing Notice</h1>
-    <div class="meta">
-      Version 1.0 &middot; Last updated: July 7, 2026 &middot;
-      Data controller: Fabrizio Midaglia — Sole Proprietor, Carnago (VA), Italy (VAT number pending registration)
-    </div>
-  </header>
+<main id="content-en" class="doc" hidden>
+<header><div class="subtitle">PREVISIO</div><h1>Privacy Notice</h1><div class="meta">Version 1.1 · Last updated: August 6, 2026 · Controller: Fabrizio Midaglia, Italy</div></header>
+<p class="lead">This notice explains how personal data is processed in connection with the Previsio website and the Previsio Microsoft Store desktop application. Previsio is a professional quantitative decision-support platform. It does not provide investment advice or operational buy/sell recommendations.</p>
+<h2>1. Controller and contact</h2>
+<p>The data controller is <strong>Fabrizio Midaglia</strong>, Italy. Privacy and support requests may be sent to <a href="mailto:previsio.quant@gmail.com">previsio.quant@gmail.com</a>. No Data Protection Officer has been appointed.</p>
+<h2>2. Scope</h2>
+<p>This notice covers the website, software activation, use of the desktop application and support communications. When a user independently uploads a dataset containing personal data, the user remains responsible for the lawful collection and use of that data.</p>
+<h2>3. Data processed</h2>
+<ul>
+<li><strong>Website data:</strong> technical request data necessarily processed by GitHub Pages and the network providers involved in delivering the site.</li>
+<li><strong>Contact data:</strong> name, organisation, email address and the content voluntarily provided in support or access requests.</li>
+<li><strong>Licence data:</strong> licence key, activation status, plan and quota information, token timestamps and an opaque device fingerprint hash used to bind and validate the licence.</li>
+<li><strong>Local application data:</strong> settings, uploaded datasets, forecasts, reports, logs and caches stored on the user's device.</li>
+<li><strong>Support material:</strong> diagnostic bundles or other files only when the user deliberately sends them.</li>
+</ul>
+<h2>4. Purposes and legal bases</h2>
+<ul>
+<li>providing the website, software and requested support;</li>
+<li>activating, refreshing and protecting software licences;</li>
+<li>maintaining security, preventing misuse and defending legal claims;</li>
+<li>responding to pre-contractual or contractual requests;</li>
+<li>complying with applicable legal obligations.</li>
+</ul>
+<p>The applicable legal bases may include performance of a contract or pre-contractual measures, compliance with legal obligations, legitimate interests in security and protection of the software, and consent where specifically requested.</p>
+<h2>5. Local processing of client data</h2>
+<p><strong>Datasets, quantitative calculations, forecasts and reports are processed locally by the Microsoft Store desktop application.</strong> They are not sent to the Previsio licence service during normal operation. Mutable application data is stored in the current user's application-data area.</p>
+<h2>6. Licence activation</h2>
+<p>The desktop application may contact the Previsio licence service to activate or refresh a licence. The service receives the minimum information required for validation, which may include the licence key, an opaque hash representing the device, product/version information and quota-related action identifiers. The raw Windows machine identifier is not transmitted by the application.</p>
+<h2>7. Diagnostics and support</h2>
+<p>Diagnostic bundles are generated locally and are sent only if the user chooses to provide them. They are designed to exclude market datasets and redact secrets, but users must review any material before sending it. Support material is used only to investigate the relevant request and is deleted or anonymised when no longer required.</p>
+<h2>8. AI features and AI-output reports</h2>
+<p>The Microsoft Store product may use a local Ollama installation for optional qualitative commentary. Client datasets and report content used by that local feature are not sent to an external AI provider by the standard desktop product. Numeric calculations are produced by deterministic application code.</p>
+<p>The “Report AI output” function opens the user's email application only after confirmation. It does not automatically attach datasets, reports or logs. Only information deliberately included by the user is sent.</p>
+<h2>9. Optional third-party services</h2>
+<p>Features independently configured by the user, such as Telegram delivery, are governed by the third party's own terms and privacy practices. Data sent through those services is controlled by the user's configuration and instructions.</p>
+<h2>10. Recipients and international transfers</h2>
+<p>Data may be processed by service providers necessary for website hosting, email, support and licence activation. The public website is hosted through GitHub Pages. Transfers outside the European Economic Area, where applicable, are handled under the safeguards made available by the relevant provider and applicable law.</p>
+<h2>11. Retention</h2>
+<p>Contact and support records are retained only for the time necessary to handle the request and meet applicable legal or security requirements. Licence records are retained for the duration needed to administer the licence, quotas, revocation and related obligations. Locally processed datasets and reports remain under the user's control on the user's device.</p>
+<h2>12. Security</h2>
+<p>Previsio applies data minimisation, local processing, secret redaction, signed licence tokens, access controls and other technical measures appropriate to the service. No system can guarantee absolute security; users remain responsible for their devices, credentials and datasets.</p>
+<h2>13. Rights</h2>
+<p>Subject to the GDPR and applicable law, data subjects may request access, rectification, erasure, restriction, portability or objection, and may withdraw consent where consent is the legal basis. Requests may be sent to <a href="mailto:previsio.quant@gmail.com">previsio.quant@gmail.com</a>. Data subjects may also lodge a complaint with the competent supervisory authority, including the Italian Garante per la protezione dei dati personali.</p>
+<h2>14. Updates</h2>
+<p>This notice may be updated when the software, providers or legal requirements change. The date and version shown at the top identify the current publication.</p>
+<div class="links"><a href="support.html">Support</a><a href="terms.html">Terms of Use</a><a href="eula.html">EULA</a></div>
+<footer>Previsio Privacy Notice · Version 1.1 · Public contact: previsio.quant@gmail.com</footer>
+</main>
 
-  <p class="lead">
-    This notice describes how personal data is processed in connection with the use of the
-    <strong>PREVISIO</strong> software (the &ldquo;Software&rdquo;), supplied by
-    Fabrizio Midaglia (the &ldquo;Licensor&rdquo;), pursuant to Regulation
-    (EU) 2016/679 (&ldquo;GDPR&rdquo;) and applicable national law. The Software is a
-    professional product intended for business/professional users (for example: asset managers,
-    investment firms, management companies, financial advisors, professional firms, family
-    offices, institutional/professional clients).
-  </p>
-
-  <h2>1. Data controller</h2>
-  <p>
-    The data controller is Fabrizio Midaglia — Sole Proprietor, Carnago (VA), Italy (VAT number pending registration),
-    reachable at previsio.quant@gmail.com. For personal data
-    matters, the User may write to previsio.quant@gmail.com. No Data Protection
-    Officer (DPO) has been appointed, as none is currently required given the scale
-    and nature of the processing described in this notice.
-  </p>
-
-  <h2>2. Scope of this notice</h2>
-  <p>
-    This notice applies to any personal data processed in connection with the installation,
-    activation, use of and support for the Software. It does not apply to personal data that the
-    User independently decides to process through the Software (for example, datasets uploaded
-    that contain personal data). With respect to such data, <strong>the User acts as an
-    independent controller</strong> and is required to provide data subjects with its own notice
-    and to comply with all GDPR obligations.
-  </p>
-
-  <h2>3. Categories of personal data processed</h2>
-  <p>Depending on the configuration and use of the Software, the following may be processed:</p>
-  <ul>
-    <li>
-      <strong>Activation and licensing data:</strong> license identifier, activation status,
-      technical device identifiers where necessary for license validation.
-    </li>
-    <li>
-      <strong>Professional contact data:</strong> name, company name, business email address,
-      supplied by the User for the purchase of the license, invoicing or support.
-    </li>
-    <li>
-      <strong>Data contained in diagnostic bundles:</strong> component versions, technical
-      configuration, application logs, recent errors, execution-environment information. Such
-      bundles are generated locally at the User's initiative and transmitted to support only if
-      the User decides to send them.
-    </li>
-    <li>
-      <strong>Credentials and secrets configured by the User:</strong> for example Telegram bot
-      token and chat ID, credentials required by supported optional features. These credentials are stored
-      locally where technically implemented (for example, via Windows Credential Manager) and are
-      not transmitted to the Licensor in the normal operation of the Software.
-    </li>
-    <li>
-      <strong>Data possibly contained in datasets uploaded by the User:</strong> time series,
-      input and output files. Such data resides on the User's device and is not transmitted to
-      the Licensor in the normal operation of the Software.
-    </li>
-  </ul>
-
-  <h2>4. Purposes of processing</h2>
-  <ul>
-    <li>Supply, installation and operation of the Software.</li>
-    <li>Activation and verification of the validity of the license.</li>
-    <li>Management of the contractual relationship, invoicing and tax/accounting obligations.</li>
-    <li>Technical support, handling of support requests and management of malfunction reports
-      through diagnostic bundles transmitted by the User.</li>
-    <li>Compliance with legal obligations, handling of disputes and protection of the Licensor's
-      rights.</li>
-    <li>Security of the Software, prevention of unauthorised use and protection of intellectual
-      property.</li>
-  </ul>
-
-  <h2>5. Legal bases of processing</h2>
-  <ul>
-    <li><strong>Art. 6(1)(b) GDPR</strong> — performance of the license agreement and
-      pre-contractual measures (supply of the Software, activation, support).</li>
-    <li><strong>Art. 6(1)(c) GDPR</strong> — compliance with legal obligations (tax, accounting,
-      security).</li>
-    <li><strong>Art. 6(1)(f) GDPR</strong> — legitimate interest of the Licensor in protecting
-      the Software, preventing abuse, ensuring security and defending legal claims.</li>
-    <li><strong>Art. 6(1)(a) GDPR</strong> — consent, where required for specific optional
-      features.</li>
-  </ul>
-
-  <h2>6. Local processing and User-controlled data</h2>
-  <p>
-    The Software is designed to operate primarily locally on the User's device.
-    <strong>By default, market datasets and files uploaded by the User are processed locally and
-    are not transmitted to the Licensor</strong>, unless the User voluntarily decides to send
-    diagnostic bundles or support materials, or configures the optional Telegram delivery
-    described below.
-  </p>
-  <p>
-    <strong>The Licensor does not access datasets uploaded by the User in the normal operation
-    of the Software.</strong> The User is required to ensure that uploaded datasets do not
-    contain personal data unless the User has a valid legal basis and is authorised to process
-    such data. The User also remains responsible for compliance with market-data rights,
-    third-party data-provider licenses (for example, Bloomberg or other market data providers)
-    and any redistribution restrictions.
-  </p>
-
-  <h2>7. License activation and validation</h2>
-  <p>
-    Where a license-key mechanism is active, the minimum data necessary to verify the validity of
-    the license may be processed (for example: license identifier, activation status, technical
-    device identifiers). No further detail document currently applies beyond this notice;
-    this section will be updated if a dedicated activation-data annex is introduced.
-  </p>
-
-  <h2>8. Diagnostics and support</h2>
-  <p>
-    The Software includes a function to export a diagnostic bundle generated locally. Where
-    technically implemented, the bundle <strong>is designed to exclude market data and to mask
-    secrets</strong> (keys, tokens, passwords). The bundle is created solely at the User's
-    initiative, remains under the User's control and is transmitted to support only if the User
-    decides to send it.
-  </p>
-  <p>
-    <strong>The User is required to review the content of the diagnostic bundle before sending
-    it to support</strong>, in order to exclude market data, unnecessary personal data and any
-    secrets that may not have been masked. Bundles received are processed by the Licensor solely
-    for technical-support purposes.
-  </p>
-
-  <h2>9. Local AI commentary</h2>
-  <p>
-    The Microsoft Store desktop version may generate narrative commentary through Ollama running
-    locally on the User's device. Market datasets, quantitative results and report content used by
-    this function are not sent to external AI providers. Remote LLM endpoints and third-party cloud
-    AI providers are not supported by the standard Microsoft Store product.
-  </p>
-  <p>
-    The language model produces qualitative narrative commentary only. Forecasts, probabilities,
-    metrics, formulas and all other numerical results are calculated by the Software's quantitative
-    engine before the commentary stage.
-  </p>
-
-  <h2>10. Optional Telegram delivery</h2>
-  <p>
-    The Software may allow the delivery of notifications/reports via Telegram. If the User
-    configures this feature, the User must provide a Telegram bot token and a chat ID. Telegram
-    is a third-party service, subject to its own privacy notice. The User is responsible for the
-    management of the bot token and the chat ID, for the use of the channel and for the
-    compliance of transmitted content with applicable law and any confidentiality obligations.
-  </p>
-
-  <h2>11. Local storage of credentials and secrets</h2>
-  <p>
-    Where technically implemented, credentials and secrets configured by the User (Telegram bot
-    token and other credentials required by supported optional features) are stored locally using operating
-    system mechanisms (for example, Windows Credential Manager). Such secrets <strong>must not
-    be included in clear text in diagnostic bundles</strong>, and, where technically
-    implemented, the Software applies masking. The User remains responsible for the security of
-    the User's device and of the credentials stored.
-  </p>
-
-  <h2>12. Recipients and processors</h2>
-  <p>
-    Personal data may be shared with parties acting as processors appointed under Article 28
-    GDPR (for example: hosting providers, license-activation services, accounting systems, email
-    providers) and with authorised persons (Licensor's personnel). The list of processors is
-    available upon request by writing to previsio.quant@gmail.com.
-  </p>
-  <p>
-    Supported third-party delivery services that the User independently decides to configure (for example, Telegram) do not act as processors of the Licensor and are governed by their own contracts and
-    privacy notices.
-  </p>
-
-  <h2>13. Transfers outside the European Economic Area</h2>
-  <p>
-    The Licensor prefers providers located within the European Economic Area. Where transfers to
-    third countries are necessary, they will be carried out subject to appropriate safeguards
-    under Articles 44 and following of the GDPR (for example: adequacy decisions, standard
-    contractual clauses). Details: no non-EEA transfer is currently carried out by the
-    Licensor; this section will be updated if that changes. Transfers arising
-    from supported third-party delivery services configured by the User (for example, Telegram) are governed by
-    the respective providers.
-  </p>
-
-  <h2>14. Retention periods</h2>
-  <p>
-    Data is retained for the time strictly necessary for the purposes for which it was collected
-    and, in any case, in accordance with legal obligations (for example: retention of accounting
-    and tax documents for the period required by applicable law). Diagnostic bundles transmitted
-    to support are retained for the time necessary to handle the request and subsequently
-    deleted or anonymised. Details: accounting and tax records are retained for 10 years as
-    required by Italian law; diagnostic bundles are retained only for the time needed to
-    handle the relevant support request and in any case no longer than 12 months.
-    Data processed locally by the User remains on
-    the User's device according to the User's choices.
-  </p>
-
-  <h2>15. Security measures</h2>
-  <p>
-    The Licensor adopts technical and organisational measures appropriate to the risk, including,
-    by way of example, access control, minimisation principles, masking of secrets in diagnostic
-    bundles where technically implemented, and local storage of credentials via operating system
-    mechanisms. The Licensor does not guarantee the absolute absence of security incidents, and
-    the security of the User's execution environment remains under the User's responsibility.
-  </p>
-
-  <h2>16. Data-subject rights</h2>
-  <p>
-    Data subjects may exercise, within the limits provided by the GDPR, the rights of access
-    (Art. 15), rectification (Art. 16), erasure (Art. 17), restriction (Art. 18), portability
-    (Art. 20) and objection (Art. 21), as well as the right to withdraw any consent given,
-    without prejudice to the lawfulness of processing carried out beforehand. Requests may be
-    submitted to the controller at previsio.quant@gmail.com.
-  </p>
-
-  <h2>17. Right to lodge a complaint with the supervisory authority</h2>
-  <p>
-    Data subjects have the right to lodge a complaint with the competent supervisory authority
-    (in Italy, the Garante per la
-    protezione dei dati personali, www.garanteprivacy.it) if they consider that the processing
-    of their personal data infringes applicable law.
-  </p>
-
-  <h2>18. Relationship with EULA and Terms of Use</h2>
-  <p>
-    This notice supplements and does not replace the End User License Agreement (EULA) and the
-    Terms of Use of the Software. In case of conflict between this notice and legal obligations
-    on the protection of personal data, the latter prevail.
-  </p>
-
-  <h2>19. Updates to this notice</h2>
-  <p>
-    This notice may be updated to reflect changes to the Software, optional services, providers
-    or applicable law. The version in force is the one published within the Software and/or made
-    available by the Licensor. The User is invited to consult it periodically.
-  </p>
-
-  <h2>20. Exclusions</h2>
-  <p>
-    The Licensor <strong>does not provide</strong> financial advice, investment research,
-    portfolio management, order execution, suitability assessment or discretionary management.
-    The Licensor <strong>does not guarantee</strong> the GDPR compliance of the User's datasets,
-    the anonymisation of the data contained therein, the lawfulness of third-party data used by
-    the User, nor the absence of data transmission in every possible Software configuration
-    defined by the User.
-  </p>
-
-  <h2>21. Contact</h2>
-  <p>
-    Data controller:
-    Fabrizio Midaglia — Sole Proprietor, Carnago (VA), Italy (VAT number pending registration) —
-    previsio.quant@gmail.com.
-    Privacy contact: previsio.quant@gmail.com.
-    DPO: not appointed.
-  </p>
-
-  <footer>
-    PREVISIO — Privacy Notice, v1.0.
-    <strong>Status: pending VAT number registration.</strong> All fields have been completed
-    except the VAT number, which is being applied for; this document must be updated with the
-    VAT number once assigned. The final version is subject to legal review.
-  </footer>
-</article></div>
-<div id="content-it" style="display:none;"><article class="legal-doc">
-  
-  <header>
-    <div class="brand">PREVISIO</div>
-    <h1>Informativa sul trattamento dei dati personali</h1>
-    <div class="meta">
-      Versione 1.0 &middot; Ultimo aggiornamento: 7 luglio 2026 &middot;
-      Titolare del trattamento: Fabrizio Midaglia — Titolare, Carnago (VA) (P.IVA in corso di attribuzione)
-    </div>
-  </header>
-
-  <p class="lead">
-    La presente informativa descrive le modalità di trattamento dei dati personali connesse
-    all'utilizzo del software <strong>PREVISIO</strong> (di seguito, il &laquo;Software&raquo;),
-    fornito da Fabrizio Midaglia (di seguito, il &laquo;Licenziante&raquo;)
-    ai sensi del Regolamento (UE) 2016/679 (&laquo;GDPR&raquo;) e della normativa nazionale
-    applicabile. Il Software è un prodotto professionale destinato ad utenti business/professionali
-    (a titolo esemplificativo: società di gestione, SIM, SGR, consulenti finanziari, studi
-    professionali, family office, clienti istituzionali/professionali).
-  </p>
-
-  <h2>1. Titolare del trattamento</h2>
-  <p>
-    Titolare del trattamento è Fabrizio Midaglia — Titolare, Carnago (VA) (P.IVA in corso di attribuzione), contattabile
-    all'indirizzo previsio.quant@gmail.com. Per le questioni relative alla
-    protezione dei dati personali è possibile scrivere a
-    previsio.quant@gmail.com. Non è stato nominato un Responsabile della protezione dei
-    dati (DPO), non essendone attualmente richiesta la nomina in ragione della scala e
-    della natura dei trattamenti descritti nella presente informativa.
-  </p>
-
-  <h2>2. Ambito dell'informativa</h2>
-  <p>
-    La presente informativa si applica ai dati personali eventualmente trattati in relazione
-    all'installazione, all'attivazione, all'utilizzo e al supporto del Software. Non si applica ai
-    dati personali che l'Utente decida autonomamente di trattare tramite il Software (ad esempio
-    dataset caricati contenenti dati personali), rispetto ai quali <strong>l'Utente agisce come
-    titolare autonomo del trattamento</strong> ed è tenuto a fornire agli interessati una propria
-    informativa e a rispettare tutti gli obblighi del GDPR.
-  </p>
-
-  <h2>3. Categorie di dati personali trattati</h2>
-  <p>A seconda della configurazione e dell'uso del Software, possono essere trattati:</p>
-  <ul>
-    <li>
-      <strong>Dati di attivazione e licenza:</strong> identificativo della licenza, stato di
-      attivazione, identificatori tecnici del dispositivo eventualmente necessari alla verifica
-      della licenza.
-    </li>
-    <li>
-      <strong>Dati di contatto professionale:</strong> nome, ragione sociale, indirizzo email
-      professionale, forniti dall'Utente per l'acquisto della licenza, la fatturazione o
-      l'assistenza.
-    </li>
-    <li>
-      <strong>Dati contenuti in pacchetti diagnostici:</strong> versioni dei componenti,
-      configurazione tecnica, log applicativi, ultimi errori, informazioni sull'ambiente di
-      esecuzione. Tali pacchetti sono generati localmente su iniziativa dell'Utente e trasmessi al
-      supporto solo se l'Utente decide di inviarli.
-    </li>
-    <li>
-      <strong>Credenziali e segreti configurati dall'Utente:</strong> ad esempio bot token e chat
-      ID Telegram, credenziali richieste dalle funzionalità opzionali supportate. Tali credenziali sono conservate
-      localmente ove tecnicamente implementato (a titolo esemplificativo, tramite Windows
-      Credential Manager) e non sono trasmesse al Licenziante nel normale funzionamento del
-      Software.
-    </li>
-    <li>
-      <strong>Dati eventualmente contenuti nei dataset caricati dall'Utente:</strong> serie
-      storiche, file di input e output. Tali dati risiedono sul dispositivo dell'Utente e non sono
-      trasmessi al Licenziante nel normale funzionamento del Software.
-    </li>
-  </ul>
-
-  <h2>4. Finalità del trattamento</h2>
-  <ul>
-    <li>Fornitura, installazione e funzionamento del Software.</li>
-    <li>Attivazione e verifica della validità della licenza d'uso.</li>
-    <li>Gestione del rapporto contrattuale, fatturazione e adempimenti fiscali/contabili.</li>
-    <li>Assistenza tecnica, risposta a richieste di supporto e gestione delle segnalazioni di
-      malfunzionamento tramite i pacchetti diagnostici trasmessi dall'Utente.</li>
-    <li>Adempimento di obblighi di legge, gestione di controversie e tutela dei diritti del
-      Licenziante.</li>
-    <li>Sicurezza del Software, prevenzione di usi non autorizzati e tutela della proprietà
-      intellettuale.</li>
-  </ul>
-
-  <h2>5. Basi giuridiche del trattamento</h2>
-  <ul>
-    <li><strong>Art. 6, par. 1, lett. b) GDPR</strong> — esecuzione del contratto di licenza e
-      misure precontrattuali (fornitura del Software, attivazione, supporto).</li>
-    <li><strong>Art. 6, par. 1, lett. c) GDPR</strong> — adempimento di obblighi di legge
-      (fiscali, contabili, di sicurezza).</li>
-    <li><strong>Art. 6, par. 1, lett. f) GDPR</strong> — legittimo interesse del Licenziante alla
-      tutela del Software, alla prevenzione di abusi, alla sicurezza e alla difesa in giudizio.</li>
-    <li><strong>Art. 6, par. 1, lett. a) GDPR</strong> — consenso, ove richiesto per specifiche
-      funzionalità opzionali.</li>
-  </ul>
-
-  <h2>6. Elaborazione in locale e dati controllati dall'Utente</h2>
-  <p>
-    Il Software è concepito per operare prevalentemente in locale sul dispositivo dell'Utente.
-    <strong>Per impostazione predefinita, i dataset di mercato e i file caricati dall'Utente sono
-    elaborati localmente e non sono trasmessi al Licenziante</strong>, salvo che l'Utente decida
-    volontariamente di inviare pacchetti diagnostici o materiali di supporto, oppure configuri
-    la consegna opzionale tramite Telegram descritta di seguito.
-  </p>
-  <p>
-    <strong>Il Licenziante non accede ai dataset caricati dall'Utente nel normale funzionamento
-    del Software.</strong> L'Utente è tenuto a garantire che i dataset caricati non contengano
-    dati personali salvo che disponga di una base giuridica valida e sia autorizzato al relativo
-    trattamento. L'Utente resta inoltre responsabile del rispetto dei diritti sui dati di mercato,
-    delle licenze dei fornitori dati terzi (a titolo esemplificativo Bloomberg o altri
-    market data provider) e delle eventuali restrizioni alla ridistribuzione.
-  </p>
-
-  <h2>7. Attivazione e validazione della licenza</h2>
-  <p>
-    Ove sia attivo un meccanismo di chiave di licenza, possono essere trattati i dati minimi
-    necessari alla verifica della validità della licenza (a titolo esemplificativo: identificativo
-    licenza, stato di attivazione, identificatori tecnici del dispositivo). Non esiste allo stato
-    attuale un documento di dettaglio ulteriore rispetto alla presente informativa; questa sezione
-    sarà aggiornata in caso di introduzione di un allegato dedicato ai dati di attivazione.
-  </p>
-
-  <h2>8. Diagnostica e supporto</h2>
-  <p>
-    Il Software include una funzione di esportazione di un pacchetto diagnostico generato
-    localmente. Ove tecnicamente implementato, il pacchetto <strong>è progettato per escludere i
-    dati di mercato e per mascherare i segreti</strong> (chiavi, token, password). Il pacchetto è
-    creato esclusivamente su iniziativa dell'Utente, rimane sotto il suo controllo e viene
-    trasmesso al supporto solo se l'Utente decide di inviarlo.
-  </p>
-  <p>
-    <strong>L'Utente è tenuto a verificare il contenuto del pacchetto diagnostico prima di
-    trasmetterlo al supporto</strong>, al fine di escludere dati di mercato, dati personali non
-    necessari e segreti eventualmente non mascherati. I pacchetti ricevuti sono trattati dal
-    Licenziante unicamente per finalità di assistenza tecnica.
-  </p>
-
-  <h2>9. Commento AI locale</h2>
-  <p>
-    La versione desktop distribuita tramite Microsoft Store può generare commenti narrativi tramite
-    Ollama in esecuzione locale sul dispositivo dell'Utente. I dataset di mercato, i risultati
-    quantitativi e i contenuti del report utilizzati da questa funzione non vengono inviati a provider
-    AI esterni. Endpoint LLM remoti e provider AI cloud di terze parti non sono supportati dal prodotto
-    standard distribuito tramite Microsoft Store.
-  </p>
-  <p>
-    Il modello linguistico produce esclusivamente commenti narrativi qualitativi. Forecast,
-    probabilità, metriche, formule e ogni altro risultato numerico sono calcolati dal motore
-    quantitativo del Software prima della fase di commento.
-  </p>
-
-  <h2>10. Consegna opzionale tramite Telegram</h2>
-  <p>
-    Il Software può consentire la consegna di notifiche/report tramite Telegram. Ove l'Utente
-    configuri tale funzionalità, dovrà fornire un bot token Telegram e un chat ID. Telegram è un
-    servizio di terze parti, soggetto alla propria informativa privacy. L'Utente è responsabile
-    della gestione del bot token e del chat ID, dell'uso del canale e della conformità dei
-    contenuti trasmessi rispetto alla normativa applicabile e ad eventuali obblighi di
-    riservatezza.
-  </p>
-
-  <h2>11. Conservazione locale delle credenziali e dei segreti</h2>
-  <p>
-    Ove tecnicamente implementato, le credenziali e i segreti configurati dall'Utente (bot token
-    Telegram e altre credenziali richieste dalle funzionalità opzionali supportate) sono conservati localmente
-    utilizzando i meccanismi del sistema operativo (a titolo esemplificativo, Windows Credential
-    Manager). Tali segreti <strong>non devono essere inclusi in chiaro nei pacchetti
-    diagnostici</strong> e, ove tecnicamente implementato, il Software applica mascheramento.
-    L'Utente resta responsabile della sicurezza del proprio dispositivo e delle credenziali
-    conservate.
-  </p>
-
-  <h2>12. Destinatari e responsabili del trattamento</h2>
-  <p>
-    I dati personali possono essere comunicati a soggetti che agiscono in qualità di responsabili
-    del trattamento designati ai sensi dell'art. 28 GDPR (a titolo esemplificativo: fornitori di
-    servizi di hosting, servizi di attivazione licenze, gestionali contabili, provider di posta
-    elettronica) e a soggetti autorizzati (personale del Licenziante). L'elenco dei
-    fornitori/responsabili del trattamento è disponibile su richiesta scrivendo a
-    previsio.quant@gmail.com.
-  </p>
-  <p>
-    I servizi di terze parti che l'Utente decide autonomamente di configurare (Telegram e altri servizi di consegna di terze parti supportati) non agiscono come responsabili del trattamento del Licenziante e sono
-    disciplinati dai rispettivi contratti e informative privacy.
-  </p>
-
-  <h2>13. Trasferimenti al di fuori dello Spazio Economico Europeo</h2>
-  <p>
-    Il Licenziante privilegia fornitori situati nello Spazio Economico Europeo. Ove si rendano
-    necessari trasferimenti verso Paesi terzi, gli stessi saranno effettuati in presenza di
-    idonee garanzie ai sensi degli artt. 44 e seguenti GDPR (a titolo esemplificativo: decisioni
-    di adeguatezza, clausole contrattuali standard). Dettagli: allo stato attuale il Licenziante
-    non effettua alcun trasferimento extra-SEE; la presente sezione sarà aggiornata in caso di
-    modifica. I trasferimenti derivanti
-    da servizi di terze parti configurati dall'Utente (Telegram e altri servizi di consegna di terze parti supportati) sono disciplinati
-    dai rispettivi fornitori.
-  </p>
-
-  <h2>14. Periodi di conservazione</h2>
-  <p>
-    I dati sono conservati per il tempo strettamente necessario alle finalità per cui sono stati
-    raccolti e, in ogni caso, nel rispetto degli obblighi di legge (a titolo esemplificativo:
-    conservazione dei documenti contabili e fiscali per il periodo previsto dalla normativa
-    applicabile). I pacchetti diagnostici trasmessi al supporto sono conservati per il tempo
-    necessario alla gestione della richiesta e successivamente cancellati o resi anonimi.
-    Dettagli: i documenti contabili e fiscali sono conservati per 10 anni ai sensi della normativa
-    italiana vigente; i pacchetti diagnostici sono conservati solo per il tempo necessario alla
-    gestione della relativa richiesta di supporto e comunque non oltre 12 mesi. I dati elaborati localmente
-    dall'Utente restano sul dispositivo dell'Utente secondo le sue scelte.
-  </p>
-
-  <h2>15. Misure di sicurezza</h2>
-  <p>
-    Il Licenziante adotta misure tecniche e organizzative adeguate al rischio, tra cui, a titolo
-    esemplificativo, controllo degli accessi, principi di minimizzazione, mascheramento dei
-    segreti nei pacchetti diagnostici ove tecnicamente implementato, e conservazione locale delle
-    credenziali tramite meccanismi del sistema operativo. Il Licenziante non garantisce
-    l'assenza assoluta di incidenti di sicurezza e la sicurezza dell'ambiente di esecuzione
-    dell'Utente resta di responsabilità di quest'ultimo.
-  </p>
-
-  <h2>16. Diritti dell'interessato</h2>
-  <p>
-    L'interessato può esercitare, nei limiti previsti dal GDPR, i diritti di accesso (art. 15),
-    rettifica (art. 16), cancellazione (art. 17), limitazione (art. 18), portabilità (art. 20) e
-    opposizione (art. 21), nonché il diritto di revocare il consenso prestato, senza pregiudizio
-    per la liceità del trattamento effettuato in precedenza. Le richieste possono essere inoltrate
-    al Titolare all'indirizzo previsio.quant@gmail.com.
-  </p>
-
-  <h2>17. Diritto di reclamo all'autorità di controllo</h2>
-  <p>
-    L'interessato ha il diritto di proporre reclamo all'autorità di controllo competente
-    (in Italia, il Garante per la
-    protezione dei dati personali, www.garanteprivacy.it) ove ritenga che il trattamento dei
-    propri dati personali violi la normativa applicabile.
-  </p>
-
-  <h2>18. Rapporto con EULA e Termini di utilizzo</h2>
-  <p>
-    La presente Informativa integra e non sostituisce il Contratto di Licenza con l'Utente Finale
-    (EULA) e i Termini di utilizzo del Software. In caso di contrasto tra la presente Informativa
-    e gli obblighi di legge in materia di protezione dei dati personali, prevalgono questi ultimi.
-  </p>
-
-  <h2>19. Aggiornamenti dell'Informativa</h2>
-  <p>
-    La presente Informativa può essere aggiornata per riflettere modifiche del Software, dei
-    servizi opzionali, dei fornitori o della normativa applicabile. La versione vigente è quella
-    pubblicata all'interno del Software e/o resa disponibile dal Licenziante. Si invita l'Utente
-    a consultarla periodicamente.
-  </p>
-
-  <h2>20. Esclusioni</h2>
-  <p>
-    Il Licenziante <strong>non fornisce</strong> consulenza finanziaria, ricerca in materia di
-    investimenti, gestione di portafoglio, esecuzione di ordini, valutazione di adeguatezza o
-    gestione discrezionale. Il Licenziante <strong>non garantisce</strong> la conformità al GDPR
-    dei dataset dell'Utente, l'anonimizzazione dei dati in essi contenuti, la liceità dei dati di
-    terze parti utilizzati dall'Utente, né l'assenza di trasmissione di dati in ogni possibile
-    configurazione del Software definita dall'Utente.
-  </p>
-
-  <h2>21. Contatti</h2>
-  <p>
-    Titolare del trattamento:
-    Fabrizio Midaglia — Titolare, Carnago (VA) (P.IVA in corso di attribuzione) —
-    previsio.quant@gmail.com.
-    Contatto privacy: previsio.quant@gmail.com.
-    DPO: non nominato.
-  </p>
-
-  <footer>
-    PREVISIO — Informativa Privacy, v1.0.
-    <strong>Stato: in attesa di attribuzione della P.IVA.</strong> Tutti i campi sono stati
-    compilati ad eccezione della Partita IVA, in corso di richiesta: il presente documento
-    dovrà essere aggiornato con il numero di P.IVA non appena attribuito. La versione
-    definitiva resta soggetta a revisione legale.
-  </footer>
-</article></div>
+<main id="content-it" class="doc" hidden>
+<header><div class="subtitle">PREVISIO</div><h1>Informativa privacy</h1><div class="meta">Versione 1.1 · Ultimo aggiornamento: 6 agosto 2026 · Titolare: Fabrizio Midaglia, Italia</div></header>
+<p class="lead">La presente informativa descrive il trattamento dei dati personali connesso al sito Previsio e all'applicazione desktop Previsio distribuita tramite Microsoft Store. Previsio è una piattaforma professionale di supporto decisionale quantitativo. Non fornisce consulenza finanziaria né raccomandazioni operative di acquisto o vendita.</p>
+<h2>1. Titolare e contatti</h2>
+<p>Il titolare del trattamento è <strong>Fabrizio Midaglia</strong>, Italia. Le richieste privacy e di assistenza possono essere inviate a <a href="mailto:previsio.quant@gmail.com">previsio.quant@gmail.com</a>. Non è stato nominato un Responsabile della protezione dei dati.</p>
+<h2>2. Ambito</h2>
+<p>L'informativa riguarda il sito, l'attivazione del software, l'utilizzo dell'applicazione desktop e le comunicazioni di supporto. Quando l'utente carica autonomamente un dataset contenente dati personali, resta responsabile della legittimità della raccolta e dell'utilizzo di tali dati.</p>
+<h2>3. Dati trattati</h2>
+<ul>
+<li><strong>Dati del sito:</strong> dati tecnici di richiesta necessariamente trattati da GitHub Pages e dai fornitori di rete coinvolti nell'erogazione del sito.</li>
+<li><strong>Dati di contatto:</strong> nome, organizzazione, indirizzo email e contenuto fornito volontariamente nelle richieste di assistenza o accesso.</li>
+<li><strong>Dati di licenza:</strong> chiave di licenza, stato di attivazione, piano e quote, timestamp dei token e hash opaco del dispositivo usato per associare e validare la licenza.</li>
+<li><strong>Dati locali dell'applicazione:</strong> impostazioni, dataset caricati, forecast, report, log e cache conservati sul dispositivo dell'utente.</li>
+<li><strong>Materiale di assistenza:</strong> pacchetti diagnostici o altri file soltanto quando l'utente decide espressamente di inviarli.</li>
+</ul>
+<h2>4. Finalità e basi giuridiche</h2>
+<ul>
+<li>fornitura del sito, del software e dell'assistenza richiesta;</li>
+<li>attivazione, rinnovo e protezione delle licenze;</li>
+<li>sicurezza, prevenzione degli abusi e tutela dei diritti;</li>
+<li>risposta a richieste precontrattuali o contrattuali;</li>
+<li>adempimento degli obblighi di legge applicabili.</li>
+</ul>
+<p>Le basi giuridiche possono comprendere l'esecuzione di un contratto o di misure precontrattuali, l'adempimento di obblighi legali, il legittimo interesse alla sicurezza e alla protezione del software e il consenso quando espressamente richiesto.</p>
+<h2>5. Elaborazione locale dei dati del cliente</h2>
+<p><strong>I dataset, i calcoli quantitativi, i forecast e i report sono elaborati localmente dall'applicazione desktop Microsoft Store.</strong> Nel normale funzionamento non vengono inviati al servizio licenze Previsio. I dati applicativi modificabili sono conservati nell'area dati dell'utente corrente.</p>
+<h2>6. Attivazione della licenza</h2>
+<p>L'applicazione può contattare il servizio licenze Previsio per attivare o aggiornare una licenza. Il servizio riceve le informazioni minime necessarie alla validazione, che possono includere la chiave di licenza, un hash opaco rappresentativo del dispositivo, informazioni su prodotto/versione e identificativi delle azioni relative alle quote. L'identificativo Windows originale della macchina non viene trasmesso dall'applicazione.</p>
+<h2>7. Diagnostica e assistenza</h2>
+<p>I pacchetti diagnostici vengono generati localmente e inviati soltanto su scelta dell'utente. Sono progettati per escludere i dataset di mercato e oscurare i segreti, ma l'utente deve verificare il materiale prima dell'invio. Il materiale ricevuto viene utilizzato esclusivamente per la richiesta interessata e cancellato o anonimizzato quando non è più necessario.</p>
+<h2>8. Funzionalità AI e segnalazione degli output</h2>
+<p>Il prodotto Microsoft Store può usare un'installazione locale di Ollama per commenti qualitativi facoltativi. I dataset del cliente e i contenuti dei report utilizzati da tale funzione locale non vengono inviati a provider AI esterni dal prodotto desktop standard. I calcoli numerici sono prodotti dal codice deterministico dell'applicazione.</p>
+<p>La funzione “Segnala output AI” apre l'applicazione email dell'utente soltanto dopo conferma. Non allega automaticamente dataset, report o log. Vengono inviate esclusivamente le informazioni inserite volontariamente dall'utente.</p>
+<h2>9. Servizi di terze parti facoltativi</h2>
+<p>Le funzioni configurate autonomamente dall'utente, come la consegna Telegram, sono disciplinate dai termini e dalle informative del relativo fornitore. I dati inviati tramite tali servizi dipendono dalla configurazione e dalle istruzioni dell'utente.</p>
+<h2>10. Destinatari e trasferimenti internazionali</h2>
+<p>I dati possono essere trattati dai fornitori necessari per hosting del sito, email, assistenza e attivazione delle licenze. Il sito pubblico è ospitato tramite GitHub Pages. Gli eventuali trasferimenti al di fuori dello Spazio Economico Europeo sono gestiti secondo le garanzie messe a disposizione dal fornitore interessato e dalla normativa applicabile.</p>
+<h2>11. Conservazione</h2>
+<p>I dati di contatto e assistenza sono conservati per il tempo necessario alla gestione della richiesta e agli obblighi legali o di sicurezza applicabili. I dati di licenza sono conservati per il periodo necessario alla gestione della licenza, delle quote, della revoca e dei relativi obblighi. I dataset e i report elaborati localmente restano sotto il controllo dell'utente sul proprio dispositivo.</p>
+<h2>12. Sicurezza</h2>
+<p>Previsio applica minimizzazione, elaborazione locale, oscuramento dei segreti, token di licenza firmati, controlli di accesso e altre misure tecniche adeguate al servizio. Nessun sistema può garantire sicurezza assoluta; l'utente resta responsabile dei propri dispositivi, credenziali e dataset.</p>
+<h2>13. Diritti</h2>
+<p>Nei limiti previsti dal GDPR e dalla normativa applicabile, l'interessato può chiedere accesso, rettifica, cancellazione, limitazione, portabilità o opposizione e può revocare il consenso quando costituisce la base giuridica. Le richieste possono essere inviate a <a href="mailto:previsio.quant@gmail.com">previsio.quant@gmail.com</a>. È inoltre possibile proporre reclamo all'autorità di controllo competente, incluso il Garante per la protezione dei dati personali.</p>
+<h2>14. Aggiornamenti</h2>
+<p>L'informativa può essere aggiornata quando cambiano software, fornitori o requisiti normativi. La data e la versione indicate in alto identificano la pubblicazione corrente.</p>
+<div class="links"><a href="support.html">Assistenza</a><a href="terms.html">Termini d'uso</a><a href="eula.html">EULA</a></div>
+<footer>Informativa privacy Previsio · Versione 1.1 · Contatto pubblico: previsio.quant@gmail.com</footer>
+</main>
 
 <script>
 (function(){
-  var lang = localStorage.getItem('previsio_lang') || localStorage.getItem('previsioLang') || 'en';
-  // FR/DE fallback to EN
-  if (lang !== 'it') lang = 'en';
-  
-  var select = document.getElementById('langSelect');
-  select.value = lang;
-  
-  function setLang(l) {
-    document.getElementById('content-en').style.display = l === 'en' ? '' : 'none';
-    document.getElementById('content-it').style.display = l === 'it' ? '' : 'none';
-    document.getElementById('backLink').textContent = l === 'it' ? '← Torna al sito' : '← Back to site';
-    document.getElementById('subtitle').textContent = "Privacy Notice" + (l === 'it' ? ' · Documento legale' : ' · Legal Document');
-    document.documentElement.lang = l;
+  var select=document.getElementById('langSelect');
+  var saved=localStorage.getItem('previsio_lang')||localStorage.getItem('previsioLang')||'en';
+  var lang=saved==='it'?'it':'en';
+  function render(value){
+    lang=value==='it'?'it':'en';
+    document.getElementById('content-en').hidden=lang!=='en';
+    document.getElementById('content-it').hidden=lang!=='it';
+    document.getElementById('backLink').textContent=lang==='it'?'← Torna al sito':'← Back to site';
+    document.getElementById('pageSubtitle').textContent=lang==='it'?'Privacy · Documento legale':'Privacy · Legal document';
+    document.documentElement.lang=lang;
+    select.value=lang;
   }
-  
-  setLang(lang);
-  select.addEventListener('change', function(){ setLang(this.value); });
+  select.addEventListener('change',function(){localStorage.setItem('previsio_lang',this.value);render(this.value)});
+  render(lang);
 })();
 </script>
 </body>

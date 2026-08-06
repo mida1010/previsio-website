@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Previsio support information for the website and Microsoft Store desktop application." />
+<title>Support — Previsio</title>
+<style>
+:root{--bg:#050505;--panel:#0d0d0f;--gold:#d4af37;--gold-light:#f3e5ab;--text:#eaeaea;--muted:#aaa;--border:rgba(255,255,255,.1);--font:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"SFMono-Regular",Consolas,monospace}*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.65}.ambient{position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 15% 10%,rgba(212,175,55,.08),transparent 40%),radial-gradient(circle at 85% 90%,rgba(45,55,90,.12),transparent 42%)}.topbar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:16px 28px;background:rgba(5,5,5,.9);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}.brand{font-weight:750;letter-spacing:.13em}.subtitle{font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.16em;text-transform:uppercase}.actions{display:flex;align-items:center;gap:10px}.actions select,.actions a{border:1px solid rgba(212,175,55,.38);border-radius:7px;background:#090909;color:var(--gold);font-family:var(--mono);font-size:11px;padding:8px 11px;text-decoration:none}.doc{width:min(860px,calc(100% - 36px));margin:0 auto;padding:52px 0 90px}.doc header{padding-bottom:20px;border-bottom:2px solid var(--gold)}h1{font-size:clamp(25px,4vw,34px);line-height:1.2;margin:10px 0 6px}h2{font-size:19px;color:var(--gold-light);margin:34px 0 10px}p,li{color:var(--muted);font-size:15px}strong{color:var(--text)}a{color:var(--gold)}.meta{font-family:var(--mono);font-size:11px;color:#808080}.lead,.card{background:rgba(212,175,55,.045);border:1px solid rgba(212,175,55,.18);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:15px 18px}.email{display:inline-block;margin-top:8px;padding:10px 14px;border:1px solid rgba(212,175,55,.35);border-radius:8px;text-decoration:none;font-family:var(--mono)}.steps{display:grid;gap:12px;padding:0;list-style:none;counter-reset:item}.steps li{counter-increment:item;padding:14px 16px 14px 52px;border:1px solid var(--border);border-radius:8px;position:relative;background:rgba(255,255,255,.018)}.steps li:before{content:counter(item);position:absolute;left:16px;top:14px;width:24px;height:24px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-family:var(--mono);font-size:11px}.links{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}.links a{border:1px solid var(--border);border-radius:7px;padding:8px 12px;text-decoration:none;font-family:var(--mono);font-size:11px}.doc footer{margin-top:46px;padding-top:16px;border-top:1px solid var(--border);font-family:var(--mono);font-size:11px;color:#777}@media(max-width:620px){.topbar{padding:13px 15px;align-items:flex-start}.actions{flex-direction:column;align-items:stretch}.doc{padding-top:32px}}
+</style>
+</head>
+<body>
+<div class="ambient"></div>
+<header class="topbar">
+  <div><div class="brand">PREVISIO</div><div class="subtitle" id="pageSubtitle">Product support</div></div>
+  <div class="actions">
+    <select id="langSelect" aria-label="Language"><option value="en">EN — English</option><option value="it">IT — Italiano</option></select>
+    <a href="index.html" id="backLink">← Back to site</a>
+  </div>
+</header>
+
+<main id="content-en" class="doc" hidden>
+<header><div class="subtitle">PREVISIO</div><h1>Support</h1><div class="meta">Microsoft Store desktop application · Website · Licensing</div></header>
+<p class="lead">For product, installation, licence or technical-support requests, contact Previsio at the address below. Please do not send confidential market datasets, client reports, passwords, licence tokens or other secrets unless support explicitly requests a specific, reviewed file.</p>
+<a class="email" href="mailto:previsio.quant@gmail.com?subject=Previsio%20support%20request">previsio.quant@gmail.com</a>
+<h2>Information to include</h2>
+<ul>
+<li>Previsio version and Windows version;</li>
+<li>affected workflow: installation, licence, dataset upload, Live Forecast, Portfolio, Time Travel or report generation;</li>
+<li>the exact error message and the steps that led to it;</li>
+<li>whether the issue is reproducible after restarting the application;</li>
+<li>a diagnostic bundle only after reviewing its contents.</li>
+</ul>
+<h2>How to report a technical issue</h2>
+<ol class="steps">
+<li>Restart Previsio and reproduce the problem once.</li>
+<li>Record the application version, Windows version and affected workflow.</li>
+<li>Use the in-app diagnostics export when available.</li>
+<li>Open the exported bundle and verify that it contains no dataset, report, password, token or confidential client material.</li>
+<li>Email the description and only the reviewed material to the support address.</li>
+</ol>
+<h2>AI-output reports</h2>
+<p>The desktop application's “Report AI output” control opens the user's default email application after confirmation. It does not automatically attach datasets, reports or logs. Include only the qualitative output and description that are necessary to investigate the issue.</p>
+<h2>Licence support</h2>
+<p>For activation or refresh issues, include the displayed status and the last four characters of the licence key only. Do not send the complete licence key unless support specifically requests it through an agreed secure procedure.</p>
+<h2>Data and confidentiality</h2>
+<p>Previsio processes client-uploaded datasets and generated reports locally in the Microsoft Store desktop application. Support cannot access those files automatically. Users remain responsible for verifying that any material voluntarily sent to support may lawfully be disclosed.</p>
+<h2>Service scope</h2>
+<p>Support covers installation, activation, software operation and reproducible product defects. It does not provide investment advice, validate investment decisions or interpret outputs as buy, sell, hold, overweight or underweight recommendations.</p>
+<h2>Availability</h2>
+<p>Requests are handled by email. Response timing depends on the severity and information supplied; no guaranteed service level applies unless a separate written agreement states otherwise.</p>
+<div class="links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms of Use</a><a href="eula.html">EULA</a></div>
+<footer>Previsio Support · Public contact: previsio.quant@gmail.com</footer>
+</main>
+
+<main id="content-it" class="doc" hidden>
+<header><div class="subtitle">PREVISIO</div><h1>Assistenza</h1><div class="meta">Applicazione desktop Microsoft Store · Sito · Licenze</div></header>
+<p class="lead">Per richieste relative al prodotto, all'installazione, alla licenza o all'assistenza tecnica, contatta Previsio all'indirizzo indicato di seguito. Non inviare dataset di mercato riservati, report dei clienti, password, token di licenza o altri segreti salvo richiesta esplicita del supporto riferita a un file specifico e già verificato.</p>
+<a class="email" href="mailto:previsio.quant@gmail.com?subject=Richiesta%20assistenza%20Previsio">previsio.quant@gmail.com</a>
+<h2>Informazioni da includere</h2>
+<ul>
+<li>versione di Previsio e versione di Windows;</li>
+<li>flusso interessato: installazione, licenza, caricamento dataset, Live Forecast, Portfolio, Time Travel o generazione report;</li>
+<li>messaggio di errore esatto e passaggi che lo hanno preceduto;</li>
+<li>indicazione se il problema si ripete dopo il riavvio dell'applicazione;</li>
+<li>pacchetto diagnostico soltanto dopo averne verificato il contenuto.</li>
+</ul>
+<h2>Come segnalare un problema tecnico</h2>
+<ol class="steps">
+<li>Riavvia Previsio e riproduci il problema una sola volta.</li>
+<li>Annota versione dell'applicazione, versione di Windows e flusso interessato.</li>
+<li>Usa l'esportazione diagnostica dell'app quando disponibile.</li>
+<li>Apri il pacchetto esportato e verifica che non contenga dataset, report, password, token o materiale riservato del cliente.</li>
+<li>Invia via email la descrizione e soltanto il materiale già verificato.</li>
+</ol>
+<h2>Segnalazione degli output AI</h2>
+<p>Il controllo “Segnala output AI” dell'applicazione desktop apre il programma email predefinito dopo conferma. Non allega automaticamente dataset, report o log. Inserisci soltanto l'output qualitativo e la descrizione necessari per analizzare il problema.</p>
+<h2>Assistenza sulle licenze</h2>
+<p>Per problemi di attivazione o aggiornamento, indica lo stato visualizzato e soltanto gli ultimi quattro caratteri della chiave. Non inviare la chiave completa salvo richiesta specifica del supporto tramite una procedura sicura concordata.</p>
+<h2>Dati e riservatezza</h2>
+<p>Previsio elabora localmente i dataset caricati dal cliente e i report generati nell'applicazione desktop Microsoft Store. Il supporto non può accedere automaticamente a tali file. L'utente resta responsabile di verificare che il materiale inviato volontariamente possa essere legittimamente comunicato.</p>
+<h2>Ambito dell'assistenza</h2>
+<p>L'assistenza riguarda installazione, attivazione, funzionamento del software e difetti riproducibili del prodotto. Non fornisce consulenza finanziaria, non valida decisioni di investimento e non interpreta gli output come raccomandazioni di acquisto, vendita, mantenimento, sovrappeso o sottopeso.</p>
+<h2>Disponibilità</h2>
+<p>Le richieste sono gestite tramite email. I tempi dipendono dalla gravità e dalle informazioni fornite; non si applica un livello di servizio garantito salvo diverso accordo scritto.</p>
+<div class="links"><a href="privacy.html">Privacy</a><a href="terms.html">Termini d'uso</a><a href="eula.html">EULA</a></div>
+<footer>Assistenza Previsio · Contatto pubblico: previsio.quant@gmail.com</footer>
+</main>
+
+<script>
+(function(){
+  var select=document.getElementById('langSelect');
+  var saved=localStorage.getItem('previsio_lang')||localStorage.getItem('previsioLang')||'en';
+  var lang=saved==='it'?'it':'en';
+  function render(value){
+    lang=value==='it'?'it':'en';
+    document.getElementById('content-en').hidden=lang!=='en';
+    document.getElementById('content-it').hidden=lang!=='it';
+    document.getElementById('backLink').textContent=lang==='it'?'← Torna al sito':'← Back to site';
+    document.getElementById('pageSubtitle').textContent=lang==='it'?'Assistenza prodotto':'Product support';
+    document.documentElement.lang=lang;
+    select.value=lang;
+  }
+  select.addEventListener('change',function(){localStorage.setItem('previsio_lang',this.value);render(this.value)});
+  render(lang);
+})();
+</script>
+</body>
+</html>
