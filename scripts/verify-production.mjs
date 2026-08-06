@@ -23,6 +23,7 @@ const requiredFiles = [
   'landing-v11.bundle.js',
   'mobile-responsive.css',
   'founder-education-fix.js',
+  'chat-language-override.js',
   'Request.html',
   'faq.html',
   'faq-data.js',
@@ -48,7 +49,7 @@ if (sourceLoader !== productionLoader) {
   throw new Error('landing-v11.loader.js must remain byte-identical to the verified website loader.');
 }
 
-if (!index.includes('<script src="landing-v11.loader.js?v=20260805"></script>')) {
+if (!index.includes('<script src="landing-v11.loader.js?v=20260805-2"></script>')) {
   throw new Error('index.html does not load the production website loader.');
 }
 
