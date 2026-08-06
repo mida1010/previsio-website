@@ -1,7 +1,6 @@
 /* PREVISIO website loader.
    Preserves the current bootstrap, loads the founder education status layer,
-   keeps the Time Travel capability label aligned across languages, and exposes
-   the public Support page in the legal footer. */
+   and keeps the Time Travel capability label aligned across languages. */
 (function loadPrevisioBootstrap() {
   function appendScript(src, attributes) {
     return new Promise(function(resolve, reject) {
@@ -50,32 +49,15 @@
     }
   }
 
-  function ensureSupportLink() {
-    var privacyLink = document.querySelector('a[href="privacy.html"]');
-    if (!privacyLink || !privacyLink.parentElement) return;
-    if (privacyLink.parentElement.querySelector('a[href="support.html"]')) return;
-
-    var supportLink = document.createElement('a');
-    supportLink.href = 'support.html';
-    supportLink.textContent = 'Support';
-    supportLink.setAttribute('data-previsio-support-link', 'true');
-    privacyLink.insertAdjacentElement('afterend', supportLink);
-  }
-
-  function applyProductionLayers() {
-    alignTimeTravelLabels();
-    ensureSupportLink();
-  }
-
-  var productionObserver = new MutationObserver(applyProductionLayers);
-  productionObserver.observe(document.documentElement, {
+  var timeTravelObserver = new MutationObserver(alignTimeTravelLabels);
+  timeTravelObserver.observe(document.documentElement, {
     childList: true,
     subtree: true,
     characterData: true
   });
 
-  document.addEventListener('DOMContentLoaded', applyProductionLayers, { once: true });
-  window.addEventListener('load', applyProductionLayers, { once: true });
+  document.addEventListener('DOMContentLoaded', alignTimeTravelLabels, { once: true });
+  window.addEventListener('load', alignTimeTravelLabels, { once: true });
 
   appendScript('founder-education-fix.js?v=20260803', {
     'data-previsio-layer': 'founder-education'
@@ -84,7 +66,7 @@
       console.error('[Previsio] Founder education layer failed to load.', error);
     })
     .then(function() {
-      return appendScript('chat-language-override.js?v=20260805-2', {
+      return appendScript('chat-language-override.js?v=20260805-1', {
         'data-previsio-layer': 'chat-language'
       }).catch(function(error) {
         console.error('[Previsio] Chat language layer failed to load.', error);
@@ -96,7 +78,7 @@
       });
     })
     .then(function() {
-      applyProductionLayers();
+      alignTimeTravelLabels();
     })
     .catch(function(error) {
       console.error('[Previsio] Website bootstrap failed to load.', error);

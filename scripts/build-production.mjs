@@ -226,7 +226,7 @@ async function updateIndexWithoutChangingMarkupOrStyles() {
   }
 
   const legacyLoader = '  <script type="text/babel" src="landing-v11.jsx"></script>';
-  const productionLoader = '  <script src="landing-v11.loader.js?v=20260805-2"></script>';
+  const productionLoader = '  <script src="landing-v11.loader.js?v=20260805"></script>';
 
   if (index.includes(legacyLoader)) {
     index = replaceExactlyOnce(index, legacyLoader, productionLoader, 'Homepage loader replacement');
