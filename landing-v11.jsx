@@ -150,28 +150,75 @@
     }
   };
 
-  function getPortfolioCopy() {
+  function getPortfolioLanguage() {
     var language = String(document.documentElement.lang || 'en').toLowerCase().slice(0, 2);
-    return portfolioCopies[language] || portfolioCopies.en;
+    return portfolioCopies[language] ? language : 'en';
   }
 
-  function base64ToBlob(base64) {
-    var compact = base64.replace(/\s/g, '');
-    var binary = window.atob(compact);
+  function getPortfolioCopy() {
+    return portfolioCopies[getPortfolioLanguage()];
+  }
+
+  var portfolioDownloadUrls = Object.create(null);
+
+  function decodeBase64Segment(base64) {
+    var binary = window.atob(base64);
     var bytes = new Uint8Array(binary.length);
     for (var i = 0; i < binary.length; i += 1) {
       bytes[i] = binary.charCodeAt(i);
     }
-    return new Blob([bytes], { type: 'image/webp' });
+    return bytes;
   }
 
-  async function downloadPortfolioReport(report, button) {
-    if (button.getAttribute('data-previsio-busy') === 'true') return;
+  function base64ChunksToBlob(chunks) {
+    var byteParts = [];
+    var carry = '';
 
+    chunks.forEach(function(chunk, index) {
+      var compact = (carry + String(chunk || '')).replace(/\s/g, '');
+      carry = '';
+
+      if (!compact) return;
+
+      var isLast = index === chunks.length - 1;
+      var containsPadding = compact.indexOf('=') !== -1;
+      var usableLength = compact.length;
+
+      if (!isLast && !containsPadding) {
+        usableLength -= usableLength % 4;
+      }
+
+      if (usableLength > 0) {
+        byteParts.push(decodeBase64Segment(compact.slice(0, usableLength)));
+      }
+
+      if (usableLength < compact.length) {
+        carry = compact.slice(usableLength);
+      }
+    });
+
+    if (carry) {
+      byteParts.push(decodeBase64Segment(carry));
+    }
+
+    return new Blob(byteParts, { type: 'image/webp' });
+  }
+
+  async function preparePortfolioReportLink(report, link) {
     var copy = getPortfolioCopy();
-    button.setAttribute('data-previsio-busy', 'true');
-    button.disabled = true;
-    button.textContent = copy.preparing;
+
+    if (portfolioDownloadUrls[report.key]) {
+      link.href = portfolioDownloadUrls[report.key];
+      link.download = report.filename;
+      link.textContent = copy.download;
+      link.removeAttribute('aria-disabled');
+      link.style.pointerEvents = '';
+      return;
+    }
+
+    link.textContent = copy.preparing;
+    link.setAttribute('aria-disabled', 'true');
+    link.style.pointerEvents = 'none';
 
     try {
       var responses = await Promise.all(report.parts.map(function(path) {
@@ -180,35 +227,41 @@
 
       responses.forEach(function(response) {
         if (!response.ok) {
-          throw new Error('Unable to load portfolio report asset.');
+          throw new Error('Unable to load portfolio report asset: ' + response.url);
         }
       });
 
       var chunks = await Promise.all(responses.map(function(response) {
         return response.text();
       }));
-      var blob = base64ToBlob(chunks.join(''));
+      var blob = base64ChunksToBlob(chunks);
+
+      if (!blob.size) {
+        throw new Error('Portfolio report asset is empty.');
+      }
+
       var url = URL.createObjectURL(blob);
-      var link = document.createElement('a');
+      portfolioDownloadUrls[report.key] = url;
       link.href = url;
       link.download = report.filename;
-      link.style.display = 'none';
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
-      button.textContent = copy.download;
+      link.textContent = getPortfolioCopy().download;
+      link.removeAttribute('aria-disabled');
+      link.style.pointerEvents = '';
     } catch (error) {
-      console.error('[Previsio] Portfolio report download failed.', error);
-      button.textContent = copy.retry;
-      window.setTimeout(function() {
-        button.textContent = getPortfolioCopy().download;
-      }, 1600);
-    } finally {
-      button.disabled = false;
-      button.setAttribute('data-previsio-busy', 'false');
+      console.error('[Previsio] Portfolio report preparation failed.', error);
+      link.removeAttribute('href');
+      link.removeAttribute('download');
+      link.textContent = getPortfolioCopy().retry;
+      link.setAttribute('aria-disabled', 'true');
+      link.style.pointerEvents = 'none';
     }
   }
+
+  window.addEventListener('beforeunload', function() {
+    Object.keys(portfolioDownloadUrls).forEach(function(key) {
+      URL.revokeObjectURL(portfolioDownloadUrls[key]);
+    });
+  });
 
   function ensurePortfolioReportShortcut() {
     var link = document.querySelector('[data-previsio-portfolio-shortcut="true"]') ||
@@ -233,10 +286,17 @@
     if (!grid) return;
 
     var panel = grid.querySelector(':scope > .panel') || grid.querySelector('.panel');
-    if (!panel || panel.getAttribute('data-previsio-official-reports') === 'true') return;
+    if (!panel) return;
+
+    var language = getPortfolioLanguage();
+    if (
+      panel.getAttribute('data-previsio-official-reports') === 'true' &&
+      panel.getAttribute('data-previsio-report-language') === language
+    ) return;
 
     var copy = getPortfolioCopy();
     panel.setAttribute('data-previsio-official-reports', 'true');
+    panel.setAttribute('data-previsio-report-language', language);
     panel.innerHTML = '';
 
     var header = document.createElement('div');
@@ -273,18 +333,19 @@
       info.appendChild(name);
       info.appendChild(metadata);
 
-      var button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'btn btn-gold';
-      button.style.cssText = 'font-size:11px;padding:9px 12px;white-space:nowrap';
-      button.textContent = copy.download;
-      button.addEventListener('click', function() {
-        downloadPortfolioReport(report, button);
-      });
+      var downloadLink = document.createElement('a');
+      downloadLink.className = 'btn btn-gold';
+      downloadLink.style.cssText = 'font-size:11px;padding:9px 12px;white-space:nowrap;text-decoration:none';
+      downloadLink.textContent = copy.preparing;
+      downloadLink.setAttribute('aria-disabled', 'true');
+      downloadLink.setAttribute('target', '_blank');
+      downloadLink.setAttribute('rel', 'noopener');
 
       row.appendChild(info);
-      row.appendChild(button);
+      row.appendChild(downloadLink);
       list.appendChild(row);
+
+      preparePortfolioReportLink(report, downloadLink);
     });
 
     panel.appendChild(list);
