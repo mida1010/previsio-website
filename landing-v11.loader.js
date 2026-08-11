@@ -1,7 +1,8 @@
 /* PREVISIO website loader.
    Preserves the current bootstrap, loads the founder education status layer,
-   keeps the Time Travel capability label aligned across languages, and exposes
-   the public Support page in the legal footer. */
+   keeps the Time Travel capability label aligned across languages, exposes
+   the public Support page in the legal footer, and publishes official
+   portfolio report downloads. */
 (function loadPrevisioBootstrap() {
   function appendScript(src, attributes) {
     return new Promise(function(resolve, reject) {
@@ -62,9 +63,243 @@
     privacyLink.insertAdjacentElement('afterend', supportLink);
   }
 
+  var portfolioReports = [
+    {
+      key: 'interactive',
+      filename: 'Previsio_Portfolio_Interactive_2026-08-09.webp',
+      parts: [
+        'reports/assets/portfolio-interactive-full/000.b64',
+        'reports/assets/portfolio-interactive-full/001.b64',
+        'reports/assets/portfolio-interactive-full/002.b64',
+        'reports/assets/portfolio-interactive-full/003.b64',
+        'reports/assets/portfolio-interactive-full/004.b64',
+        'reports/assets/portfolio-interactive-full/005.b64'
+      ]
+    },
+    {
+      key: 'client',
+      filename: 'Previsio_Portfolio_Client_2026-08-09.webp',
+      parts: [
+        'reports/assets/portfolio-client.webp.b64'
+      ]
+    },
+    {
+      key: 'validation',
+      filename: 'Previsio_Portfolio_Validation_2026-08-09.webp',
+      parts: [
+        'reports/assets/portfolio-validation-full/000a.b64',
+        'reports/assets/portfolio-validation-full/000b.b64',
+        'reports/assets/portfolio-validation-full/001.b64',
+        'reports/assets/portfolio-validation-full/002.b64',
+        'reports/assets/portfolio-validation-full/003.b64',
+        'reports/assets/portfolio-validation-full/004.b64',
+        'reports/assets/portfolio-validation-full/005.b64',
+        'reports/assets/portfolio-validation-full/006.b64',
+        'reports/assets/portfolio-validation-full/007.b64',
+        'reports/assets/portfolio-validation-full/008a.b64',
+        'reports/assets/portfolio-validation-full/008b.b64',
+        'reports/assets/portfolio-validation-full/009.b64'
+      ]
+    }
+  ];
+
+  var portfolioCopies = {
+    en: {
+      title: 'Official portfolio reports',
+      sub: 'Real Previsio portfolio outputs · 9 August 2026',
+      labels: ['Interactive portfolio report', 'Client portfolio report', 'Portfolio validation report'],
+      download: 'Download',
+      preparing: 'Preparing…',
+      retry: 'Retry',
+      shortcut: 'Portfolio reports →',
+      metadata: 'WEBP · complete visual snapshot of the real report',
+      note: 'Complete visual snapshots generated directly from the supplied Previsio reports.'
+    },
+    it: {
+      title: 'Report ufficiali portfolio',
+      sub: 'Output portfolio reali Previsio · 9 agosto 2026',
+      labels: ['Report portfolio interattivo', 'Report portfolio cliente', 'Report portfolio di validazione'],
+      download: 'Scarica',
+      preparing: 'Preparazione…',
+      retry: 'Riprova',
+      shortcut: 'Vedi i report portfolio →',
+      metadata: 'WEBP · snapshot visivo completo del report reale',
+      note: 'Snapshot visivi completi generati direttamente dai report Previsio forniti.'
+    },
+    fr: {
+      title: 'Rapports portfolio officiels',
+      sub: 'Sorties portfolio réelles Previsio · 9 août 2026',
+      labels: ['Rapport portfolio interactif', 'Rapport portfolio client', 'Rapport portfolio de validation'],
+      download: 'Télécharger',
+      preparing: 'Préparation…',
+      retry: 'Réessayer',
+      shortcut: 'Rapports portfolio →',
+      metadata: 'WEBP · capture visuelle complète du rapport réel',
+      note: 'Captures visuelles complètes générées directement à partir des rapports Previsio fournis.'
+    },
+    de: {
+      title: 'Offizielle Portfolio-Berichte',
+      sub: 'Reale Previsio-Portfolioausgaben · 9. August 2026',
+      labels: ['Interaktiver Portfolio-Bericht', 'Portfolio-Kundenbericht', 'Portfolio-Validierungsbericht'],
+      download: 'Herunterladen',
+      preparing: 'Vorbereitung…',
+      retry: 'Erneut versuchen',
+      shortcut: 'Portfolio-Berichte →',
+      metadata: 'WEBP · vollständige visuelle Momentaufnahme des realen Berichts',
+      note: 'Vollständige visuelle Momentaufnahmen, direkt aus den bereitgestellten Previsio-Berichten erzeugt.'
+    }
+  };
+
+  function getPortfolioCopy() {
+    var language = String(document.documentElement.lang || 'en').toLowerCase().slice(0, 2);
+    return portfolioCopies[language] || portfolioCopies.en;
+  }
+
+  function base64ToBlob(base64) {
+    var compact = base64.replace(/\s/g, '');
+    var binary = window.atob(compact);
+    var bytes = new Uint8Array(binary.length);
+    for (var i = 0; i < binary.length; i += 1) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    return new Blob([bytes], { type: 'image/webp' });
+  }
+
+  async function downloadPortfolioReport(report, button) {
+    if (button.getAttribute('data-previsio-busy') === 'true') return;
+
+    var copy = getPortfolioCopy();
+    button.setAttribute('data-previsio-busy', 'true');
+    button.disabled = true;
+    button.textContent = copy.preparing;
+
+    try {
+      var responses = await Promise.all(report.parts.map(function(path) {
+        return fetch(path, { cache: 'no-store' });
+      }));
+
+      responses.forEach(function(response) {
+        if (!response.ok) {
+          throw new Error('Unable to load portfolio report asset.');
+        }
+      });
+
+      var chunks = await Promise.all(responses.map(function(response) {
+        return response.text();
+      }));
+      var blob = base64ToBlob(chunks.join(''));
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = report.filename;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+      button.textContent = copy.download;
+    } catch (error) {
+      console.error('[Previsio] Portfolio report download failed.', error);
+      button.textContent = copy.retry;
+      window.setTimeout(function() {
+        button.textContent = getPortfolioCopy().download;
+      }, 1600);
+    } finally {
+      button.disabled = false;
+      button.setAttribute('data-previsio-busy', 'false');
+    }
+  }
+
+  function ensurePortfolioReportShortcut() {
+    var link = document.querySelector('[data-previsio-portfolio-shortcut="true"]') ||
+      document.querySelector('a[href="Request.html#report-portfolio"]');
+    if (!link) return;
+
+    var copy = getPortfolioCopy();
+    if (link.getAttribute('href') !== '#portfolio-mode') {
+      link.setAttribute('href', '#portfolio-mode');
+    }
+    if (link.textContent !== copy.shortcut) {
+      link.textContent = copy.shortcut;
+    }
+    link.setAttribute('data-previsio-portfolio-shortcut', 'true');
+  }
+
+  function publishOfficialPortfolioReports() {
+    var section = document.getElementById('portfolio-mode');
+    if (!section) return;
+
+    var grid = section.querySelector('.tt-grid');
+    if (!grid) return;
+
+    var panel = grid.querySelector(':scope > .panel') || grid.querySelector('.panel');
+    if (!panel || panel.getAttribute('data-previsio-official-reports') === 'true') return;
+
+    var copy = getPortfolioCopy();
+    panel.setAttribute('data-previsio-official-reports', 'true');
+    panel.innerHTML = '';
+
+    var header = document.createElement('div');
+    header.style.cssText = 'margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border-subtle)';
+
+    var eyebrow = document.createElement('div');
+    eyebrow.style.cssText = 'font-family:var(--font-mono);font-size:13px;color:var(--gold-primary);letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px';
+    eyebrow.textContent = copy.title;
+
+    var sub = document.createElement('div');
+    sub.style.cssText = 'font-family:var(--font-mono);font-size:12px;color:var(--text-faint);letter-spacing:.06em;line-height:1.5';
+    sub.textContent = copy.sub;
+
+    header.appendChild(eyebrow);
+    header.appendChild(sub);
+    panel.appendChild(header);
+
+    var list = document.createElement('div');
+    list.style.cssText = 'display:grid;gap:10px';
+
+    portfolioReports.forEach(function(report, index) {
+      var row = document.createElement('div');
+      row.style.cssText = 'display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 15px;border:1px solid var(--border-subtle);border-radius:8px;background:rgba(0,0,0,.25)';
+
+      var info = document.createElement('div');
+      var name = document.createElement('div');
+      name.style.cssText = 'font-size:13px;font-weight:600;color:var(--text-main);margin-bottom:3px';
+      name.textContent = copy.labels[index];
+
+      var metadata = document.createElement('div');
+      metadata.style.cssText = 'font-family:var(--font-mono);font-size:10px;color:var(--text-faint);letter-spacing:.08em;line-height:1.5';
+      metadata.textContent = copy.metadata;
+
+      info.appendChild(name);
+      info.appendChild(metadata);
+
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'btn btn-gold';
+      button.style.cssText = 'font-size:11px;padding:9px 12px;white-space:nowrap';
+      button.textContent = copy.download;
+      button.addEventListener('click', function() {
+        downloadPortfolioReport(report, button);
+      });
+
+      row.appendChild(info);
+      row.appendChild(button);
+      list.appendChild(row);
+    });
+
+    panel.appendChild(list);
+
+    var note = document.createElement('div');
+    note.style.cssText = 'margin-top:14px;padding-top:12px;border-top:1px solid var(--border-subtle);font-size:11px;color:var(--text-muted);line-height:1.6';
+    note.textContent = copy.note;
+    panel.appendChild(note);
+  }
+
   function applyProductionLayers() {
     alignTimeTravelLabels();
     ensureSupportLink();
+    ensurePortfolioReportShortcut();
+    publishOfficialPortfolioReports();
   }
 
   var productionObserver = new MutationObserver(applyProductionLayers);
