@@ -125,7 +125,7 @@ const T = {
     engine_h2c: "published only when supported.",
     engine_lede: "You configure a ticker, a target date, analysis depth and confidence level, and optionally a target threshold, threshold direction, price range and Time Travel reference date. The engine reads the selected dataset, runs up to eight forecasting models according to the horizon and available history, and weights the valid models by their historical performance on that asset. A valid completed run publishes the point forecast; the prediction interval and requested threshold or range probabilities are published only when their calibration samples pass the required adequacy and validation checks. Unsupported outputs are reported as not estimable rather than assigned an invented value. Given the same dataset, parameters and engine version, published outputs are reproducible.",
     features_eyebrow: 'What you get',
-    features_h2: "Forecast, validated intervals and probabilities when estimable, and an automated report. One auditable process.",
+    features_h2: "Eight time-series forecasting models, optional fundamental valuation on eligible data, empirical intervals, probabilities and professional reports.",
     analytics_eyebrow: 'Outputs',
     analytics_h2: "Core quantitative outputs, published only when supported by the data, plus an optional directional indicator.",
     analytics_lede: "Calculated forecasts, intervals and probabilities are distinguished from independent out-of-sample reliability assessments. High, Medium, Low and Not estimable describe the strength of evidence, not investment recommendations; technical checks remain in internal reports.",
@@ -186,7 +186,7 @@ const T = {
     whats_next_items: [
     {
       title: 'Adaptive Weights by Asset and Horizon',
-      body: 'We are training a model that learns — based on asset class and time horizon — which forecasting models have historically performed best, and automatically adapts the weights assigned to each model for every new forecast. The model requires large training samples to be effective, and therefore takes time before it can be integrated into production.',
+      body: "A controlled adaptive-weight blending implementation already exists as an optional, default-off component. It requires compatible historical evidence and does not replace validated production weighting when its checks fail. Wider training and robustness evaluation remain ongoing research.",
       tag: 'AI · Modelling'
     },
     {
@@ -248,7 +248,7 @@ const T = {
     engine_h2c: "pubblicati solo quando supportati.",
     engine_lede: "Configurate un ticker, una data obiettivo, la profondità di analisi e il livello di confidenza, e facoltativamente una soglia di prezzo, la relativa direzione, un range di prezzo e una data di riferimento Time Travel. Il motore legge il dataset selezionato, esegue fino a otto modelli in funzione dell’orizzonte e dello storico disponibile e pesa i modelli validi in base ai risultati storici ottenuti su quell’asset. Un’esecuzione valida e completata pubblica il forecast puntuale; l’intervallo di predizione e le probabilità richieste sulla soglia o sul range vengono pubblicati solo quando i campioni di calibrazione superano i controlli di adeguatezza e validazione previsti. Gli output non supportati vengono indicati come non stimabili, senza attribuire valori inventati. A parità di dataset, parametri e versione del motore, gli output pubblicati sono riproducibili.",
     features_eyebrow: 'Cosa ottenete',
-    features_h2: "Forecast, intervalli validati e probabilità quando stimabili, più un report automatico. Un unico processo auditabile.",
+    features_h2: "Otto modelli previsionali di serie storiche, valutazione fondamentale opzionale su dati idonei, intervalli empirici, probabilità e report professionali.",
     analytics_eyebrow: 'Output',
     analytics_h2: "Output quantitativi principali, pubblicati solo quando supportati dai dati, più un indicatore direzionale opzionale.",
     analytics_lede: "Forecast, intervalli e probabilità calcolati sono distinti dalla validazione di affidabilità out-of-sample. Alta, Media, Bassa e Non stimabile descrivono la qualità dell'evidenza, non indicazioni operative; i controlli tecnici restano nei report interni.",
@@ -309,7 +309,7 @@ const T = {
     whats_next_items: [
     {
       title: 'Pesi Adattativi per Asset e Orizzonte',
-      body: "Stiamo allenando un modello che apprende — in base all'asset class e all'orizzonte temporale — quali modelli previsionali abbiano storicamente performato meglio e adatta automaticamente i pesi assegnati a ciascun modello per ogni nuovo forecast. Il modello richiede campioni di grandi dimensioni per essere allenato in modo efficace e dunque richiede tempo prima di poter essere integrato in produzione.",
+      body: "Un'implementazione di miscelazione adattiva dei pesi è già presente come componente opzionale, disattivata per impostazione predefinita. Richiede evidenza storica compatibile e non sostituisce la pesatura di produzione quando i controlli falliscono. L'estensione dell'addestramento e della robustezza resta oggetto di ricerca.",
       tag: 'AI · Modellistica'
     },
     {
@@ -371,7 +371,7 @@ const T = {
     engine_h2c: "publiées uniquement si elles sont étayées.",
     engine_lede: "Vous configurez un ticker, une date cible, la profondeur d’analyse et le niveau de confiance, ainsi qu’en option un seuil de prix, sa direction, une fourchette de prix et une date de référence Time Travel. Le moteur lit le jeu de données sélectionné, exécute jusqu’à huit modèles selon l’horizon et l’historique disponible, puis pondère les modèles valides d’après leurs performances historiques sur l’actif. Une exécution valide et terminée publie la prévision ponctuelle ; l’intervalle de prédiction et les probabilités demandées sur le seuil ou la fourchette ne sont publiés que si leurs échantillons de calibration satisfont les contrôles d’adéquation et de validation requis. Les sorties insuffisamment étayées sont indiquées comme non estimables, sans valeur inventée. À jeu de données, paramètres et version du moteur identiques, les sorties publiées sont reproductibles.",
     features_eyebrow: 'Ce que vous obtenez',
-    features_h2: "Prévision, intervalles validés et probabilités lorsqu’elles sont estimables, avec un rapport automatique. Un seul processus auditable.",
+    features_h2: "Huit modèles de séries temporelles, valorisation fondamentale facultative sur données admissibles, intervalles empiriques, probabilités et rapports professionnels.",
     analytics_eyebrow: 'Sorties',
     analytics_h2: "Sorties quantitatives principales, publiées uniquement si les données les étayent, avec un indicateur directionnel optionnel.",
     analytics_lede: "Prévisions, intervalles et probabilités calculés sont distincts de leur validation indépendante hors échantillon. Élevée, Moyenne, Faible et Non estimable qualifient les preuves, pas des recommandations; les contrôles techniques restent internes.",
@@ -432,7 +432,7 @@ const T = {
     whats_next_items: [
     {
       title: 'Pondérations Adaptatives par Actif et Horizon',
-      body: "Nous entraînons un modèle qui apprend — en fonction de la classe d'actifs et de l'horizon temporel — quels modèles de prévision ont historiquement le mieux performé, et adapte automatiquement les pondérations de chaque modèle pour chaque nouveau forecast. Le modèle nécessite de grands échantillons d'entraînement pour être efficace, et requiert donc du temps avant d'être intégré en production.",
+      body: "Une implémentation de pondérations adaptatives existe déjà sous forme de composant facultatif, désactivé par défaut. Elle exige des preuves historiques compatibles et ne remplace pas la pondération de production si ses contrôles échouent. L'entraînement et la robustesse restent étudiés.",
       tag: 'IA · Modélisation'
     },
     {
@@ -494,7 +494,7 @@ const T = {
     engine_h2c: "nur bei ausreichender Datengrundlage veröffentlicht.",
     engine_lede: "Sie konfigurieren einen Ticker, ein Zieldatum, die Analysetiefe und das Konfidenzniveau sowie optional eine Preisschwelle, deren Richtung, eine Preisspanne und ein Time-Travel-Referenzdatum. Die Engine liest den ausgewählten Datensatz, führt abhängig von Horizont und verfügbarer Historie bis zu acht Prognosemodelle aus und gewichtet die gültigen Modelle nach ihrer historischen Leistung für den jeweiligen Vermögenswert. Ein gültiger, abgeschlossener Lauf veröffentlicht die Punktprognose; das Prognoseintervall und angeforderte Schwellen- oder Spannenwahrscheinlichkeiten werden nur veröffentlicht, wenn ihre Kalibrierungsstichproben die erforderlichen Eignungs- und Validierungsprüfungen bestehen. Nicht ausreichend gestützte Ergebnisse werden als nicht schätzbar ausgewiesen, statt mit erfundenen Werten belegt zu werden. Bei identischem Datensatz, identischen Parametern und gleicher Engine-Version sind die veröffentlichten Ergebnisse reproduzierbar.",
     features_eyebrow: 'Was Sie erhalten',
-    features_h2: "Prognose, validierte Intervalle und Wahrscheinlichkeiten, sofern schätzbar, sowie ein automatisierter Bericht. Ein prüfbarer Prozess.",
+    features_h2: "Acht Zeitreihenprognosemodelle, optionale Fundamentalbewertung bei geeigneten Daten, empirische Intervalle, Wahrscheinlichkeiten und professionelle Berichte.",
     analytics_eyebrow: 'Ausgaben',
     analytics_h2: "Zentrale quantitative Ergebnisse, nur bei ausreichender Datengrundlage veröffentlicht, ergänzt um einen optionalen Richtungsindikator.",
     analytics_lede: "Berechnete Prognosen, Intervalle und Wahrscheinlichkeiten bleiben von unabhängiger Out-of-Sample-Validierung getrennt. Hoch, Mittel, Niedrig und Nicht schätzbar kennzeichnen Evidenz statt Empfehlungen; technische Prüfungen bleiben intern.",
@@ -555,7 +555,7 @@ const T = {
     whats_next_items: [
     {
       title: 'Adaptive Gewichte nach Asset und Horizont',
-      body: 'Wir trainieren ein Modell, das — basierend auf Asset-Klasse und Zeithorizont — lernt, welche Prognosemodelle historisch am besten abgeschnitten haben, und passt die Gewichte automatisch für jeden neuen Forecast an. Das Modell benötigt große Trainingsmengen und braucht daher Zeit, bevor es in den Produktionsbetrieb integriert werden kann.',
+      body: "Eine kontrollierte Implementierung adaptiver Gewichtsmischung existiert bereits als optionale, standardmäßig deaktivierte Komponente. Sie setzt kompatible historische Evidenz voraus und ersetzt Produktionsgewichte nicht bei fehlgeschlagenen Prüfungen. Weiteres Training und Robustheitstests bleiben Forschung.",
       tag: 'KI · Modellierung'
     },
     {
@@ -1847,7 +1847,7 @@ function Methodology() {
             <div className="md-icon">◰</div>
             <div className="md-text">
               <div className="md-title">{{ en: 'Previsio · Quantitative methodology', it: 'Previsio · Metodologia quantitativa', fr: 'Previsio · Méthodologie quantitative', de: 'Previsio · Quantitative Methodologie' }[lang]}</div>
-              <div className="md-sub">{{ en: '20 sections · models, weights, intervals, probability, defaults · 190+ formulas', it: '20 sezioni · modelli, pesi, intervalli, probabilità, parametri · 190+ formule', fr: '20 sections · modèles, poids, intervalles, probabilité, paramètres · 190+ formules', de: '20 Abschnitte · Modelle, Gewichte, Intervalle, Wahrscheinlichkeit, Standards · 190+ Formeln' }[lang]}</div>
+              <div className="md-sub">{{ en: 'Technical methodology · models, forecasting, portfolio construction, validation and report governance', it: 'Metodologia tecnica · modelli, previsioni, costruzione di portafoglio, validazione e governo dei report', fr: 'Méthodologie technique · modèles, prévisions, construction de portefeuille, validation et rapports', de: 'Technische Methodik · Modelle, Prognosen, Portfoliokonstruktion, Validierung und Berichte' }[lang]}</div>
             </div>
             <a className="btn btn-gold" href="Request.html#docs">
               {{ en: 'Request documentation', it: 'Richiedi documentazione', fr: 'Demander la documentation', de: 'Dokumentation anfordern' }[lang]} <span className="arrow">→</span>
