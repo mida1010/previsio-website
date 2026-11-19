@@ -55,7 +55,7 @@
 
   try {
     var request = new XMLHttpRequest();
-    request.open('GET', 'faq-data.source.js?v=20260803', false);
+    request.open('GET', 'faq-data.source.js?v=20261119', false);
     request.send(null);
 
     if (request.status !== 0 && (request.status < 200 || request.status >= 300)) {
@@ -67,11 +67,15 @@
     var repaired = "The website\\'s informational assistant";
     var occurrences = source.split(broken).length - 1;
 
-    if (occurrences !== 1) {
-      throw new Error('FAQ source compatibility check failed: expected 1 repair target, found ' + occurrences);
+    // The current source no longer contains this legacy unescaped apostrophe;
+    // the repair is applied only to an older cached copy that still has it.
+    if (occurrences > 1) {
+      throw new Error('FAQ source compatibility check failed: expected at most 1 repair target, found ' + occurrences);
     }
 
-    source = source.replace(broken, repaired);
+    if (occurrences === 1) {
+      source = source.replace(broken, repaired);
+    }
     (0, eval)(source);
 
     if (!window.FAQ_DATA || !window.FAQ_DATA.ui || !Array.isArray(window.FAQ_DATA.categories)) {
